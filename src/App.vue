@@ -6,6 +6,7 @@ import NavHomeIcon from '@/components/icons/NavHomeIcon.vue'
 import NavMoviesIcon from '@/components/icons/NavMoviesIcon.vue'
 import NavTVSeriesIcon from '@/components/icons/NavTVSeriesIcon.vue'
 import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
+import SearchIcon from '@/components/icons/SearchIcon.vue'
 </script>
 
 <template>
@@ -21,7 +22,10 @@ import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
       <img src="@/assets/avatars/image-avatar.png" alt="User Avatar" />
     </div>
   </div>
-
+  <form>
+    <SearchIcon />
+    <input placeholder="Search for movies or TV series" />
+  </form>
   <RouterView />
 </template>
 
