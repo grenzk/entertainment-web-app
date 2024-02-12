@@ -1,7 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>
-    <h1>This is a home page</h1>
-  </main>
+  <div>
+    <h2>Trending</h2>
+    <h2>Recommended for you</h2>
+  </div>
 </template>
