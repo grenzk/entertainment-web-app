@@ -6,11 +6,16 @@
   --color-neutral-greyish-blue: hsl(223, 23%, 46%);
   --color-neutral-white: hsl(0, 0%, 100%);
 
+  --font-family-sans: 'Outfit', sans-serif;
+
   --font-size-s: 0.813rem;
   --font-size-m: 0.938rem;
   --font-size-l: 1.125rem;
   --font-size-xl: 1.5rem;
   --font-size-xxl: 2rem;
+
+  --font-weight-light: 300;
+  --font-weight-medium: 500;
 
   --space-nav-links-gap: 1.5rem; // T: 2rem || D: 2.5rem
   --space-content-gap: 1.5rem;

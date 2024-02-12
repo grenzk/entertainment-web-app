@@ -27,6 +27,8 @@ body {
 body {
   background-color: var(--color-primary-dark-blue);
   color: var(--color-neutral-white);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-light);
   text-rendering: optimizeSpeed;
   line-height: 1.5;
 }
