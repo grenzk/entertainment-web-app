@@ -1,0 +1,32 @@
+@media screen and (min-width: 768px) {
+  #app {
+    grid-template: 8.063rem 1fr 1fr 1fr / 1fr;
+  }
+
+  .header-group.l-container {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+
+  .header {
+    padding-top: 1.5rem;
+
+    &-group {
+      border-radius: var(--border-radius-s);
+    }
+
+    &-logo {
+      width: 2rem;
+      height: 1.6rem;
+    }
+
+    &-nav-item {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    &-avatar {
+      width: 32px;
+    }
+  }
+}
