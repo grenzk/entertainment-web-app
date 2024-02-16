@@ -10,23 +10,96 @@ import SearchIcon from '@/components/icons/SearchIcon.vue'
 </script>
 
 <template>
-  <div>
-    <a href="/"><LogoIcon /></a>
-    <nav>
-      <RouterLink to="/"><NavHomeIcon /></RouterLink>
-      <RouterLink to="/movies"><NavMoviesIcon /></RouterLink>
-      <RouterLink to="/tv-series"><NavTVSeriesIcon /></RouterLink>
-      <RouterLink to="/bookmarks"><NavBookmarksIcon /></RouterLink>
-    </nav>
-    <div class="avatar">
-      <img src="@/assets/avatars/image-avatar.png" alt="User Avatar" />
+  <header class="header">
+    <div class="header-group l-flex l-container">
+      <a href="/" class="header-logo"><LogoIcon class="header-logo-svg-icon" /></a>
+      <nav class="header-nav">
+        <ul class="header-nav-list l-flex">
+          <li class="header-nav-item">
+            <RouterLink to="/" class="header-nav-link">
+              <NavHomeIcon class="header-nav-link-svg-icon" />
+            </RouterLink>
+          </li>
+          <li class="header-nav-item">
+            <RouterLink to="/movies" class="header-nav-link">
+              <NavMoviesIcon class="header-nav-link-svg-icon" />
+            </RouterLink>
+          </li>
+          <li class="header-nav-item">
+            <RouterLink to="/tv-series" class="header-nav-link">
+              <NavTVSeriesIcon class="header-nav-link-svg-icon" />
+            </RouterLink>
+          </li>
+          <li class="header-nav-item">
+            <RouterLink to="/bookmarks" class="header-nav-link">
+              <NavBookmarksIcon class="header-nav-link-svg-icon" />
+            </RouterLink>
+          </li>
+        </ul>
+      </nav>
+      <div class="header-avatar">
+        <img src="@/assets/avatars/image-avatar.png" alt="User Avatar" />
+      </div>
     </div>
-  </div>
+  </header>
+
   <form>
     <SearchIcon />
     <input placeholder="Search for movies or TV series" />
   </form>
+
   <RouterView />
 </template>
 
-<style scoped></style>
+<style lang="scss">
+#app {
+  display: grid;
+  grid-template: 5rem 1fr 1fr 1fr / 1fr;
+}
+
+.header-group.l-container {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.header {
+  &-group {
+    height: var(--header-height);
+    padding: 0 1rem;
+    background-color: var(--color-primary-semi-dark-blue);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-logo {
+    width: 1.563rem;
+    height: 1.25rem;
+  }
+
+  &-logo-svg-icon,
+  &-nav-link-svg-icon,
+  &-nav-link {
+    width: 100%;
+    height: 100%;
+  }
+
+  &-nav-list {
+    gap: var(--space-nav-links-gap);
+  }
+
+  &-nav-item {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &-nav-link {
+    display: inline-block;
+  }
+
+  &-avatar {
+    width: 24px;
+    border: 1px solid white;
+    border-radius: var(--border-radius-round);
+  }
+}
+</style>
