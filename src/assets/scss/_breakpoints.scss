@@ -30,3 +30,40 @@
     }
   }
 }
+
+@media screen and (min-width: 1200px) {
+  #app {
+    grid-template: 8.063rem 1fr 1fr 1fr / 10.25rem 1fr;
+  }
+
+  .header-group.l-container {
+    margin-left: unset;
+    margin-right: unset;
+  }
+
+  .header {
+    grid-row: 1 / span 4;
+    padding: 2rem;
+
+    &-logo {
+      margin-bottom: 4.688rem;
+    }
+
+    &-group,
+    &-nav-list {
+      flex-direction: column;
+    }
+
+    &-group {
+      width: 96px;
+      border-radius: var(--border-radius-m);
+      padding: 2rem 0;
+      justify-content: unset;
+    }
+
+    &-avatar {
+      margin-top: auto;
+      width: 40px;
+    }
+  }
+}
