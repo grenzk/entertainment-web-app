@@ -6,7 +6,6 @@ import NavHomeIcon from '@/components/icons/NavHomeIcon.vue'
 import NavMoviesIcon from '@/components/icons/NavMoviesIcon.vue'
 import NavTVSeriesIcon from '@/components/icons/NavTVSeriesIcon.vue'
 import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
-import SearchIcon from '@/components/icons/SearchIcon.vue'
 </script>
 
 <template>
@@ -43,18 +42,13 @@ import SearchIcon from '@/components/icons/SearchIcon.vue'
     </div>
   </header>
 
-  <form>
-    <SearchIcon />
-    <input placeholder="Search for movies or TV series" />
-  </form>
-
   <RouterView />
 </template>
 
 <style lang="scss">
 #app {
   display: grid;
-  grid-template: 5rem 1fr 1fr 1fr / 1fr;
+  grid-template: 5rem 3rem 1fr 1fr 1fr / 1fr;
 }
 
 .header-group.l-container {
