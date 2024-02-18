@@ -21,6 +21,7 @@
     "yup": "^1.3.3"
   },
   "devDependencies": {
+    "@quasar/vite-plugin": "^1.6.0",
     "@rushstack/eslint-patch": "^1.7.2",
     "@tsconfig/node20": "^20.1.2",
     "@types/node": "^20.11.17",
