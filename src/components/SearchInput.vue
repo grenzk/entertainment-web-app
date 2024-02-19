@@ -15,6 +15,7 @@ const ph = ref('')
 
 <style lang="scss">
 .input-group {
+  align-self: start;
   align-items: center;
   gap: 1rem;
 }
