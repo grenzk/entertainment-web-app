@@ -173,8 +173,137 @@ import EmptyBookmarkIcon from '@/components/icons/EmptyBookmarkIcon.vue'
       </div>
     </div>
   </div>
-  <div>
+  <div class="recommended">
     <h2 class="section-title">Recommended for you</h2>
+
+    <div class="recommended-content l-container l-grid">
+      <div class="media-element recommended-media">
+        <img
+          class="media-img"
+          src="../assets/img/thumbnails/the-great-lands/regular/large.jpg"
+          alt="Beyond Earth"
+        />
+
+        <div class="bookmark l-flex"><EmptyBookmarkIcon /></div>
+
+        <div class="media-info">
+          <div class="tags l-flex">
+            <small>2019</small>
+            <small class="dot"></small>
+            <small class="category-icon"><MovieCategoryIcon /></small>
+            <small>Movie</small>
+            <small class="dot"></small>
+            <small>E</small>
+          </div>
+          <h3 class="media-title">The Great Lands</h3>
+        </div>
+      </div>
+      <div class="media-element recommended-media">
+        <img
+          class="media-img"
+          src="../assets/img/thumbnails/the-great-lands/regular/large.jpg"
+          alt="Beyond Earth"
+        />
+
+        <div class="bookmark l-flex"><EmptyBookmarkIcon /></div>
+
+        <div class="media-info">
+          <div class="tags l-flex">
+            <small>2019</small>
+            <small class="dot"></small>
+            <small class="category-icon"><MovieCategoryIcon /></small>
+            <small>Movie</small>
+            <small class="dot"></small>
+            <small>E</small>
+          </div>
+          <h3 class="media-title">The Great Lands</h3>
+        </div>
+      </div>
+      <div class="media-element recommended-media">
+        <img
+          class="media-img"
+          src="../assets/img/thumbnails/the-great-lands/regular/large.jpg"
+          alt="Beyond Earth"
+        />
+
+        <div class="bookmark l-flex"><EmptyBookmarkIcon /></div>
+
+        <div class="media-info">
+          <div class="tags l-flex">
+            <small>2019</small>
+            <small class="dot"></small>
+            <small class="category-icon"><MovieCategoryIcon /></small>
+            <small>Movie</small>
+            <small class="dot"></small>
+            <small>E</small>
+          </div>
+          <h3 class="media-title">The Great Lands</h3>
+        </div>
+      </div>
+      <div class="media-element recommended-media">
+        <img
+          class="media-img"
+          src="../assets/img/thumbnails/the-great-lands/regular/large.jpg"
+          alt="Beyond Earth"
+        />
+
+        <div class="bookmark l-flex"><EmptyBookmarkIcon /></div>
+
+        <div class="media-info">
+          <div class="tags l-flex">
+            <small>2019</small>
+            <small class="dot"></small>
+            <small class="category-icon"><MovieCategoryIcon /></small>
+            <small>Movie</small>
+            <small class="dot"></small>
+            <small>E</small>
+          </div>
+          <h3 class="media-title">The Great Lands</h3>
+        </div>
+      </div>
+      <div class="media-element recommended-media">
+        <img
+          class="media-img"
+          src="../assets/img/thumbnails/the-great-lands/regular/large.jpg"
+          alt="Beyond Earth"
+        />
+
+        <div class="bookmark l-flex"><EmptyBookmarkIcon /></div>
+
+        <div class="media-info">
+          <div class="tags l-flex">
+            <small>2019</small>
+            <small class="dot"></small>
+            <small class="category-icon"><MovieCategoryIcon /></small>
+            <small>Movie</small>
+            <small class="dot"></small>
+            <small>E</small>
+          </div>
+          <h3 class="media-title">The Great Lands</h3>
+        </div>
+      </div>
+      <div class="media-element recommended-media">
+        <img
+          class="media-img"
+          src="../assets/img/thumbnails/the-great-lands/regular/large.jpg"
+          alt="Beyond Earth"
+        />
+
+        <div class="bookmark l-flex"><EmptyBookmarkIcon /></div>
+
+        <div class="media-info">
+          <div class="tags l-flex">
+            <small>2019</small>
+            <small class="dot"></small>
+            <small class="category-icon"><MovieCategoryIcon /></small>
+            <small>Movie</small>
+            <small class="dot"></small>
+            <small>E</small>
+          </div>
+          <h3 class="media-title">The Great Lands</h3>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -218,7 +347,6 @@ import EmptyBookmarkIcon from '@/components/icons/EmptyBookmarkIcon.vue'
   left: 1rem;
   bottom: 1rem;
   z-index: 1;
-  overflow: hidden !important;
 }
 
 .media-img {
@@ -266,5 +394,29 @@ import EmptyBookmarkIcon from '@/components/icons/EmptyBookmarkIcon.vue'
   position: absolute;
   right: 0.5rem;
   top: 0.5rem;
+}
+
+.recommended-content {
+  grid-template: 154px 154px / 1fr 1fr;
+  gap: 1rem;
+}
+
+.media-element.recommended-media {
+  width: 164px;
+  height: 110px;
+  overflow: visible;
+
+  .media-img {
+    border-radius: var(--border-radius-xs);
+    margin-bottom: 0.5rem;
+  }
+
+  .media-info {
+    position: static;
+  }
+
+  .tags {
+    gap: 0.375rem;
+  }
 }
 </style>

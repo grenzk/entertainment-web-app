@@ -48,7 +48,7 @@ import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
 <style lang="scss">
 #app {
   display: grid;
-  grid-template: 5rem 3rem 1fr 1fr 1fr / 1fr;
+  grid-template: 5rem 3rem 12.813rem / 1fr;
 }
 
 .header-group.l-container {
