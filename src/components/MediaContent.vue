@@ -1,29 +1,35 @@
 <script setup lang="ts">
 import EmptyBookmarkIcon from '@/components/icons/EmptyBookmarkIcon.vue'
 import MovieCategoryIcon from '@/components/icons/MovieCategoryIcon.vue'
+
+defineProps<{
+  title: string
+  thumbnailUrl: string
+  year: number
+  category: string
+  rating: string
+  // isBookmarked: boolean
+  // isTrending: boolean
+}>()
 </script>
 
 <template>
   <div class="media">
-    <img
-      class="media-img"
-      src="../assets/img/thumbnails/beyond-earth/trending/large.jpg"
-      alt="Beyond Earth"
-    />
+    <img class="media-img" :src="thumbnailUrl" alt="Beyond Earth Image" />
 
     <div class="media-gradient-overlay"></div>
     <div class="media-bookmark-button l-flex"><EmptyBookmarkIcon /></div>
 
     <div class="media-info">
       <div class="media-info-tags l-flex">
-        <small>2019</small>
+        <small>{{ year }}</small>
         <small></small>
         <small><MovieCategoryIcon /></small>
-        <small>Movie</small>
+        <small>{{ category }}</small>
         <small></small>
-        <small>PG</small>
+        <small>{{ rating }}</small>
       </div>
-      <h3 class="media-info-title">Beyond Earth</h3>
+      <h3 class="media-info-title">{{ title }}</h3>
     </div>
   </div>
 </template>
