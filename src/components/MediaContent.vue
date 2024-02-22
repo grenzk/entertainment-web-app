@@ -4,7 +4,7 @@ import MovieCategoryIcon from '@/components/icons/MovieCategoryIcon.vue'
 
 defineProps<{
   title: string
-  thumbnailUrl: string
+  thumbnailUrl: string | undefined
   year: number
   category: string
   rating: string
@@ -15,7 +15,7 @@ defineProps<{
 
 <template>
   <div class="media">
-    <img class="media-img" :src="thumbnailUrl" alt="Beyond Earth Image" />
+    <img class="media-img" :src="thumbnailUrl" alt="Movie Image" />
 
     <div class="media-gradient-overlay"></div>
     <div class="media-bookmark-button l-flex"><EmptyBookmarkIcon /></div>
