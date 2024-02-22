@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import EmptyBookmarkIcon from '@/components/icons/EmptyBookmarkIcon.vue'
 import MovieCategoryIcon from '@/components/icons/MovieCategoryIcon.vue'
+import TVCategoryIcon from '@/components/icons/TVCategoryIcon.vue'
 
 defineProps<{
   title: string
@@ -24,7 +25,8 @@ defineProps<{
       <div class="media-info-tags l-flex">
         <small>{{ year }}</small>
         <small></small>
-        <small><MovieCategoryIcon /></small>
+        <small v-if="category === 'Movie'"><MovieCategoryIcon /></small>
+        <small v-else><TVCategoryIcon /></small>
         <small>{{ category }}</small>
         <small></small>
         <small>{{ rating }}</small>
