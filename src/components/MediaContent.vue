@@ -45,6 +45,7 @@ defineProps<{
   &-img {
     object-fit: cover;
     height: 100%;
+    width: 100%;
   }
 
   &-info {
@@ -58,6 +59,10 @@ defineProps<{
       color: hsla(0, 0%, 100%, 0.75);
       align-items: center;
 
+      small {
+        font-size: var(--font-size-xxs);
+      }
+
       small:nth-child(2),
       small:nth-child(5) {
         width: 0.188rem;
@@ -67,12 +72,12 @@ defineProps<{
       }
 
       small:nth-child(3) {
-        height: 0.75rem;
+        display: inline-flex;
       }
     }
 
     &-title {
-      font-size: var(--font-size-s);
+      font-size: var(--font-size-trending-media-title);
       line-height: revert;
     }
   }
@@ -118,6 +123,10 @@ defineProps<{
 
     &-tags {
       gap: 0.375rem;
+    }
+
+    h3 {
+      font-size: var(--font-size-s);
     }
   }
 }

@@ -44,7 +44,7 @@ const ph = ref('')
 
   &--standard &__control::after {
     height: 1px !important;
-    // transform: scale3d(0, 1, 1) !important;
+    transform: scale3d(0, 1, 1) !important;
   }
 
   &__native {

@@ -10,6 +10,7 @@
 
   --font-family-sans: 'Outfit', sans-serif;
 
+  --font-size-xxs: 0.75rem;
   --font-size-xs: 0.813rem;
   --font-size-s: 0.938rem;
   --font-size-m: 1rem;
@@ -17,6 +18,8 @@
   --font-size-xl: 1.25rem;
   --font-size-xxl: 1.5rem;
   --font-size-xxxl: 2rem;
+
+  --font-size-trending-media-title: var(--font-size-s);
 
   --font-weight-light: 300;
   --font-weight-medium: 500;
@@ -37,7 +40,17 @@
 @media screen and (min-width: 768px) {
   :root {
     --header-height: 4.5rem;
+
+    --font-size-xxs: 0.938rem;
+    --font-size-s: 1.125rem;
+    --font-size-m: 1.5rem;
+    --font-size-xl: 2rem;
+
+    --font-size-trending-media-title: var(--font-size-m);
+
     --space-nav-links-gap: 2rem;
+    --space-content-gap: 1.5rem;
+    --space-content-grid-gap: 1.875rem;
   }
 }
 
