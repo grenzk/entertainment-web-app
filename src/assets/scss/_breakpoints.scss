@@ -28,7 +28,7 @@
 
 @media screen and (min-width: 768px) {
   #app {
-    grid-template: 8.063rem 4.063rem 20.938rem 1fr / 1fr;
+    grid-template: 8.063rem 4.063rem 20.938rem / 1fr;
   }
 
   .header-group.l-container,
@@ -90,6 +90,11 @@
     &-info {
       left: 1.5rem;
       bottom: 1.5rem;
+    }
+
+    &-bookmark-button {
+      top: 1rem;
+      right: 1rem;
     }
   }
 }
