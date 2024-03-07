@@ -78,6 +78,7 @@ defineProps<{
 
     &-title {
       font-size: var(--font-size-trending-media-title);
+      font-weight: var(--font-weight-medium);
       line-height: revert;
     }
   }

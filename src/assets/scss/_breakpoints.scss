@@ -80,6 +80,9 @@
   }
 
   .recommended {
+    padding-bottom: 3.25rem;
+    max-width: 90rem;
+
     &-group {
       gap: var(--space-content-grid-gap);
       row-gap: 1.5rem;
@@ -101,7 +104,7 @@
 
 @media screen and (min-width: 1024px) {
   #app {
-    grid-template: 8.063rem 1fr 1fr 1fr / 10.25rem 1fr;
+    grid-template: 8.125rem 20.938rem 1fr / 10.25rem 1fr;
   }
 
   .header-group.l-container {
@@ -109,8 +112,13 @@
     margin-right: unset;
   }
 
+  .l-container {
+    margin-left: unset;
+    margin-right: 2.25rem;
+  }
+
   .header {
-    grid-row: 1 / span 4;
+    grid-row: 1 / span 3;
     padding: 2rem;
 
     &-logo {
@@ -131,7 +139,45 @@
 
     &-avatar {
       margin-top: auto;
-      width: 40px;
+      width: 2.5rem;
+    }
+  }
+
+  .input-group {
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+    align-self: center;
+  }
+
+  .q-field {
+    &__control {
+      height: 56px !important;
+    }
+
+    &--standard &__control::after {
+      transform: scale3d(0, 1, 1) !important;
+    }
+
+    &--standard.q-field--highlighted &__control::after {
+      transform: scale3d(1, 1, 1) !important;
+    }
+  }
+
+  .trending-media-scroller {
+    width: calc(100vw - 10.25rem);
+    gap: 2.5rem;
+    padding-left: 0;
+    padding-right: 2.25rem;
+  }
+
+  .snaps-inline {
+    scroll-padding-inline: 0;
+  }
+
+  .recommended {
+    &-group {
+      grid-template-columns: repeat(4, 1fr);
+      row-gap: 2rem;
     }
   }
 }

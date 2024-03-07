@@ -56,7 +56,11 @@
 
 @media screen and (min-width: 1024px) {
   :root {
-    --header-height: Min(100%, 960px);
+    --header-height: Min(calc(100vh - 4rem), 960px);
+
+    --font-size-xxs: 0.875rem;
+
     --space-nav-links-gap: 2.5rem;
+    --space-content-grid-gap: 2.5rem;
   }
 }
