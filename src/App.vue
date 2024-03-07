@@ -88,6 +88,18 @@ import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
 
   &-nav-link {
     display: inline-block;
+
+    &:hover {
+      svg path {
+        fill: var(--color-primary-red);
+      }
+    }
+  }
+
+  &-nav-link.router-link-active {
+    svg path {
+      fill: var(--color-neutral-white);
+    }
   }
 
   &-avatar {
