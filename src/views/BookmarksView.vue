@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
+import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import SearchInput from '@/components/SearchInput.vue'
 import MediaContent from '@/components/MediaContent.vue'
@@ -12,6 +13,9 @@ const bookmarkedMovies = data.value.filter((media) => {
 const bookmarkedTvSeries = data.value.filter((media) => {
   return media.isBookmarked && media.category === 'TV Series'
 })
+
+onMounted(() => changeGridRows('5rem 3rem auto'))
+onUnmounted(() => resetGrid())
 </script>
 
 <template>
