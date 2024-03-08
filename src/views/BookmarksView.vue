@@ -14,13 +14,13 @@ const bookmarkedTvSeries = data.value.filter((media) => {
   return media.isBookmarked && media.category === 'TV Series'
 })
 
-onMounted(() => changeGridRows('5rem 3rem auto'))
+onMounted(() => changeGridRows('5rem 3rem auto auto'))
 onUnmounted(() => resetGrid())
 </script>
 
 <template>
   <SearchInput placeholder="Search for bookmarked shows" />
-  <div class="recommended l-container">
+  <div class="recommended bookmarked-movies l-container">
     <h2 class="section-title">Bookmarked Movies</h2>
 
     <div class="recommended-group l-grid">
@@ -36,7 +36,7 @@ onUnmounted(() => resetGrid())
       />
     </div>
   </div>
-  <div class="recommended l-container">
+  <div class="recommended bookmarked-tv-series l-container">
     <h2 class="section-title">Bookmarked TV Series</h2>
 
     <div class="recommended-group l-grid">
@@ -54,4 +54,8 @@ onUnmounted(() => resetGrid())
   </div>
 </template>
 
-<style></style>
+<style lang="scss">
+.bookmarked-movies {
+  padding-bottom: 1.5rem;
+}
+</style>
