@@ -11,7 +11,7 @@ const recommendedMedia = data.value.filter((media) => !media.isTrending)
 </script>
 
 <template>
-  <SearchInput />
+  <SearchInput placeholder="Search for movies or TV series" />
   <div class="trending">
     <h2 class="section-title l-container">Trending</h2>
 
