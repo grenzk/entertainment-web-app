@@ -3,13 +3,17 @@ import { ref } from 'vue'
 
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 
+defineProps<{
+  placeholder: string
+}>()
+
 const ph = ref('')
 </script>
 
 <template>
   <div class="input-group l-flex l-container">
     <SearchIcon class="search-icon" />
-    <QInput v-model="ph" placeholder="Search for movies or TV series" />
+    <QInput v-model="ph" :placeholder="placeholder" />
   </div>
 </template>
 
