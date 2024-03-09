@@ -11,7 +11,7 @@
     grid-auto-columns: 20rem;
   }
 
-  .recommended {
+  .media-library {
     &-group {
       gap: var(--space-content-grid-gap);
     }
@@ -19,7 +19,7 @@
 }
 
 @media screen and (min-width: 500px) {
-  .recommended {
+  .media-library {
     &-group {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -79,7 +79,7 @@
     scroll-padding-inline: 1.5rem;
   }
 
-  .recommended {
+  .media-library {
     padding-bottom: 3.25rem;
     max-width: 90rem;
 
@@ -174,7 +174,7 @@
     scroll-padding-inline: 0;
   }
 
-  .recommended {
+  .media-library {
     &-group {
       grid-template-columns: repeat(4, 1fr);
       row-gap: 2rem;
