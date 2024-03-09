@@ -1,0 +1,8 @@
+.media-library {
+  padding-bottom: 3.813rem;
+
+  &-group {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.938rem;
+  }
+}

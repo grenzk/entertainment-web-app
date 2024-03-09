@@ -27,10 +27,10 @@ const recommendedMedia = data.value.filter((media) => !media.isTrending)
       />
     </div>
   </div>
-  <div class="recommended l-container">
+  <div class="media-library l-container">
     <h2 class="section-title">Recommended for you</h2>
 
-    <div class="recommended-group l-grid">
+    <div class="media-library-group l-grid">
       <MediaContent
         class="media-recommended"
         v-for="(media, index) in recommendedMedia"
@@ -73,15 +73,6 @@ const recommendedMedia = data.value.filter((media) => !media.isTrending)
     overscroll-behavior-inline: contain;
     width: 100vw;
     height: 8.75rem;
-  }
-}
-
-.recommended {
-  padding-bottom: 3.813rem;
-
-  &-group {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.938rem;
   }
 }
 </style>

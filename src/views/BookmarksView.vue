@@ -20,10 +20,10 @@ onUnmounted(() => resetGrid())
 
 <template>
   <SearchInput placeholder="Search for bookmarked shows" />
-  <div class="recommended bookmarked-movies l-container">
+  <div class="media-library bookmarked-movies l-container">
     <h2 class="section-title">Bookmarked Movies</h2>
 
-    <div class="recommended-group l-grid">
+    <div class="media-library-group l-grid">
       <MediaContent
         class="media-recommended"
         v-for="(media, index) in bookmarkedMovies"
@@ -36,10 +36,10 @@ onUnmounted(() => resetGrid())
       />
     </div>
   </div>
-  <div class="recommended bookmarked-tv-series l-container">
+  <div class="media-library bookmarked-tv-series l-container">
     <h2 class="section-title">Bookmarked TV Series</h2>
 
-    <div class="recommended-group l-grid">
+    <div class="media-library-group l-grid">
       <MediaContent
         class="media-recommended"
         v-for="(media, index) in bookmarkedTvSeries"
@@ -55,7 +55,7 @@ onUnmounted(() => resetGrid())
 </template>
 
 <style lang="scss">
-.bookmarked-movies {
+.media-library.bookmarked-movies {
   padding-bottom: 1.5rem;
 }
 </style>

@@ -15,10 +15,10 @@ onUnmounted(() => resetGrid())
 
 <template>
   <SearchInput placeholder="Search for movies" />
-  <div class="recommended l-container">
+  <div class="media-library l-container">
     <h2 class="section-title">Movies</h2>
 
-    <div class="recommended-group l-grid">
+    <div class="media-library-group l-grid">
       <MediaContent
         class="media-recommended"
         v-for="(media, index) in movieMedia"
