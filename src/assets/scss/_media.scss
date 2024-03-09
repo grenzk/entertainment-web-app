@@ -1,6 +1,10 @@
 .media-library {
   padding-bottom: 3.813rem;
 
+  .section-title {
+    margin-bottom: var(--space-content-gap-2);
+  }
+
   &-group {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.938rem;
