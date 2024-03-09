@@ -9,8 +9,15 @@ import mediaData from '@/assets/data.json'
 const data = ref(mediaData)
 const movieMedia = data.value.filter((media) => media.category === 'Movie')
 
-onMounted(() => changeGridRows())
-onUnmounted(() => resetGrid())
+onMounted(() => {
+  changeGridRows()
+  window.addEventListener('resize', changeGridRows)
+})
+
+onUnmounted(() => {
+  resetGrid()
+  window.removeEventListener('resize', changeGridRows)
+})
 </script>
 
 <template>
