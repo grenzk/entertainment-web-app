@@ -14,7 +14,7 @@ const bookmarkedTvSeries = data.value.filter((media) => {
   return media.isBookmarked && media.category === 'TV Series'
 })
 
-onMounted(() => changeGridRows('5rem 3rem auto auto'))
+onMounted(() => changeGridRows())
 onUnmounted(() => resetGrid())
 </script>
 

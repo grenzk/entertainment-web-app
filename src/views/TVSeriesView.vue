@@ -9,7 +9,7 @@ import mediaData from '@/assets/data.json'
 const data = ref(mediaData)
 const tvSeriesMedia = data.value.filter((media) => media.category === 'TV Series')
 
-onMounted(() => changeGridRows('5rem 3rem auto'))
+onMounted(() => changeGridRows())
 onUnmounted(() => resetGrid())
 </script>
 

@@ -89,6 +89,10 @@
     }
   }
 
+  .media-library.bookmarked-movies {
+    padding-bottom: 3rem;
+  }
+
   .media {
     &-info {
       left: 1.5rem;
@@ -179,5 +183,9 @@
       grid-template-columns: repeat(4, 1fr);
       row-gap: 2rem;
     }
+  }
+
+  .media-library.bookmarked-movies {
+    padding-bottom: 2.5rem;
   }
 }
