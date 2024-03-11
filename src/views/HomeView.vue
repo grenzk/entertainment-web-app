@@ -32,7 +32,6 @@ const recommendedMedia = data.value.filter((media) => !media.isTrending)
 
     <div class="media-library-group l-grid">
       <MediaContent
-        class="media-recommended"
         v-for="(media, index) in recommendedMedia"
         :key="index"
         :title="media.title"

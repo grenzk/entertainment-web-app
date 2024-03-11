@@ -167,7 +167,7 @@ defineProps<{
   }
 }
 
-.media.media-recommended {
+.media-library-group .media {
   overflow: visible;
 
   .media-img-group {

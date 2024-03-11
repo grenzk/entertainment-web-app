@@ -27,7 +27,6 @@ onUnmounted(() => {
 
     <div class="media-library-group l-grid">
       <MediaContent
-        class="media-recommended"
         v-for="(media, index) in tvSeriesMedia"
         :key="index"
         :title="media.title"

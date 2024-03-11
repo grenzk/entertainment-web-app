@@ -32,7 +32,6 @@ onUnmounted(() => {
 
     <div class="media-library-group l-grid">
       <MediaContent
-        class="media-recommended"
         v-for="(media, index) in bookmarkedMovies"
         :key="index"
         :title="media.title"
@@ -48,7 +47,6 @@ onUnmounted(() => {
 
     <div class="media-library-group l-grid">
       <MediaContent
-        class="media-recommended"
         v-for="(media, index) in bookmarkedTvSeries"
         :key="index"
         :title="media.title"
