@@ -64,7 +64,6 @@ const recommendedMedia = data.value.filter((media) => !media.isTrending)
 
 .trending {
   &-media-scroller {
-    scrollbar-width: none;
     padding: 0 1rem;
     grid-auto-flow: column;
     grid-auto-columns: 15rem;
@@ -73,6 +72,11 @@ const recommendedMedia = data.value.filter((media) => !media.isTrending)
     overscroll-behavior-inline: contain;
     width: 100vw;
     height: 8.75rem;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 </style>
