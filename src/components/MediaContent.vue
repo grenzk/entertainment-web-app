@@ -26,8 +26,7 @@ defineProps<{
       </button>
     </div>
 
-    <div class="media-gradient-overlay"></div>
-    <div class="media-bookmark-button l-flex"><EmptyBookmarkIcon /></div>
+    <button class="media-bookmark-button l-flex"><EmptyBookmarkIcon /></button>
 
     <div class="media-info">
       <div class="media-info-tags l-flex">
@@ -41,6 +40,7 @@ defineProps<{
       </div>
       <h3 class="media-info-title">{{ title }}</h3>
     </div>
+    <div class="media-gradient-overlay"></div>
   </div>
 </template>
 
@@ -155,6 +155,15 @@ defineProps<{
     right: 0.5rem;
     top: 0.5rem;
     cursor: pointer;
+    border: none;
+
+    &:hover {
+      background-color: var(--color-neutral-white);
+
+      svg path {
+        stroke: var(--color-primary-dark-blue);
+      }
+    }
   }
 }
 
