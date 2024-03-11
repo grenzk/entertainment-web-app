@@ -147,8 +147,8 @@ defineProps<{
     border-radius: var(--border-radius-round);
     justify-content: center;
     align-items: center;
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     position: absolute;
     right: 0.5rem;
     top: 0.5rem;

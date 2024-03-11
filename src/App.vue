@@ -103,7 +103,7 @@ import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
   }
 
   &-avatar {
-    width: 24px;
+    width: 1.5rem;
     border: 1px solid var(--color-neutral-white);
     border-radius: var(--border-radius-round);
   }

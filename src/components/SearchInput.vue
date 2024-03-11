@@ -39,7 +39,7 @@ const ph = ref('')
   &__control {
     position: unset !important;
     color: var(--color-neutral-greyish-blue) !important;
-    height: 37px !important;
+    height: 2.313rem !important;
   }
 
   &--standard &__control::before {
