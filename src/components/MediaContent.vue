@@ -53,6 +53,7 @@ defineProps<{
   &-img-group {
     height: 100%;
     position: relative;
+    cursor: pointer;
 
     &:hover {
       .media-img {
@@ -83,6 +84,7 @@ defineProps<{
     gap: 1.188rem;
     padding: 0.563rem;
     opacity: 0;
+    cursor: pointer;
 
     &-text {
       color: var(--color-neutral-white);
@@ -152,6 +154,7 @@ defineProps<{
     position: absolute;
     right: 0.5rem;
     top: 0.5rem;
+    cursor: pointer;
   }
 }
 

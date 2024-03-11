@@ -106,6 +106,7 @@ import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
     width: 1.5rem;
     border: 1px solid var(--color-neutral-white);
     border-radius: var(--border-radius-round);
+    cursor: pointer;
   }
 }
 </style>
