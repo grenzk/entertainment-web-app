@@ -62,21 +62,19 @@ const recommendedMedia = data.value.filter((media) => !media.isTrending)
   margin-bottom: var(--space-content-gap-1);
 }
 
-.trending {
-  &-media-scroller {
-    padding: 0 1rem;
-    grid-auto-flow: column;
-    grid-auto-columns: 15rem;
-    gap: 1rem;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    width: 100vw;
-    height: 8.75rem;
-    scrollbar-width: none;
+.trending-media-scroller {
+  padding: 0 1rem;
+  grid-auto-flow: column;
+  grid-auto-columns: 15rem;
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  width: 100vw;
+  height: 8.75rem;
+  scrollbar-width: none;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 </style>
