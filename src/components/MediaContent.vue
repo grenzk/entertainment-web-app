@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import EmptyBookmarkIcon from '@/components/icons/EmptyBookmarkIcon.vue'
+import PlayIcon from '@/components/icons/PlayIcon.vue'
 import MovieCategoryIcon from '@/components/icons/MovieCategoryIcon.vue'
 import TVCategoryIcon from '@/components/icons/TVCategoryIcon.vue'
 
@@ -16,7 +17,14 @@ defineProps<{
 
 <template>
   <div class="media">
-    <img class="media-img" :src="thumbnailUrl" alt="Movie Image" />
+    <div class="media-img-group">
+      <img class="media-img" :src="thumbnailUrl" alt="Movie Image" />
+
+      <button class="media-play-button l-flex">
+        <PlayIcon />
+        <span class="media-play-button-text">Play</span>
+      </button>
+    </div>
 
     <div class="media-gradient-overlay"></div>
     <div class="media-bookmark-button l-flex"><EmptyBookmarkIcon /></div>
@@ -41,6 +49,47 @@ defineProps<{
   overflow: hidden;
   border-radius: var(--border-radius-xs);
   position: relative;
+
+  &-img-group {
+    height: 100%;
+    position: relative;
+
+    &:hover {
+      .media-img {
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
+      }
+
+      .media-play-button {
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+    }
+  }
+
+  &-play-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: hsla(0, 0%, 100%, 0.25);
+    width: 7.313rem;
+    height: 3rem;
+    border-radius: var(--border-radius-l);
+    border: none;
+    align-items: center;
+    gap: 1.188rem;
+    padding: 0.563rem;
+    opacity: 0;
+
+    &-text {
+      color: var(--color-neutral-white);
+      font-size: var(--font-size-l);
+      font-weight: var(--font-weight-medium);
+    }
+  }
 
   &-img {
     object-fit: cover;
@@ -90,6 +139,7 @@ defineProps<{
     height: 50%;
     bottom: 0;
     overflow: hidden;
+    pointer-events: none;
   }
 
   &-bookmark-button {
@@ -105,24 +155,27 @@ defineProps<{
   }
 }
 
-.media.media-recommended > .media {
+.media.media-recommended {
   overflow: visible;
 
-  &-img {
+  .media-img-group {
+    height: unset;
+  }
+
+  .media-img {
     border-radius: var(--border-radius-xs);
     margin-bottom: 0.5rem;
     height: 6.875rem;
-    width: 100%;
   }
 
-  &-gradient-overlay {
+  .media-gradient-overlay {
     display: none;
   }
 
-  &-info {
+  .media-info {
     position: static;
 
-    &-tags {
+    .media-tags {
       gap: 0.375rem;
     }
 
