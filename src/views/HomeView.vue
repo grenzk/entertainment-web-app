@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, onUpdated, ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 
 import SearchInput from '@/components/SearchInput.vue'
 import MediaContent from '@/components/MediaContent.vue'
