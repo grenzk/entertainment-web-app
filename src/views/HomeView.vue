@@ -10,17 +10,19 @@ import mediaData from '@/assets/data.json'
 
 const data = ref(mediaData)
 const userInput = ref('')
-const filterSearchResults = () => {
-  return data.value.filter((media) => {
-    return media.title.toLowerCase().includes(userInput.value.toLowerCase())
-  })
-}
+
 const trendingMedia = data.value.filter((media) => media.isTrending)
 const recommendedMedia = data.value.filter((media) => !media.isTrending)
 
 const mediaScroller = ref<HTMLDivElement | null>(null)
 const isPrevButtonShown = ref(false)
 const isNextButtonShown = ref(true)
+
+const filterSearchResults = () => {
+  return data.value.filter((media) => {
+    return media.title.toLowerCase().includes(userInput.value.toLowerCase())
+  })
+}
 
 const scrollLeft = () => {
   mediaScroller.value?.scrollBy({ left: -400, behavior: 'smooth' })
