@@ -8,6 +8,12 @@ import LeftArrowIcon from '@/components/icons/LeftArrowIcon.vue'
 import mediaData from '@/assets/data.json'
 
 const data = ref(mediaData)
+const userInput = ref('')
+const filteredSearch = () => {
+  return data.value.filter((media) => {
+    return media.title.toLowerCase().includes(userInput.value.toLowerCase())
+  })
+}
 const trendingMedia = data.value.filter((media) => media.isTrending)
 const recommendedMedia = data.value.filter((media) => !media.isTrending)
 
@@ -42,8 +48,9 @@ const checkButtonsVisibility = () => {
 </script>
 
 <template>
-  <SearchInput placeholder="Search for movies or TV series" />
-  <div class="trending">
+  <SearchInput v-model="userInput" placeholder="Search for movies or TV series" />
+
+  <div v-if="userInput.length === 0" class="trending">
     <h2 class="section-title l-container">Trending</h2>
 
     <div class="trending-media-container">
@@ -80,12 +87,28 @@ const checkButtonsVisibility = () => {
       </button>
     </div>
   </div>
-  <div class="media-library l-container">
-    <h2 class="section-title">Recommended for you</h2>
 
-    <div class="media-library-group l-grid">
+  <div class="media-library l-container">
+    <h2 v-if="userInput.length === 0" class="section-title">Recommended for you</h2>
+    <h2 v-else class="section-title">
+      Found {{ filteredSearch().length }} results for '{{ userInput }}'
+    </h2>
+
+    <div v-if="userInput.length === 0" class="media-library-group l-grid">
       <MediaContent
         v-for="(media, index) in recommendedMedia"
+        :key="index"
+        :title="media.title"
+        :thumbnail-url="media.thumbnail.regular?.large"
+        :year="media.year"
+        :category="media.category"
+        :rating="media.rating"
+      />
+    </div>
+
+    <div v-else class="media-library-group l-grid">
+      <MediaContent
+        v-for="(media, index) in filteredSearch()"
         :key="index"
         :title="media.title"
         :thumbnail-url="media.thumbnail.regular?.large"

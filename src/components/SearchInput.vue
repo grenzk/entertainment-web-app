@@ -1,19 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 
 defineProps<{
   placeholder: string
 }>()
 
-const ph = ref('')
+const model = defineModel<string>()
 </script>
 
 <template>
   <div class="input-group l-flex l-container">
     <SearchIcon class="search-icon" />
-    <QInput v-model="ph" :placeholder="placeholder" />
+    <QInput type="search" v-model="model" :placeholder="placeholder" />
   </div>
 </template>
 
