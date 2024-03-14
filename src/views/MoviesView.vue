@@ -3,11 +3,18 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import SearchInput from '@/components/SearchInput.vue'
-import MediaContent from '@/components/MediaContent.vue'
+import MediaSection from '@/components/MediaSection.vue'
 import mediaData from '@/assets/data.json'
 
 const data = ref(mediaData)
+const userInput = ref('')
 const movieMedia = data.value.filter((media) => media.category === 'Movie')
+
+const filterSearchResults = () => {
+  return movieMedia.filter((media) => {
+    return media.title.toLowerCase().includes(userInput.value.toLowerCase())
+  })
+}
 
 onMounted(() => {
   changeGridRows()
@@ -21,22 +28,14 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <SearchInput placeholder="Search for movies" />
-  <div class="media-library l-container">
-    <h2 class="section-title">Movies</h2>
+  <SearchInput v-model="userInput" placeholder="Search for movies" />
 
-    <div class="media-library-group l-grid">
-      <MediaContent
-        v-for="(media, index) in movieMedia"
-        :key="index"
-        :title="media.title"
-        :thumbnail-url="media.thumbnail.regular?.large"
-        :year="media.year"
-        :category="media.category"
-        :rating="media.rating"
-      />
-    </div>
-  </div>
+  <MediaSection
+    section-title="Movies"
+    :search-input="userInput"
+    :media-list="movieMedia"
+    :filter-search="filterSearchResults"
+  />
 </template>
 
 <style></style>
