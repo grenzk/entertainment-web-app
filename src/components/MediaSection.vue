@@ -23,19 +23,25 @@ interface MediaItem {
   isTrending: boolean
 }
 
-defineProps<{
-  sectionTitle: string
-  searchInput: string
-  mediaList: MediaItem[]
-  filterSearch: () => MediaItem[]
-}>()
+withDefaults(
+  defineProps<{
+    sectionTitle: string
+    searchInput: string
+    enableFilterSearch?: boolean
+    mediaList: MediaItem[]
+    filterSearch: () => MediaItem[]
+  }>(),
+  {
+    enableFilterSearch: true
+  }
+)
 </script>
 
 <template>
   <div class="media-library l-container">
     <h2 v-if="searchInput.length === 0" class="section-title">{{ sectionTitle }}</h2>
-    <h2 v-else class="section-title">
-      Found {{ filterSearch().length }} results for '{{ searchInput }}'
+    <h2 v-if="searchInput.length > 0 && enableFilterSearch" class="section-title">
+      Found {{ filterSearch()?.length }} results for '{{ searchInput }}'
     </h2>
 
     <div v-if="searchInput.length === 0" class="media-library-group l-grid">
@@ -50,7 +56,7 @@ defineProps<{
       />
     </div>
 
-    <div v-else class="media-library-group l-grid">
+    <div v-if="searchInput.length > 0 && enableFilterSearch" class="media-library-group l-grid">
       <MediaContent
         v-for="(media, index) in filterSearch()"
         :key="index"
