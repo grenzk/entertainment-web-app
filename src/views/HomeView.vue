@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import SearchInput from '@/components/SearchInput.vue'
 import MediaContent from '@/components/MediaContent.vue'
@@ -18,11 +18,11 @@ const mediaScroller = ref<HTMLDivElement | null>(null)
 const isPrevButtonShown = ref(false)
 const isNextButtonShown = ref(true)
 
-const filterSearchResults = () => {
+const filteredList = computed(() => {
   return data.value.filter((media) => {
     return media.title.toLowerCase().includes(userInput.value.toLowerCase())
   })
-}
+})
 
 const scrollLeft = () => {
   mediaScroller.value?.scrollBy({ left: -400, behavior: 'smooth' })
@@ -95,7 +95,7 @@ const checkButtonsVisibility = () => {
     section-title="Recommended for you"
     :search-input="userInput"
     :media-list="recommendedMedia"
-    :filter-search="filterSearchResults"
+    :filtered-search="filteredList"
   />
 </template>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue'
 import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import SearchInput from '@/components/SearchInput.vue'
@@ -10,11 +10,11 @@ const data = ref(mediaData)
 const userInput = ref('')
 const movieMedia = data.value.filter((media) => media.category === 'Movie')
 
-const filterSearchResults = () => {
+const filteredList = computed(() => {
   return movieMedia.filter((media) => {
     return media.title.toLowerCase().includes(userInput.value.toLowerCase())
   })
-}
+})
 
 onMounted(() => {
   changeGridRows()
@@ -34,7 +34,7 @@ onUnmounted(() => {
     section-title="Movies"
     :search-input="userInput"
     :media-list="movieMedia"
-    :filter-search="filterSearchResults"
+    :filtered-search="filteredList"
   />
 </template>
 

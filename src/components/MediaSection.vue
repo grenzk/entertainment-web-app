@@ -29,7 +29,7 @@ withDefaults(
     searchInput: string
     enableFilterSearch?: boolean
     mediaList: MediaItem[]
-    filterSearch: () => MediaItem[]
+    filteredSearch: MediaItem[]
   }>(),
   {
     enableFilterSearch: true
@@ -41,7 +41,7 @@ withDefaults(
   <div class="media-library l-container">
     <h2 v-if="searchInput.length === 0" class="section-title">{{ sectionTitle }}</h2>
     <h2 v-if="searchInput.length > 0 && enableFilterSearch" class="section-title">
-      Found {{ filterSearch()?.length }} results for '{{ searchInput }}'
+      Found {{ filteredSearch.length }} results for '{{ searchInput }}'
     </h2>
 
     <div v-if="searchInput.length === 0" class="media-library-group l-grid">
@@ -58,7 +58,7 @@ withDefaults(
 
     <div v-if="searchInput.length > 0 && enableFilterSearch" class="media-library-group l-grid">
       <MediaContent
-        v-for="(media, index) in filterSearch()"
+        v-for="(media, index) in filteredSearch"
         :key="index"
         :title="media.title"
         :thumbnail-url="media.thumbnail.regular?.large"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue'
 import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import SearchInput from '@/components/SearchInput.vue'
@@ -16,11 +16,11 @@ const bookmarkedTvSeries = data.value.filter((media) => {
 })
 const bookmarkedShows = data.value.filter((media) => media.isBookmarked)
 
-const filterSearchResults = () => {
+const filteredList = computed(() => {
   return bookmarkedShows.filter((media) => {
     return media.title.toLowerCase().includes(userInput.value.toLowerCase())
   })
-}
+})
 
 onMounted(() => {
   changeGridRows()
@@ -42,14 +42,14 @@ onUnmounted(() => {
     :search-input="userInput"
     :enable-filter-search="false"
     :media-list="bookmarkedMovies"
-    :filter-search="filterSearchResults"
+    :filtered-search="filteredList"
   />
 
   <MediaSection
     section-title="Bookmarked TV Series"
     :search-input="userInput"
     :media-list="bookmarkedTvSeries"
-    :filter-search="filterSearchResults"
+    :filtered-search="filteredList"
   />
 </template>
 
