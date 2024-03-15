@@ -32,8 +32,8 @@ onUnmounted(() => {
 
   <MediaSection
     section-title="TV Series"
-    :search-input="userInput"
     :media-list="tvSeriesMedia"
+    :search-input="userInput"
     :filtered-search="filteredList"
   />
 </template>

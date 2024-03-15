@@ -37,19 +37,18 @@ onUnmounted(() => {
   <SearchInput v-model="userInput" placeholder="Search for bookmarked shows" />
 
   <MediaSection
-    v-if="userInput.length === 0"
+    class="bookmarked-movies"
     section-title="Bookmarked Movies"
-    :search-input="userInput"
-    :enable-filter-search="false"
     :media-list="bookmarkedMovies"
+    :search-input="userInput"
     :filtered-search="filteredList"
   />
 
   <MediaSection
+    v-if="userInput.length === 0"
     section-title="Bookmarked TV Series"
-    :search-input="userInput"
     :media-list="bookmarkedTvSeries"
-    :filtered-search="filteredList"
+    disabled-filter-search
   />
 </template>
 

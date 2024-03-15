@@ -23,28 +23,23 @@ interface MediaItem {
   isTrending: boolean
 }
 
-withDefaults(
-  defineProps<{
-    sectionTitle: string
-    searchInput: string
-    enableFilterSearch?: boolean
-    mediaList: MediaItem[]
-    filteredSearch: MediaItem[]
-  }>(),
-  {
-    enableFilterSearch: true
-  }
-)
+defineProps<{
+  sectionTitle: string
+  searchInput?: string
+  disabledFilterSearch?: boolean
+  mediaList: MediaItem[]
+  filteredSearch?: MediaItem[]
+}>()
 </script>
 
 <template>
   <div class="media-library l-container">
-    <h2 v-if="searchInput.length === 0" class="section-title">{{ sectionTitle }}</h2>
-    <h2 v-if="searchInput.length > 0 && enableFilterSearch" class="section-title">
-      Found {{ filteredSearch.length }} results for '{{ searchInput }}'
+    <h2 v-if="searchInput?.length === 0 || searchInput === undefined" class="section-title">{{ sectionTitle }}</h2>
+    <h2 v-if="(searchInput?.length || 0) > 0 && !disabledFilterSearch" class="section-title">
+      Found {{ filteredSearch?.length }} results for '{{ searchInput }}'
     </h2>
 
-    <div v-if="searchInput.length === 0" class="media-library-group l-grid">
+    <div v-if="searchInput?.length === 0 || searchInput === undefined" class="media-library-group l-grid">
       <MediaContent
         v-for="(media, index) in mediaList"
         :key="index"
@@ -56,7 +51,10 @@ withDefaults(
       />
     </div>
 
-    <div v-if="searchInput.length > 0 && enableFilterSearch" class="media-library-group l-grid">
+    <div
+      v-if="(searchInput?.length || 0) > 0 && !disabledFilterSearch"
+      class="media-library-group l-grid"
+    >
       <MediaContent
         v-for="(media, index) in filteredSearch"
         :key="index"

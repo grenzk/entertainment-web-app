@@ -93,8 +93,8 @@ const checkButtonsVisibility = () => {
 
   <MediaSection
     section-title="Recommended for you"
-    :search-input="userInput"
     :media-list="recommendedMedia"
+    :search-input="userInput"
     :filtered-search="filteredList"
   />
 </template>
