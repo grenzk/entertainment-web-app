@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import MediaContent from '@/components/MediaContent.vue'
 
 interface Thumbnail {
@@ -23,23 +24,37 @@ interface MediaItem {
   isTrending: boolean
 }
 
-defineProps<{
+const props = defineProps<{
   sectionTitle: string
   searchInput?: string
   disabledFilterSearch?: boolean
   mediaList: MediaItem[]
   filteredSearch?: MediaItem[]
 }>()
+
+const isSearchEmpty = computed(() => {
+  return props.searchInput?.length === 0 || props.searchInput === undefined
+})
+
+const isSearchEnabled = computed(() => {
+  return (props.searchInput?.length || 0) > 0 && !props.disabledFilterSearch
+})
+
+const resultOrResults = computed(() => {
+  return props.filteredSearch?.length === 1 ? 'result' : 'results'
+})
 </script>
 
 <template>
   <div class="media-library l-container">
-    <h2 v-if="searchInput?.length === 0 || searchInput === undefined" class="section-title">{{ sectionTitle }}</h2>
-    <h2 v-if="(searchInput?.length || 0) > 0 && !disabledFilterSearch" class="section-title">
-      Found {{ filteredSearch?.length }} results for '{{ searchInput }}'
+    <h2 v-if="isSearchEmpty" class="section-title">
+      {{ sectionTitle }}
+    </h2>
+    <h2 v-if="isSearchEnabled" class="section-title">
+      Found {{ filteredSearch?.length }} {{ resultOrResults }} for '{{ searchInput }}'
     </h2>
 
-    <div v-if="searchInput?.length === 0 || searchInput === undefined" class="media-library-group l-grid">
+    <div v-if="isSearchEmpty" class="media-library-group l-grid">
       <MediaContent
         v-for="(media, index) in mediaList"
         :key="index"
@@ -51,10 +66,7 @@ defineProps<{
       />
     </div>
 
-    <div
-      v-if="(searchInput?.length || 0) > 0 && !disabledFilterSearch"
-      class="media-library-group l-grid"
-    >
+    <div v-if="isSearchEnabled" class="media-library-group l-grid">
       <MediaContent
         v-for="(media, index) in filteredSearch"
         :key="index"
