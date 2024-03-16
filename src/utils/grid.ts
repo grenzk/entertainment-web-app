@@ -1,4 +1,4 @@
-const gridContainer = document.getElementById('app') as HTMLElement
+const gridContainer = document.getElementById('app') as HTMLDivElement
 
 export const changeGridRows = () => {
   gridContainer.style.gridTemplateRows = '5rem 3rem'

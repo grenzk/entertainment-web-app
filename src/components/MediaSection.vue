@@ -18,7 +18,7 @@ const isSearchEmpty = computed(() => {
 })
 
 const isSearchEnabled = computed(() => {
-  return (userInput.value.length || 0) > 0 && !props.disabledFilterSearch
+  return userInput.value.length > 0 && !props.disabledFilterSearch
 })
 
 const resultOrResults = computed(() => {
