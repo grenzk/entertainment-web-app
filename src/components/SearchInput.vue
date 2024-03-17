@@ -1,17 +1,20 @@
 <script setup lang="ts">
+import { useMediaStore } from '@/stores/media'
+import { storeToRefs } from 'pinia'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
+
+const store = useMediaStore()
+const { userInput } = storeToRefs(store)
 
 defineProps<{
   placeholder: string
 }>()
-
-const model = defineModel<string>()
 </script>
 
 <template>
   <div class="input-group l-flex l-container">
     <SearchIcon class="search-icon" />
-    <QInput type="search" v-model="model" :placeholder="placeholder" />
+    <QInput type="search" v-model="userInput" :placeholder="placeholder" />
   </div>
 </template>
 

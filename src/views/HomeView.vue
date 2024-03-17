@@ -1,28 +1,23 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useMediaStore } from '@/stores/media'
 
 import SearchInput from '@/components/SearchInput.vue'
 import MediaContent from '@/components/MediaContent.vue'
 import MediaSection from '@/components/MediaSection.vue'
 import RightArrowIcon from '@/components/icons/RightArrowIcon.vue'
 import LeftArrowIcon from '@/components/icons/LeftArrowIcon.vue'
-import mediaData from '@/assets/data.json'
 
-const data = ref(mediaData)
-const userInput = ref('')
+const store = useMediaStore()
+const { shows, userInput } = storeToRefs(store)
 
-const trendingMedia = data.value.filter((media) => media.isTrending)
-const recommendedMedia = data.value.filter((media) => !media.isTrending)
+const trendingShows = shows.value.filter((show) => show.isTrending)
+const recommendedShows = shows.value.filter((show) => !show.isTrending)
 
 const mediaScroller = ref<HTMLDivElement | null>(null)
 const isPrevButtonShown = ref(false)
 const isNextButtonShown = ref(true)
-
-const filteredList = computed(() => {
-  return data.value.filter((media) => {
-    return media.title.toLowerCase().includes(userInput.value.toLowerCase())
-  })
-})
 
 const scrollLeft = () => {
   mediaScroller.value?.scrollBy({ left: -400, behavior: 'smooth' })
@@ -51,7 +46,7 @@ const checkButtonsVisibility = () => {
 </script>
 
 <template>
-  <SearchInput v-model="userInput" placeholder="Search for movies or TV series" />
+  <SearchInput placeholder="Search for movies or TV series" />
 
   <div v-if="userInput.length === 0" class="trending">
     <h2 class="section-title l-container">Trending</h2>
@@ -71,7 +66,7 @@ const checkButtonsVisibility = () => {
         @scroll="checkButtonsVisibility"
       >
         <MediaContent
-          v-for="(media, index) in trendingMedia"
+          v-for="(media, index) in trendingShows"
           :key="index"
           :title="media.title"
           :thumbnail-url="media.thumbnail.trending?.large"
@@ -91,12 +86,7 @@ const checkButtonsVisibility = () => {
     </div>
   </div>
 
-  <MediaSection
-    section-title="Recommended for you"
-    :media-list="recommendedMedia"
-    :search-input="userInput"
-    :filtered-search="filteredList"
-  />
+  <MediaSection section-title="Recommended for you" :media-list="recommendedShows" />
 </template>
 
 <style lang="scss">

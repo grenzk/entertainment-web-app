@@ -1,47 +1,28 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useMediaStore } from '@/stores/media'
+import { storeToRefs } from 'pinia'
 import MediaContent from '@/components/MediaContent.vue'
-
-interface Thumbnail {
-  trending?: {
-    small: string
-    large: string
-  }
-  regular: {
-    small: string
-    medium?: string
-    large: string
-  }
-}
-
-interface MediaItem {
-  title: string
-  thumbnail: Thumbnail
-  year: number
-  category: string
-  rating: string
-  isBookmarked: boolean
-  isTrending: boolean
-}
 
 const props = defineProps<{
   sectionTitle: string
-  searchInput?: string
-  disabledFilterSearch?: boolean
+  disabledFilteredShows?: boolean
   mediaList: MediaItem[]
-  filteredSearch?: MediaItem[]
 }>()
 
+const store = useMediaStore()
+const { userInput, filteredShows } = storeToRefs(store)
+
 const isSearchEmpty = computed(() => {
-  return props.searchInput?.length === 0 || props.searchInput === undefined
+  return userInput.value.length === 0
 })
 
 const isSearchEnabled = computed(() => {
-  return (props.searchInput?.length || 0) > 0 && !props.disabledFilterSearch
+  return userInput.value.length > 0 && !props.disabledFilteredShows
 })
 
 const resultOrResults = computed(() => {
-  return props.filteredSearch?.length === 1 ? 'result' : 'results'
+  return filteredShows.value.length === 1 ? 'result' : 'results'
 })
 </script>
 
@@ -51,7 +32,7 @@ const resultOrResults = computed(() => {
       {{ sectionTitle }}
     </h2>
     <h2 v-if="isSearchEnabled" class="section-title">
-      Found {{ filteredSearch?.length }} {{ resultOrResults }} for '{{ searchInput }}'
+      Found {{ filteredShows.length }} {{ resultOrResults }} for '{{ userInput }}'
     </h2>
 
     <div v-if="isSearchEmpty" class="media-library-group l-grid">
@@ -68,7 +49,7 @@ const resultOrResults = computed(() => {
 
     <div v-if="isSearchEnabled" class="media-library-group l-grid">
       <MediaContent
-        v-for="(media, index) in filteredSearch"
+        v-for="(media, index) in filteredShows"
         :key="index"
         :title="media.title"
         :thumbnail-url="media.thumbnail.regular?.large"

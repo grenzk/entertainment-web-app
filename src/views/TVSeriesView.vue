@@ -1,25 +1,26 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, computed } from 'vue'
+import { onBeforeUnmount, onMounted, onUnmounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useMediaStore } from '@/stores/media'
 import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import SearchInput from '@/components/SearchInput.vue'
 import MediaSection from '@/components/MediaSection.vue'
-import mediaData from '@/assets/data.json'
 
-const data = ref(mediaData)
-const userInput = ref('')
-const tvSeriesMedia = data.value.filter((media) => media.category === 'TV Series')
+const store = useMediaStore()
+const { shows } = storeToRefs(store)
+const { resetShows } = store
 
-const filteredList = computed(() => {
-  return tvSeriesMedia.filter((media) => {
-    return media.title.toLowerCase().includes(userInput.value.toLowerCase())
-  })
-})
+const tvSeries = shows.value.filter((show) => show.category === 'TV Series')
 
 onMounted(() => {
   changeGridRows()
   window.addEventListener('resize', changeGridRows)
+
+  shows.value = tvSeries
 })
+
+onBeforeUnmount(() => resetShows())
 
 onUnmounted(() => {
   resetGrid()
@@ -28,14 +29,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <SearchInput v-model="userInput" placeholder="Search for TV series" />
+  <SearchInput placeholder="Search for TV series" />
 
-  <MediaSection
-    section-title="TV Series"
-    :media-list="tvSeriesMedia"
-    :search-input="userInput"
-    :filtered-search="filteredList"
-  />
+  <MediaSection section-title="TV Series" :media-list="tvSeries" />
 </template>
 
 <style></style>
