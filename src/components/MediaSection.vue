@@ -6,7 +6,7 @@ import MediaContent from '@/components/MediaContent.vue'
 
 const props = defineProps<{
   sectionTitle: string
-  disabledFilterSearch?: boolean
+  disabledFilteredShows?: boolean
   mediaList: MediaItem[]
 }>()
 
@@ -18,7 +18,7 @@ const isSearchEmpty = computed(() => {
 })
 
 const isSearchEnabled = computed(() => {
-  return userInput.value.length > 0 && !props.disabledFilterSearch
+  return userInput.value.length > 0 && !props.disabledFilteredShows
 })
 
 const resultOrResults = computed(() => {

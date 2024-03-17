@@ -48,7 +48,7 @@ onUnmounted(() => {
     v-if="userInput.length === 0"
     section-title="Bookmarked TV Series"
     :media-list="bookmarkedTvSeries"
-    disabled-filter-search
+    disabled-filtered-shows
   />
 </template>
 
