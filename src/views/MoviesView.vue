@@ -4,7 +4,6 @@ import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 import { changeGridRows, resetGrid } from '@/utils/grid'
 
-import SearchInput from '@/components/SearchInput.vue'
 import MediaSection from '@/components/MediaSection.vue'
 
 const store = useMediaStore()
@@ -29,8 +28,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <SearchInput placeholder="Search for movies" />
-
   <MediaSection section-title="Movies" :media-list="movies" />
 </template>
 
