@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
@@ -42,6 +42,8 @@ const checkButtonsVisibility = () => {
     isNextButtonShown.value = true
   }
 }
+
+onBeforeUnmount(() => (userInput.value = ''))
 </script>
 
 <template>
