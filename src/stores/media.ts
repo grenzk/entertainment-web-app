@@ -20,6 +20,7 @@ export const useMediaStore = defineStore('media', () => {
 
   const resetShows = () => {
     shows.value = data
+    userInput.value = ''
   }
 
   return { shows, userInput, filteredShows, resetShows }

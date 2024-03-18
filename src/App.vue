@@ -1,11 +1,27 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+import SearchInput from '@/components/SearchInput.vue'
 
 import LogoIcon from '@/components/icons/LogoIcon.vue'
 import NavHomeIcon from '@/components/icons/NavHomeIcon.vue'
 import NavMoviesIcon from '@/components/icons/NavMoviesIcon.vue'
 import NavTVSeriesIcon from '@/components/icons/NavTVSeriesIcon.vue'
 import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
+
+const route = useRoute()
+
+const searchPlaceholders: Record<string, string> = {
+  '/': 'Search for movies or TV series',
+  '/movies': 'Search for movies',
+  '/tv-series': 'Search for TV series',
+  '/bookmarks': 'Search for bookmarked shows'
+}
+
+const searchPlaceholder = computed(() => {
+  return searchPlaceholders[route.path]
+})
 </script>
 
 <template>
@@ -41,6 +57,8 @@ import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
       </div>
     </div>
   </header>
+
+  <SearchInput :placeholder="searchPlaceholder" />
 
   <RouterView />
 </template>

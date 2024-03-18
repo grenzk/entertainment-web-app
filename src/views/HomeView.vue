@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
-import SearchInput from '@/components/SearchInput.vue'
 import MediaContent from '@/components/MediaContent.vue'
 import MediaSection from '@/components/MediaSection.vue'
 import RightArrowIcon from '@/components/icons/RightArrowIcon.vue'
@@ -43,11 +42,11 @@ const checkButtonsVisibility = () => {
     isNextButtonShown.value = true
   }
 }
+
+onBeforeUnmount(() => (userInput.value = ''))
 </script>
 
 <template>
-  <SearchInput placeholder="Search for movies or TV series" />
-
   <div v-if="userInput.length === 0" class="trending">
     <h2 class="section-title l-container">Trending</h2>
 
