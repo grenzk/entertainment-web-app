@@ -37,10 +37,10 @@ const resultOrResults = computed(() => {
 
     <div v-if="isSearchEmpty" class="media-library-group l-grid">
       <MediaContent
-        v-for="(media, index) in mediaList"
-        :key="index"
+        v-for="media in mediaList"
+        :key="media.id"
         :title="media.title"
-        :thumbnail-url="media.thumbnail.regular?.large"
+        :thumbnail-url="media.thumbnails.regular"
         :year="media.year"
         :category="media.category"
         :rating="media.rating"
@@ -49,10 +49,10 @@ const resultOrResults = computed(() => {
 
     <div v-if="isSearchEnabled" class="media-library-group l-grid">
       <MediaContent
-        v-for="(media, index) in filteredShows"
-        :key="index"
+        v-for="media in filteredShows"
+        :key="media.id"
         :title="media.title"
-        :thumbnail-url="media.thumbnail.regular?.large"
+        :thumbnail-url="media.thumbnails.regular"
         :year="media.year"
         :category="media.category"
         :rating="media.rating"
