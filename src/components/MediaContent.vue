@@ -6,19 +6,17 @@ import TVCategoryIcon from '@/components/icons/TVCategoryIcon.vue'
 
 defineProps<{
   title: string
-  thumbnailUrl: string | undefined
+  thumbnail: string | undefined
   year: number
   category: string
   rating: string
-  // isBookmarked: boolean
-  // isTrending: boolean
 }>()
 </script>
 
 <template>
   <div class="media">
     <div class="media-img-group">
-      <img class="media-img" :src="thumbnailUrl" alt="Movie Image" />
+      <img class="media-img" :src="thumbnail" alt="Movie Image" />
 
       <button class="media-play-button l-flex">
         <PlayIcon />
