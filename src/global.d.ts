@@ -1,21 +1,12 @@
-interface Thumbnail {
-  trending?: {
-    small: string
-    large: string
-  }
-  regular: {
-    small: string
-    medium?: string
-    large: string
-  }
-}
-
 interface MediaItem {
+  id: number
   title: string
-  thumbnail: Thumbnail
+  thumbnails: {
+    trending?: string
+    regular: string
+  }
   year: number
   category: string
   rating: string
-  isBookmarked: boolean
   isTrending: boolean
 }
