@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref } from 'vue'
+import { onBeforeUnmount, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
@@ -11,8 +11,8 @@ import LeftArrowIcon from '@/components/icons/LeftArrowIcon.vue'
 const store = useMediaStore()
 const { shows, userInput } = storeToRefs(store)
 
-const trendingShows = shows.value.filter((show) => show.isTrending)
-const recommendedShows = shows.value.filter((show) => !show.isTrending)
+const trendingShows = computed(() => shows.value.filter((show) => show.isTrending))
+const recommendedShows = computed(() => shows.value.filter((show) => !show.isTrending))
 
 const mediaScroller = ref<HTMLDivElement | null>(null)
 const isPrevButtonShown = ref(false)
@@ -65,10 +65,10 @@ onBeforeUnmount(() => (userInput.value = ''))
         @scroll="checkButtonsVisibility"
       >
         <MediaContent
-          v-for="(media, index) in trendingShows"
-          :key="index"
+          v-for="media in trendingShows"
+          :key="media.id"
           :title="media.title"
-          :thumbnail-url="media.thumbnail.trending?.large"
+          :thumbnail="media.thumbnails.trending"
           :year="media.year"
           :category="media.category"
           :rating="media.rating"
