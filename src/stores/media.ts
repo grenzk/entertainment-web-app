@@ -7,16 +7,10 @@ export const useMediaStore = defineStore('media', () => {
   const shows = ref<MediaItem[]>([])
   const userInput = ref('')
 
-  const filteredShows = computed({
-    get: () => {
-      return shows.value.filter((show) => {
-        return show.title.toLowerCase().includes(userInput.value.toLowerCase())
-      })
-    },
-
-    set: (newValue: MediaItem[]) => {
-      shows.value = newValue
-    }
+  const filteredShows = computed(() => {
+    return shows.value.filter((show) => {
+      return show.title.toLowerCase().includes(userInput.value.toLowerCase())
+    })
   })
 
   const resetShows = () => {
