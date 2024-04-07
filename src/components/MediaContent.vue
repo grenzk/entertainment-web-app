@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import EmptyBookmarkIcon from '@/components/icons/EmptyBookmarkIcon.vue'
+import { ref } from 'vue'
+import BookmarkIcon from '@/components/icons/BookmarkIcon.vue'
 import PlayIcon from '@/components/icons/PlayIcon.vue'
 import MovieCategoryIcon from '@/components/icons/MovieCategoryIcon.vue'
 import TVCategoryIcon from '@/components/icons/TVCategoryIcon.vue'
@@ -11,6 +12,12 @@ defineProps<{
   category: string
   rating: string
 }>()
+
+const isBookmarked = ref(false)
+
+const toggleBookmark = () => {
+  isBookmarked.value = !isBookmarked.value
+}
 </script>
 
 <template>
@@ -24,7 +31,13 @@ defineProps<{
       </button>
     </div>
 
-    <button class="media-bookmark-button l-flex"><EmptyBookmarkIcon /></button>
+    <button
+      class="media-bookmark-button l-flex"
+      :class="{ 'is-pressed': isBookmarked }"
+      @click="toggleBookmark"
+    >
+      <BookmarkIcon />
+    </button>
 
     <div class="media-info">
       <div class="media-info-tags l-flex">
@@ -161,6 +174,12 @@ defineProps<{
       svg path {
         stroke: var(--color-primary-dark-blue);
       }
+    }
+  }
+
+  &-bookmark-button.is-pressed {
+    svg {
+      fill: var(--color-neutral-white);
     }
   }
 }
