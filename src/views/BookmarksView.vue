@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, onUnmounted, ref, computed } from 'vue'
+import { onBeforeUnmount, onMounted, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 import Axios from 'axios'
-import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import MediaSection from '@/components/MediaSection.vue'
 
@@ -23,11 +22,7 @@ const fetchBookmarks = async () => {
   }
 }
 
-onMounted(() => {
-  changeGridRows()
-  fetchBookmarks()
-  window.addEventListener('resize', changeGridRows)
-})
+onMounted(() => fetchBookmarks())
 
 const bookmarkedMovies = computed(() => {
   return shows.value.filter((show) => show.category === 'Movie')
@@ -38,11 +33,6 @@ const bookmarkedTvSeries = computed(() => {
 })
 
 onBeforeUnmount(() => resetShows())
-
-onUnmounted(() => {
-  resetGrid()
-  window.removeEventListener('resize', changeGridRows)
-})
 </script>
 
 <template>

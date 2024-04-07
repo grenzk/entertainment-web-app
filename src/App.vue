@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
+import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import SearchInput from '@/components/SearchInput.vue'
 
@@ -21,6 +22,16 @@ const searchPlaceholders: Record<string, string> = {
 
 const searchPlaceholder = computed(() => {
   return searchPlaceholders[route.path]
+})
+
+watchEffect(() => {
+  if (route.path !== '/') {
+    changeGridRows()
+    window.addEventListener('resize', changeGridRows)
+  } else {
+    resetGrid()
+    window.removeEventListener('resize', changeGridRows)
+  }
 })
 </script>
 
