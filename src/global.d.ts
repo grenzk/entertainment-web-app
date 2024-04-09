@@ -9,4 +9,5 @@ interface MediaItem {
   category: string
   rating: string
   isTrending: boolean
+  isBookmarked: boolean
 }
