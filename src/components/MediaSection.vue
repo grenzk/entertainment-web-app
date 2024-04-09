@@ -39,6 +39,7 @@ const resultOrResults = computed(() => {
       <MediaContent
         v-for="media in mediaList"
         :key="media.id"
+        :id="media.id"
         :title="media.title"
         :thumbnail="media.thumbnails.regular"
         :year="media.year"
@@ -51,6 +52,7 @@ const resultOrResults = computed(() => {
       <MediaContent
         v-for="media in filteredShows"
         :key="media.id"
+        :id="media.id"
         :title="media.title"
         :thumbnail="media.thumbnails.regular"
         :year="media.year"

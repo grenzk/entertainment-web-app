@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref, computed } from 'vue'
+import { onBeforeUnmount, ref, computed, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
@@ -67,6 +67,7 @@ onBeforeUnmount(() => (userInput.value = ''))
         <MediaContent
           v-for="media in trendingShows"
           :key="media.id"
+          :id="media.id"
           :title="media.title"
           :thumbnail="media.thumbnails.trending"
           :year="media.year"
