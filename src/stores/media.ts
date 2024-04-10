@@ -5,6 +5,7 @@ import Axios from 'axios'
 export const useMediaStore = defineStore('media', () => {
   const data = ref<MediaItem[]>([])
   const shows = ref<MediaItem[]>([])
+  const bookmarks = ref<number[]>([])
   const userInput = ref('')
 
   const filteredShows = computed(() => {
@@ -16,6 +17,16 @@ export const useMediaStore = defineStore('media', () => {
   const resetShows = () => {
     shows.value = data.value
     userInput.value = ''
+  }
+
+  const fetchBookmarks = async () => {
+    try {
+      const response = await Axios.get('http://127.0.0.1:3000/api/v1/bookmarks')
+      bookmarks.value = response.data.map((item: { medium_id: number }) => item.medium_id)
+      shows.value = shows.value.filter((show) => bookmarks.value.includes(show.id))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const fetchMediaData = async () => {
@@ -30,5 +41,5 @@ export const useMediaStore = defineStore('media', () => {
 
   fetchMediaData()
 
-  return { shows, userInput, filteredShows, resetShows, fetchMediaData }
+  return { shows, userInput, filteredShows, resetShows, fetchMediaData, fetchBookmarks }
 })
