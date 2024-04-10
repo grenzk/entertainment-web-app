@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, computed } from 'vue'
+import { onBeforeUnmount, computed, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
 import MediaSection from '@/components/MediaSection.vue'
 
 const store = useMediaStore()
-const { shows, userInput } = storeToRefs(store)
-const { resetShows, fetchBookmarks } = store
+const { shows, userInput, bookmarks } = storeToRefs(store)
+const { resetShows } = store
 
-onMounted(() => fetchBookmarks())
+watchEffect(() => {
+  shows.value = shows.value.filter((show) => bookmarks.value.includes(show.id))
+})
 
 const bookmarkedMovies = computed(() => {
   return shows.value.filter((show) => show.category === 'Movie')
