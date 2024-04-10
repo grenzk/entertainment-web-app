@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { useMediaStore } from '@/stores/media'
 import Axios from 'axios'
@@ -14,13 +15,14 @@ const props = defineProps<MediaItem>()
 const routes = useRoute()
 
 const store = useMediaStore()
-const { fetchMediaData } = store
+const { bookmarks } = storeToRefs(store)
+const { fetchMediaData, fetchBookmarks } = store
 
 const toggleBookmark = async () => {
   try {
-    const response = await Axios.get(`http://127.0.0.1:3000/api/v1/bookmarks/${props.id}`)
+    const hasBookmark = computed(() => bookmarks.value.includes(props.id))
 
-    if (response.data) {
+    if (hasBookmark.value) {
       await Axios.delete(`http://127.0.0.1:3000/api/v1/bookmarks/${props.id}`)
     } else {
       await Axios.post('http://127.0.0.1:3000/api/v1/bookmarks', {
@@ -28,6 +30,7 @@ const toggleBookmark = async () => {
       })
     }
 
+    fetchBookmarks()
     fetchMediaData()
   } catch (error) {
     console.error(error)
