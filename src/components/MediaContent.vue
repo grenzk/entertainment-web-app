@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { useMediaStore } from '@/stores/media'
-import Axios from 'axios'
+import axios from 'axios'
 
 import BookmarkIcon from '@/components/icons/BookmarkIcon.vue'
 import PlayIcon from '@/components/icons/PlayIcon.vue'
@@ -23,9 +23,9 @@ const toggleBookmark = async () => {
     const hasBookmark = computed(() => bookmarks.value.includes(props.id))
 
     if (hasBookmark.value) {
-      await Axios.delete(`http://127.0.0.1:3000/api/v1/bookmarks/${props.id}`)
+      await axios.delete(`http://127.0.0.1:3000/api/v1/bookmarks/${props.id}`)
     } else {
-      await Axios.post('http://127.0.0.1:3000/api/v1/bookmarks', {
+      await axios.post('http://127.0.0.1:3000/api/v1/bookmarks', {
         medium_id: props.id
       })
     }

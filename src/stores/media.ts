@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import Axios from 'axios'
+import axios from 'axios'
 
 export const useMediaStore = defineStore('media', () => {
   const data = ref<MediaItem[]>([])
@@ -21,7 +21,7 @@ export const useMediaStore = defineStore('media', () => {
 
   const fetchBookmarks = async () => {
     try {
-      const response = await Axios.get('http://127.0.0.1:3000/api/v1/bookmarks')
+      const response = await axios.get('http://127.0.0.1:3000/api/v1/bookmarks')
       bookmarks.value = response.data.map((item: { medium_id: number }) => item.medium_id)
     } catch (error) {
       console.error(error)
@@ -30,7 +30,7 @@ export const useMediaStore = defineStore('media', () => {
 
   const fetchMediaData = async () => {
     try {
-      const response = await Axios.get('http://127.0.0.1:3000/api/v1/media')
+      const response = await axios.get('http://127.0.0.1:3000/api/v1/media')
       data.value = response.data
       shows.value = response.data
     } catch (error) {
