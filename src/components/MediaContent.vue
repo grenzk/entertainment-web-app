@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 import Axios from 'axios'
 
@@ -16,10 +14,11 @@ const props = defineProps<{
   year: number
   category: string
   rating: string
+  isBookmarked: boolean
 }>()
 
 const store = useMediaStore()
-const { shows } = storeToRefs(store)
+const { fetchMediaData } = store
 
 const toggleBookmark = async () => {
   try {
@@ -27,21 +26,17 @@ const toggleBookmark = async () => {
 
     if (response.data) {
       await Axios.delete(`http://127.0.0.1:3000/api/v1/bookmarks/${props.id}`)
-      return
+    } else {
+      await Axios.post('http://127.0.0.1:3000/api/v1/bookmarks', {
+        medium_id: props.id
+      })
     }
 
-    await Axios.post('http://127.0.0.1:3000/api/v1/bookmarks', {
-      medium_id: props.id
-    })
+    fetchMediaData()
   } catch (error) {
     console.error(error)
   }
 }
-
-const isBookmarked = computed(() => {
-  const selectedShow = shows.value.find((show) => show.id === props.id)
-  return selectedShow?.isBookmarked
-})
 </script>
 
 <template>

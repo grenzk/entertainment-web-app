@@ -45,6 +45,7 @@ const resultOrResults = computed(() => {
         :year="media.year"
         :category="media.category"
         :rating="media.rating"
+        :is-bookmarked="media.isBookmarked"
       />
     </div>
 
@@ -58,6 +59,7 @@ const resultOrResults = computed(() => {
         :year="media.year"
         :category="media.category"
         :rating="media.rating"
+        :is-bookmarked="media.isBookmarked"
       />
     </div>
   </div>

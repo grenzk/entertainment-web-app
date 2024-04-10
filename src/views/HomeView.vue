@@ -73,6 +73,7 @@ onBeforeUnmount(() => (userInput.value = ''))
           :year="media.year"
           :category="media.category"
           :rating="media.rating"
+          :is-bookmarked="media.isBookmarked"
         />
       </div>
 
