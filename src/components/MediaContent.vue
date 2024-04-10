@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { useMediaStore } from '@/stores/media'
 import Axios from 'axios'
 
@@ -7,15 +9,9 @@ import PlayIcon from '@/components/icons/PlayIcon.vue'
 import MovieCategoryIcon from '@/components/icons/MovieCategoryIcon.vue'
 import TVCategoryIcon from '@/components/icons/TVCategoryIcon.vue'
 
-const props = defineProps<{
-  id: number
-  title: string
-  thumbnail: string | undefined
-  year: number
-  category: string
-  rating: string
-  isBookmarked: boolean
-}>()
+const props = defineProps<MediaItem>()
+
+const routes = useRoute()
 
 const store = useMediaStore()
 const { fetchMediaData } = store
@@ -37,6 +33,13 @@ const toggleBookmark = async () => {
     console.error(error)
   }
 }
+
+const thumbnail = computed(() => {
+  if (routes.path === '/') {
+    return props.isTrending ? props.thumbnails.trending : props.thumbnails.regular
+  }
+  return props.thumbnails.regular
+})
 </script>
 
 <template>

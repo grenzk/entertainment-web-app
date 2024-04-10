@@ -64,17 +64,7 @@ onBeforeUnmount(() => (userInput.value = ''))
         class="trending-media-scroller l-grid snaps-inline"
         @scroll="checkButtonsVisibility"
       >
-        <MediaContent
-          v-for="media in trendingShows"
-          :key="media.id"
-          :id="media.id"
-          :title="media.title"
-          :thumbnail="media.thumbnails.trending"
-          :year="media.year"
-          :category="media.category"
-          :rating="media.rating"
-          :is-bookmarked="media.isBookmarked"
-        />
+        <MediaContent v-for="media in trendingShows" :key="media.id" v-bind="media" />
       </div>
 
       <button

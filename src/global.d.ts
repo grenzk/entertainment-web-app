@@ -1,4 +1,4 @@
-interface MediaItem {
+declare interface MediaItem {
   id: number
   title: string
   thumbnails: {

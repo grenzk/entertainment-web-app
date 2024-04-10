@@ -36,31 +36,11 @@ const resultOrResults = computed(() => {
     </h2>
 
     <div v-if="isSearchEmpty" class="media-library-group l-grid">
-      <MediaContent
-        v-for="media in mediaList"
-        :key="media.id"
-        :id="media.id"
-        :title="media.title"
-        :thumbnail="media.thumbnails.regular"
-        :year="media.year"
-        :category="media.category"
-        :rating="media.rating"
-        :is-bookmarked="media.isBookmarked"
-      />
+      <MediaContent v-for="media in mediaList" :key="media.id" v-bind="media" />
     </div>
 
     <div v-if="isSearchEnabled" class="media-library-group l-grid">
-      <MediaContent
-        v-for="media in filteredShows"
-        :key="media.id"
-        :id="media.id"
-        :title="media.title"
-        :thumbnail="media.thumbnails.regular"
-        :year="media.year"
-        :category="media.category"
-        :rating="media.rating"
-        :is-bookmarked="media.isBookmarked"
-      />
+      <MediaContent v-for="media in filteredShows" :key="media.id" v-bind="media" />
     </div>
   </div>
 </template>
