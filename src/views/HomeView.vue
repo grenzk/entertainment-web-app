@@ -96,13 +96,6 @@ onBeforeUnmount(() => (userInput.value = ''))
   }
 }
 
-.section-title {
-  font-size: var(--font-size-xl);
-  line-height: revert;
-  letter-spacing: -0.31px;
-  margin-bottom: var(--space-content-gap-1);
-}
-
 .trending-media-container {
   position: relative;
 
