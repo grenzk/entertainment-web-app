@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { useMediaStore } from '@/stores/media'
-import axios from 'axios'
 
 import BookmarkIcon from '@/components/icons/BookmarkIcon.vue'
 import PlayIcon from '@/components/icons/PlayIcon.vue'
@@ -15,27 +14,8 @@ const props = defineProps<MediaItem>()
 const routes = useRoute()
 
 const store = useMediaStore()
-const { bookmarks, isSearchEmpty } = storeToRefs(store)
-const { fetchMediaData, fetchBookmarks } = store
-
-const toggleBookmark = async () => {
-  try {
-    const hasBookmark = computed(() => bookmarks.value.includes(props.id))
-
-    if (hasBookmark.value) {
-      await axios.delete(`http://127.0.0.1:3000/api/v1/bookmarks/${props.id}`)
-    } else {
-      await axios.post('http://127.0.0.1:3000/api/v1/bookmarks', {
-        medium_id: props.id
-      })
-    }
-
-    fetchBookmarks()
-    fetchMediaData()
-  } catch (error) {
-    console.error(error)
-  }
-}
+const { isSearchEmpty } = storeToRefs(store)
+const { toggleBookmark } = store
 
 const thumbnail = computed(() => {
   if (routes.path === '/' && isSearchEmpty.value) {
@@ -59,7 +39,7 @@ const thumbnail = computed(() => {
     <button
       class="media-bookmark-button l-flex"
       :class="{ 'is-pressed': isBookmarked }"
-      @click="toggleBookmark"
+      @click="toggleBookmark(id)"
     >
       <BookmarkIcon />
     </button>

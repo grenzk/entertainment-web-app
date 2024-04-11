@@ -2,6 +2,9 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const MEDIA_API_ENDPOINT = import.meta.env.VITE_MEDIA_API_ENDPOINT
+const BOOKMARKS_API_ENDPOINT = import.meta.env.VITE_BOOKMARKS_API_ENDPOINT
+
 export const useMediaStore = defineStore('media', () => {
   const data = ref<MediaItem[]>([])
   const shows = ref<MediaItem[]>([])
@@ -23,20 +26,39 @@ export const useMediaStore = defineStore('media', () => {
     userInput.value = ''
   }
 
+  const fetchMediaData = async () => {
+    try {
+      const response = await axios.get(MEDIA_API_ENDPOINT)
+      data.value = response.data
+      shows.value = response.data
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const fetchBookmarks = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:3000/api/v1/bookmarks')
+      const response = await axios.get(BOOKMARKS_API_ENDPOINT)
       bookmarks.value = response.data.map((item: { medium_id: number }) => item.medium_id)
     } catch (error) {
       console.error(error)
     }
   }
 
-  const fetchMediaData = async () => {
+  const toggleBookmark = async (id: number) => {
     try {
-      const response = await axios.get('http://127.0.0.1:3000/api/v1/media')
-      data.value = response.data
-      shows.value = response.data
+      const hasBookmark = computed(() => bookmarks.value.includes(id))
+
+      if (hasBookmark.value) {
+        await axios.delete(`${BOOKMARKS_API_ENDPOINT}/${id}`)
+      } else {
+        await axios.post(BOOKMARKS_API_ENDPOINT, {
+          medium_id: id
+        })
+      }
+
+      fetchMediaData()
+      fetchBookmarks()
     } catch (error) {
       console.error(error)
     }
@@ -47,12 +69,13 @@ export const useMediaStore = defineStore('media', () => {
 
   return {
     shows,
-    userInput,
     bookmarks,
+    userInput,
     filteredShows,
     isSearchEmpty,
     resetShows,
     fetchMediaData,
-    fetchBookmarks
+    fetchBookmarks,
+    toggleBookmark
   }
 })
