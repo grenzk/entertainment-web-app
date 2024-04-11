@@ -9,7 +9,7 @@ import RightArrowIcon from '@/components/icons/RightArrowIcon.vue'
 import LeftArrowIcon from '@/components/icons/LeftArrowIcon.vue'
 
 const store = useMediaStore()
-const { shows, userInput } = storeToRefs(store)
+const { shows, userInput, isSearchEmpty } = storeToRefs(store)
 
 const trendingShows = computed(() => shows.value.filter((show) => show.isTrending))
 const recommendedShows = computed(() => shows.value.filter((show) => !show.isTrending))
@@ -47,7 +47,7 @@ onBeforeUnmount(() => (userInput.value = ''))
 </script>
 
 <template>
-  <div v-if="userInput.length === 0" class="trending">
+  <div v-if="isSearchEmpty" class="trending">
     <h2 class="section-title l-container">Trending</h2>
 
     <div class="trending-media-container">

@@ -6,7 +6,7 @@ import { useMediaStore } from '@/stores/media'
 import MediaSection from '@/components/MediaSection.vue'
 
 const store = useMediaStore()
-const { shows, userInput, bookmarks } = storeToRefs(store)
+const { shows, bookmarks, isSearchEmpty } = storeToRefs(store)
 const { resetShows } = store
 
 watchEffect(() => {
@@ -32,7 +32,7 @@ onBeforeUnmount(() => resetShows())
   />
 
   <MediaSection
-    v-if="userInput.length === 0"
+    v-if="isSearchEmpty"
     section-title="Bookmarked TV Series"
     :media-list="bookmarkedTvSeries"
     disabled-filtered-shows

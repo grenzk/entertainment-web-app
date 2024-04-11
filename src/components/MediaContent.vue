@@ -15,7 +15,7 @@ const props = defineProps<MediaItem>()
 const routes = useRoute()
 
 const store = useMediaStore()
-const { bookmarks } = storeToRefs(store)
+const { bookmarks, isSearchEmpty } = storeToRefs(store)
 const { fetchMediaData, fetchBookmarks } = store
 
 const toggleBookmark = async () => {
@@ -38,7 +38,7 @@ const toggleBookmark = async () => {
 }
 
 const thumbnail = computed(() => {
-  if (routes.path === '/') {
+  if (routes.path === '/' && isSearchEmpty.value) {
     return props.isTrending ? props.thumbnails.trending : props.thumbnails.regular
   }
   return props.thumbnails.regular

@@ -14,6 +14,10 @@ export const useMediaStore = defineStore('media', () => {
     })
   })
 
+  const isSearchEmpty = computed(() => {
+    return userInput.value.length === 0
+  })
+
   const resetShows = () => {
     shows.value = data.value
     userInput.value = ''
@@ -46,6 +50,7 @@ export const useMediaStore = defineStore('media', () => {
     userInput,
     bookmarks,
     filteredShows,
+    isSearchEmpty,
     resetShows,
     fetchMediaData,
     fetchBookmarks

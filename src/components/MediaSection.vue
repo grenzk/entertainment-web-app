@@ -11,11 +11,7 @@ const props = defineProps<{
 }>()
 
 const store = useMediaStore()
-const { userInput, filteredShows } = storeToRefs(store)
-
-const isSearchEmpty = computed(() => {
-  return userInput.value.length === 0
-})
+const { userInput, filteredShows, isSearchEmpty } = storeToRefs(store)
 
 const isSearchEnabled = computed(() => {
   return userInput.value.length > 0 && !props.disabledFilteredShows
