@@ -19,5 +19,3 @@ onBeforeUnmount(() => resetShows())
 <template>
   <MediaSection section-title="TV Series" :media-list="tvSeries" />
 </template>
-
-<style></style>
