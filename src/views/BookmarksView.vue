@@ -1,37 +1,27 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, onUnmounted } from 'vue'
+import { onBeforeUnmount, computed, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
-import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import MediaSection from '@/components/MediaSection.vue'
 
 const store = useMediaStore()
-const { shows, userInput } = storeToRefs(store)
+const { shows, bookmarks, isSearchEmpty } = storeToRefs(store)
 const { resetShows } = store
 
-const bookmarkedMovies = shows.value.filter((show) => {
-  return show.isBookmarked && show.category === 'Movie'
-})
-const bookmarkedTvSeries = shows.value.filter((show) => {
-  return show.isBookmarked && show.category === 'TV Series'
+watchEffect(() => {
+  shows.value = shows.value.filter((show) => bookmarks.value.includes(show.id))
 })
 
-const bookmarkedShows = shows.value.filter((media) => media.isBookmarked)
+const bookmarkedMovies = computed(() => {
+  return shows.value.filter((show) => show.category === 'Movie')
+})
 
-onMounted(() => {
-  changeGridRows()
-  window.addEventListener('resize', changeGridRows)
-
-  shows.value = bookmarkedShows
+const bookmarkedTvSeries = computed(() => {
+  return shows.value.filter((show) => show.category === 'TV Series')
 })
 
 onBeforeUnmount(() => resetShows())
-
-onUnmounted(() => {
-  resetGrid()
-  window.removeEventListener('resize', changeGridRows)
-})
 </script>
 
 <template>
@@ -42,7 +32,7 @@ onUnmounted(() => {
   />
 
   <MediaSection
-    v-if="userInput.length === 0"
+    v-if="isSearchEmpty"
     section-title="Bookmarked TV Series"
     :media-list="bookmarkedTvSeries"
     disabled-filtered-shows

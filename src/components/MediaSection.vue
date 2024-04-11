@@ -11,11 +11,7 @@ const props = defineProps<{
 }>()
 
 const store = useMediaStore()
-const { userInput, filteredShows } = storeToRefs(store)
-
-const isSearchEmpty = computed(() => {
-  return userInput.value.length === 0
-})
+const { userInput, filteredShows, isSearchEmpty } = storeToRefs(store)
 
 const isSearchEnabled = computed(() => {
   return userInput.value.length > 0 && !props.disabledFilteredShows
@@ -36,27 +32,11 @@ const resultOrResults = computed(() => {
     </h2>
 
     <div v-if="isSearchEmpty" class="media-library-group l-grid">
-      <MediaContent
-        v-for="(media, index) in mediaList"
-        :key="index"
-        :title="media.title"
-        :thumbnail-url="media.thumbnail.regular?.large"
-        :year="media.year"
-        :category="media.category"
-        :rating="media.rating"
-      />
+      <MediaContent v-for="media in mediaList" :key="media.id" v-bind="media" />
     </div>
 
     <div v-if="isSearchEnabled" class="media-library-group l-grid">
-      <MediaContent
-        v-for="(media, index) in filteredShows"
-        :key="index"
-        :title="media.title"
-        :thumbnail-url="media.thumbnail.regular?.large"
-        :year="media.year"
-        :category="media.category"
-        :rating="media.rating"
-      />
+      <MediaContent v-for="media in filteredShows" :key="media.id" v-bind="media" />
     </div>
   </div>
 </template>

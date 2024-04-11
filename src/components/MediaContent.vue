@@ -1,24 +1,34 @@
 <script setup lang="ts">
-import EmptyBookmarkIcon from '@/components/icons/EmptyBookmarkIcon.vue'
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
+import { useMediaStore } from '@/stores/media'
+
+import BookmarkIcon from '@/components/icons/BookmarkIcon.vue'
 import PlayIcon from '@/components/icons/PlayIcon.vue'
 import MovieCategoryIcon from '@/components/icons/MovieCategoryIcon.vue'
 import TVCategoryIcon from '@/components/icons/TVCategoryIcon.vue'
 
-defineProps<{
-  title: string
-  thumbnailUrl: string | undefined
-  year: number
-  category: string
-  rating: string
-  // isBookmarked: boolean
-  // isTrending: boolean
-}>()
+const props = defineProps<MediaItem>()
+
+const routes = useRoute()
+
+const store = useMediaStore()
+const { isSearchEmpty } = storeToRefs(store)
+const { toggleBookmark } = store
+
+const thumbnail = computed(() => {
+  if (routes.path === '/' && isSearchEmpty.value) {
+    return props.isTrending ? props.thumbnails.trending : props.thumbnails.regular
+  }
+  return props.thumbnails.regular
+})
 </script>
 
 <template>
   <div class="media">
     <div class="media-img-group">
-      <img class="media-img" :src="thumbnailUrl" alt="Movie Image" />
+      <img class="media-img" :src="thumbnail" alt="Movie Image" />
 
       <button class="media-play-button l-flex">
         <PlayIcon />
@@ -26,7 +36,13 @@ defineProps<{
       </button>
     </div>
 
-    <button class="media-bookmark-button l-flex"><EmptyBookmarkIcon /></button>
+    <button
+      class="media-bookmark-button l-flex"
+      :class="{ 'is-pressed': isBookmarked }"
+      @click="toggleBookmark(id)"
+    >
+      <BookmarkIcon />
+    </button>
 
     <div class="media-info">
       <div class="media-info-tags l-flex">
@@ -163,6 +179,12 @@ defineProps<{
       svg path {
         stroke: var(--color-primary-dark-blue);
       }
+    }
+  }
+
+  &-bookmark-button.is-pressed {
+    svg {
+      fill: var(--color-neutral-white);
     }
   }
 }

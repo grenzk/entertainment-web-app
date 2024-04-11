@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref } from 'vue'
+import { onBeforeUnmount, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
@@ -9,10 +9,10 @@ import RightArrowIcon from '@/components/icons/RightArrowIcon.vue'
 import LeftArrowIcon from '@/components/icons/LeftArrowIcon.vue'
 
 const store = useMediaStore()
-const { shows, userInput } = storeToRefs(store)
+const { shows, userInput, isSearchEmpty } = storeToRefs(store)
 
-const trendingShows = shows.value.filter((show) => show.isTrending)
-const recommendedShows = shows.value.filter((show) => !show.isTrending)
+const trendingShows = computed(() => shows.value.filter((show) => show.isTrending))
+const recommendedShows = computed(() => shows.value.filter((show) => !show.isTrending))
 
 const mediaScroller = ref<HTMLDivElement | null>(null)
 const isPrevButtonShown = ref(false)
@@ -47,7 +47,7 @@ onBeforeUnmount(() => (userInput.value = ''))
 </script>
 
 <template>
-  <div v-if="userInput.length === 0" class="trending">
+  <div v-if="isSearchEmpty" class="trending">
     <h2 class="section-title l-container">Trending</h2>
 
     <div class="trending-media-container">
@@ -64,15 +64,7 @@ onBeforeUnmount(() => (userInput.value = ''))
         class="trending-media-scroller l-grid snaps-inline"
         @scroll="checkButtonsVisibility"
       >
-        <MediaContent
-          v-for="(media, index) in trendingShows"
-          :key="index"
-          :title="media.title"
-          :thumbnail-url="media.thumbnail.trending?.large"
-          :year="media.year"
-          :category="media.category"
-          :rating="media.rating"
-        />
+        <MediaContent v-for="media in trendingShows" :key="media.id" v-bind="media" />
       </div>
 
       <button
@@ -102,13 +94,6 @@ onBeforeUnmount(() => (userInput.value = ''))
   .snaps-inline > * {
     scroll-snap-align: center;
   }
-}
-
-.section-title {
-  font-size: var(--font-size-xl);
-  line-height: revert;
-  letter-spacing: -0.31px;
-  margin-bottom: var(--space-content-gap-1);
 }
 
 .trending-media-container {

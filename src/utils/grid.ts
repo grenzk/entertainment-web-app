@@ -8,7 +8,7 @@ export const changeGridRows = () => {
   }
 
   if (window.innerWidth >= 1024) {
-    gridContainer.style.gridTemplateRows = '8.125rem'
+    gridContainer.style.gridTemplateRows = '7.15rem'
   }
 }
 
