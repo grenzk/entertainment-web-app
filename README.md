@@ -49,7 +49,7 @@ Users should be able to:
 - CSS Grid
 - Mobile-first workflow
 - SASS
-- Vue 
+- Vue
 - Quasar (Vue framework/component library)
 
 #### Backend
