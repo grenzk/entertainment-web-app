@@ -10,6 +10,8 @@ A full-stack application for discovering and bookmarking shows.
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
+- [Usage](#usage)
+  - [Development](#development)
 - [Acknowledgments](#acknowledgments)
 
 ## Overview
@@ -39,15 +41,55 @@ Users should be able to:
 
 ### Built with
 
+#### Frontend
+
 - Semantic HTML5 markup
 - CSS custom properties
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
 - SASS
-- Vue (frontend)
-- Quasar
-- Ruby on Rails (backend)
+- Vue 
+- Quasar (Vue framework/component library)
+
+#### Backend
+
+- Ruby on Rails
+- PostgreSQL
+
+## Usage
+
+### Development
+
+#### Inside the Vue project
+
+Create a `.env.local` file and add
+
+```
+VITE_MEDIA_API_ENDPOINT=http://127.0.0.1:3000/api/v1/media
+VITE_BOOKMARKS_API_ENDPOINT=http://127.0.0.1:3000/api/v1/bookmarks
+```
+
+then run the project
+
+```
+npm install
+npm run dev
+```
+
+#### Inside the Ruby on Rails project
+
+Create a database and seed data
+
+```
+bin/rails db:create db:migrate db:seed
+```
+
+then run the project
+
+```
+bin/rails s
+```
 
 ## Acknowledgments
 
