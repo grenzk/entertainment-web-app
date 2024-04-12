@@ -186,6 +186,10 @@ const thumbnail = computed(() => {
     svg {
       fill: var(--color-neutral-white);
     }
+
+    &:hover svg {
+      fill: var(--color-primary-dark-blue);
+    }
   }
 }
 
