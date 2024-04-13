@@ -6,7 +6,7 @@ const MEDIA_API_ENDPOINT = import.meta.env.VITE_MEDIA_API_ENDPOINT
 const BOOKMARKS_API_ENDPOINT = import.meta.env.VITE_BOOKMARKS_API_ENDPOINT
 
 export const useMediaStore = defineStore('media', () => {
-  const data = ref<MediaItem[]>([])
+  const allShows = ref<MediaItem[]>([])
   const shows = ref<MediaItem[]>([])
   const bookmarks = ref<number[]>([])
   const userInput = ref('')
@@ -22,14 +22,14 @@ export const useMediaStore = defineStore('media', () => {
   })
 
   const resetShows = () => {
-    shows.value = data.value
+    shows.value = allShows.value
     userInput.value = ''
   }
 
-  const fetchMediaData = async () => {
+  const fetchMedia = async () => {
     try {
       const response = await axios.get(MEDIA_API_ENDPOINT)
-      data.value = response.data
+      allShows.value = response.data
       shows.value = response.data
     } catch (error) {
       console.error(error)
@@ -57,14 +57,14 @@ export const useMediaStore = defineStore('media', () => {
         })
       }
 
-      fetchMediaData()
+      fetchMedia()
       fetchBookmarks()
     } catch (error) {
       console.error(error)
     }
   }
 
-  fetchMediaData()
+  fetchMedia()
   fetchBookmarks()
 
   return {
@@ -74,7 +74,7 @@ export const useMediaStore = defineStore('media', () => {
     filteredShows,
     isSearchEmpty,
     resetShows,
-    fetchMediaData,
+    fetchMedia,
     fetchBookmarks,
     toggleBookmark
   }

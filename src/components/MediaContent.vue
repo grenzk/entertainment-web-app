@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
 import BookmarkIcon from '@/components/icons/BookmarkIcon.vue'

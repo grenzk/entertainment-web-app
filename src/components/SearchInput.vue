@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useMediaStore } from '@/stores/media'
 import { storeToRefs } from 'pinia'
+import { useMediaStore } from '@/stores/media'
+
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 
 defineProps<{
   placeholder: string
 }>()
 
+const route = useRoute()
+
 const store = useMediaStore()
 const { bookmarks, userInput } = storeToRefs(store)
-
-const route = useRoute()
 
 const isSearchDisabled = computed(() => {
   return route.path === '/bookmarks' && bookmarks.value.length === 0
