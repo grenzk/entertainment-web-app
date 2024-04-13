@@ -6,7 +6,7 @@ import { useMediaStore } from '@/stores/media'
 import MediaSection from '@/components/MediaSection.vue'
 
 const store = useMediaStore()
-const { shows, bookmarks, isSearchEmpty } = storeToRefs(store)
+const { shows, bookmarks } = storeToRefs(store)
 const { resetShows } = store
 
 watchEffect(() => {
@@ -21,21 +21,31 @@ const bookmarkedTvSeries = computed(() => {
   return shows.value.filter((show) => show.category === 'TV Series')
 })
 
+const hasBookmarkedMovies = computed(() => {
+  return bookmarkedMovies.value.length > 0
+})
+
+const hasBookmarkedTvSeries = computed(() => {
+  return bookmarkedTvSeries.value.length > 0
+})
+
 onBeforeUnmount(() => resetShows())
 </script>
 
 <template>
   <MediaSection
+    v-if="hasBookmarkedMovies"
     class="bookmarked-movies"
     section-title="Bookmarked Movies"
     :media-list="bookmarkedMovies"
   />
 
   <MediaSection
-    v-if="isSearchEmpty"
+    v-if="hasBookmarkedTvSeries"
+    class="bookmarked-tv-series"
     section-title="Bookmarked TV Series"
     :media-list="bookmarkedTvSeries"
-    disabled-filtered-shows
+    :disabled-filtered-shows="hasBookmarkedMovies"
   />
 </template>
 
