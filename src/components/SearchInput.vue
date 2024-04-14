@@ -1,20 +1,34 @@
 <script setup lang="ts">
-import { useMediaStore } from '@/stores/media'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import SearchIcon from '@/components/icons/SearchIcon.vue'
+import { useMediaStore } from '@/stores/media'
 
-const store = useMediaStore()
-const { userInput } = storeToRefs(store)
+import SearchIcon from '@/components/icons/SearchIcon.vue'
 
 defineProps<{
   placeholder: string
 }>()
+
+const route = useRoute()
+
+const store = useMediaStore()
+const { bookmarks, userInput } = storeToRefs(store)
+
+const isSearchDisabled = computed(() => {
+  return route.path === '/bookmarks' && bookmarks.value.length === 0
+})
 </script>
 
 <template>
   <div class="input-group l-flex l-container">
     <SearchIcon class="search-icon" />
-    <QInput type="search" v-model="userInput" :placeholder="placeholder" />
+    <QInput
+      type="search"
+      v-model="userInput"
+      :placeholder="placeholder"
+      :disable="isSearchDisabled"
+    />
   </div>
 </template>
 

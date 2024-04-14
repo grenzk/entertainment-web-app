@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useMediaStore } from '@/stores/media'
 import { storeToRefs } from 'pinia'
+import { useMediaStore } from '@/stores/media'
+
 import MediaContent from '@/components/MediaContent.vue'
 
 const props = defineProps<{
