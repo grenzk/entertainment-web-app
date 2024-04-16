@@ -72,7 +72,6 @@ const isSearchDisabled = computed(() => {
     font-weight: var(--font-weight-light) !important;
     color: var(--color-neutral-white) !important;
     caret-color: var(--color-primary-red);
-    cursor: pointer;
   }
 
   &__append {
