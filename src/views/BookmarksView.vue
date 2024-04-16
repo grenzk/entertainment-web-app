@@ -59,7 +59,7 @@ onBeforeUnmount(() => resetShows())
     <EmptyStateIcon class="empty-state-icon" />
 
     <div>
-      <p>You don't have any bookmarked shows.</p>
+      <p>You don't have any bookmarks yet.</p>
       <p>Discover <RouterLink to="/">shows</RouterLink>.</p>
     </div>
   </div>
