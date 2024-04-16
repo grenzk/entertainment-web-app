@@ -68,6 +68,7 @@ export const useMediaStore = defineStore('media', () => {
   fetchBookmarks()
 
   return {
+    allShows,
     shows,
     bookmarks,
     userInput,
