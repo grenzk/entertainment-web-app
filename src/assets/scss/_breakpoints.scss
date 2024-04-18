@@ -57,7 +57,7 @@
     }
   }
 
-  .input-group {
+  .search-group {
     gap: 1.5rem;
   }
 
@@ -145,22 +145,22 @@
     }
   }
 
-  .input-group {
+  .search-group {
     margin-top: 2.3rem;
     gap: 1.5rem;
     align-self: center;
   }
 
-  .q-field {
-    &__control {
+  .search-input {
+    .q-field__control {
       height: 3.5rem !important;
     }
 
-    &--standard &__control::after {
+    &.q-field--standard .q-field__control::after {
       transform: scale3d(0, 1, 1) !important;
     }
 
-    &--standard.q-field--highlighted &__control::after {
+    &.q-field--standard.q-field--highlighted .q-field__control::after {
       transform: scale3d(1, 1, 1) !important;
     }
   }
