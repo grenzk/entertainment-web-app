@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import { changeGridRows, resetGrid } from '@/utils/grid'
+import { adjustGridForAuthPages, changeGridRows, resetGrid } from '@/utils/grid'
 
 import SiteHeader from '@/components/SiteHeader.vue'
 import SearchInput from '@/components/SearchInput.vue'
@@ -19,20 +19,32 @@ const searchPlaceholder = computed(() => {
   return searchPlaceholders[route.path]
 })
 
+const authRoutes = computed(() => {
+  return route.path === '/sign-in' || route.path === '/sign-up'
+})
+
 watchEffect(() => {
-  if (route.path !== '/') {
+  if (!(route.path === '/' || authRoutes.value)) {
     changeGridRows()
     window.addEventListener('resize', changeGridRows)
   } else {
     resetGrid()
     window.removeEventListener('resize', changeGridRows)
   }
+
+  if (authRoutes.value) {
+    adjustGridForAuthPages()
+    window.addEventListener('resize', adjustGridForAuthPages)
+  } else {
+    resetGrid()
+    window.removeEventListener('resize', adjustGridForAuthPages)
+  }
 })
 </script>
 
 <template>
-  <SiteHeader />
-  <SearchInput :placeholder="searchPlaceholder" />
+  <SiteHeader v-if="!authRoutes" />
+  <SearchInput v-if="!authRoutes" :placeholder="searchPlaceholder" />
 
   <RouterView />
 </template>
