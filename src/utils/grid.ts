@@ -1,8 +1,9 @@
 const gridContainer = document.getElementById('app') as HTMLDivElement
 
 export const adjustGridForAuthPages = () => {
-  gridContainer.style.gridTemplate = '1fr / 1fr'
+  gridContainer.style.gridTemplate = '8.25rem / auto'
   gridContainer.style.justifyItems = 'center'
+  gridContainer.style.alignItems = 'start'
 }
 
 export const changeGridRows = () => {
