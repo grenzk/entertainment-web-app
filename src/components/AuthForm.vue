@@ -1,25 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import LogoIcon from '@/components/icons/LogoIcon.vue'
 
+const route = useRoute()
 const input = ref('')
+
+const isSignUp = computed(() => route.name === 'sign-up')
+const formTitle = computed(() => (isSignUp.value ? 'Sign Up' : 'Login'))
+const formLink = computed(() => (isSignUp.value ? 'Login' : 'Sign Up'))
+const formRoute = computed(() => (isSignUp.value ? '/sign-in' : '/sign-up'))
 </script>
 
 <template>
   <LogoIcon class="logo-icon" />
   <div class="form-group">
-    <h1 class="form-title">Sign Up</h1>
+    <h1 class="form-title">{{ formTitle }}</h1>
 
     <form class="l-flex">
       <QInput type="email" v-model="input" placeholder="Email address" />
       <QInput type="password" v-model="input" placeholder="Password" />
-      <QInput type="password" v-model="input" placeholder="Repeat password" />
+      <QInput v-if="isSignUp" type="password" v-model="input" placeholder="Repeat password" />
 
       <input type="submit" value="Create an account" />
     </form>
 
-    <p class="form-link">Already have an account? <RouterLink to="/sign-in">Login</RouterLink></p>
+    <p class="form-link">
+      Already have an account? <RouterLink :to="formRoute">{{ formLink }}</RouterLink>
+    </p>
   </div>
 </template>
 
