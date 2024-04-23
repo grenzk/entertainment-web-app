@@ -2,6 +2,7 @@
 import { onBeforeUnmount, onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
+import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import MediaSection from '@/components/MediaSection.vue'
 
@@ -11,9 +12,19 @@ const { resetShows } = store
 
 const tvSeries = computed(() => shows.value.filter((show) => show.category === 'TV Series'))
 
-onMounted(() => (shows.value = tvSeries.value))
+onMounted(() => {
+  changeGridRows()
+  window.addEventListener('resize', changeGridRows)
 
-onBeforeUnmount(() => resetShows())
+  shows.value = tvSeries.value
+})
+
+onBeforeUnmount(() => {
+  resetGrid()
+  window.removeEventListener('resize', changeGridRows)
+
+  resetShows()
+})
 </script>
 
 <template>

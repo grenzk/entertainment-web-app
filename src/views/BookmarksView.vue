@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { onBeforeUnmount, computed, watchEffect } from 'vue'
+import { onBeforeUnmount, onMounted, computed, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
+import { changeGridRows, resetGrid } from '@/utils/grid'
 
 import MediaSection from '@/components/MediaSection.vue'
 import EmptyStateIcon from '@/components/icons/EmptyStateIcon.vue'
@@ -34,7 +35,17 @@ const hasShows = computed(() => {
   return shows.value.length > 0
 })
 
-onBeforeUnmount(() => resetShows())
+onMounted(() => {
+  changeGridRows()
+  window.addEventListener('resize', changeGridRows)
+})
+
+onBeforeUnmount(() => {
+  resetGrid()
+  window.removeEventListener('resize', changeGridRows)
+
+  resetShows()
+})
 </script>
 
 <template>
