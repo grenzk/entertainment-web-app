@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import ContentLayout from '@/components/ContentLayout.vue'
+import AuthLayout from '@/components/AuthLayout.vue'
+
 import SignUpView from '@/views/SignUpView.vue'
 import SignInView from '@/views/SignInView.vue'
 import HomeView from '@/views/HomeView.vue'
@@ -12,13 +15,13 @@ export const router = createRouter({
   routes: [
     {
       path: '/sign-up',
-      name: 'sign-up',
-      component: SignUpView
+      component: AuthLayout,
+      children: [{ path: '', name: 'sign-up', component: SignUpView }]
     },
     {
       path: '/sign-in',
-      name: 'sign-in',
-      component: SignInView
+      component: AuthLayout,
+      children: [{ path: '', name: 'sign-in', component: SignInView }]
     },
     {
       path: '/',
@@ -27,18 +30,18 @@ export const router = createRouter({
     },
     {
       path: '/movies',
-      name: 'movies',
-      component: MoviesView
+      component: ContentLayout,
+      children: [{ path: '', name: 'movies', component: MoviesView }]
     },
     {
       path: '/tv-series',
-      name: 'tv-series',
-      component: TVSeriesView
+      component: ContentLayout,
+      children: [{ path: '', name: 'tv-series', component: TVSeriesView }]
     },
     {
       path: '/bookmarks',
-      name: 'bookmarks',
-      component: BookmarksView
+      component: ContentLayout,
+      children: [{ path: '', name: 'bookmarks', component: BookmarksView }]
     }
   ]
 })
