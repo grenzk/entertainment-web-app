@@ -9,6 +9,9 @@ const input = ref('')
 
 const isSignUp = computed(() => route.name === 'sign-up')
 const formTitle = computed(() => (isSignUp.value ? 'Sign Up' : 'Login'))
+const formSubmitButtonText = computed(() =>
+  isSignUp.value ? 'Create an account' : 'Login to your account'
+)
 const formLink = computed(() => (isSignUp.value ? 'Login' : 'Sign Up'))
 const formRoute = computed(() => (isSignUp.value ? '/sign-in' : '/sign-up'))
 </script>
@@ -23,7 +26,7 @@ const formRoute = computed(() => (isSignUp.value ? '/sign-in' : '/sign-up'))
       <QInput type="password" v-model="input" placeholder="Password" />
       <QInput v-if="isSignUp" type="password" v-model="input" placeholder="Repeat password" />
 
-      <input type="submit" value="Create an account" />
+      <input type="submit" :value="formSubmitButtonText" />
     </form>
 
     <p class="form-link">
@@ -42,7 +45,6 @@ const formRoute = computed(() => (isSignUp.value ? '/sign-in' : '/sign-up'))
   border-radius: var(--border-radius-s);
   padding: 1.5rem;
   width: 20.438rem;
-  max-width: 25rem;
 }
 
 .form-title {
@@ -106,6 +108,7 @@ form {
 
   input[type='submit'] {
     background-color: var(--color-primary-red);
+    font-size: 0.938rem;
     color: var(--color-neutral-white);
     margin: 2rem 0 1.5rem 0;
     border: none;

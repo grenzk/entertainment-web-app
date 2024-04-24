@@ -102,6 +102,12 @@
       right: 1rem;
     }
   }
+
+  .form-group {
+    border-radius: var(--border-radius-m);
+    width: 25rem;
+    padding: 2rem;
+  }
 }
 
 @media screen and (min-width: 1024px) {

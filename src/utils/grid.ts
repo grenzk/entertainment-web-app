@@ -16,8 +16,11 @@ export const adjustGridForContentPages = () => {
 
 export const adjustGridForAuthPages = () => {
   gridContainer.style.gridTemplate = '8.25rem / auto'
-  gridContainer.style.justifyItems = 'center'
-  gridContainer.style.alignItems = 'start'
+  gridContainer.style.placeItems = 'start center'
+
+  if (window.innerWidth >= 768) {
+    gridContainer.style.gridTemplateRows = '11.625rem'
+  }
 }
 
 export const useGrid = (gridHandler: () => void) => {
