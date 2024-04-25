@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { Field, Form, type SubmissionContext } from 'vee-validate'
+import * as yup from 'yup'
 
 import LogoIcon from '@/components/icons/LogoIcon.vue'
 
 const route = useRoute()
-const input = ref('')
 
 const isSignUp = computed(() => route.name === 'sign-up')
 const formTitle = computed(() => (isSignUp.value ? 'Sign Up' : 'Login'))
@@ -14,6 +15,29 @@ const formSubmitButtonText = computed(() =>
 )
 const formLink = computed(() => (isSignUp.value ? 'Login' : 'Sign Up'))
 const formRoute = computed(() => (isSignUp.value ? '/sign-in' : '/sign-up'))
+
+const schema = yup.object({
+  email: yup
+    .string()
+    .required("Can't be empty")
+    .email('Must be a valid email')
+    .label('Email address'),
+  password: yup
+    .string()
+    .required("Can't be empty")
+    .min(6, 'Must be at least 6 characters')
+    .label('Password'),
+  passwordConfirm: yup
+    .string()
+    .oneOf([yup.ref('password')], 'Passwords must match')
+    .required("Can't be empty")
+    .label('Repeat password')
+})
+
+const onSubmit = (values: Record<string, string>, actions: SubmissionContext) => {
+  console.log(values)
+  actions.resetForm()
+}
 </script>
 
 <template>
@@ -21,13 +45,41 @@ const formRoute = computed(() => (isSignUp.value ? '/sign-in' : '/sign-up'))
   <div class="form-group">
     <h1 class="form-title">{{ formTitle }}</h1>
 
-    <form class="l-flex">
-      <QInput type="email" v-model="input" placeholder="Email address" />
-      <QInput type="password" v-model="input" placeholder="Password" />
-      <QInput v-if="isSignUp" type="password" v-model="input" placeholder="Repeat password" />
+    <Form class="l-flex" :validation-schema="schema" @submit="onSubmit">
+      <Field name="email" v-slot="{ errorMessage, value, field }">
+        <QInput
+          type="email"
+          placeholder="Email address"
+          :model-value="value"
+          v-bind="field"
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
+      <Field name="password" v-slot="{ errorMessage, value, field }">
+        <QInput
+          type="password"
+          placeholder="Password"
+          :model-value="value"
+          v-bind="field"
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
+      <Field name="passwordConfirm" v-slot="{ errorMessage, value, field }">
+        <QInput
+          v-if="isSignUp"
+          type="password"
+          placeholder="Repeat password"
+          :model-value="value"
+          v-bind="field"
+          :error-message="errorMessage"
+          :error="!!errorMessage"
+        />
+      </Field>
 
       <input type="submit" :value="formSubmitButtonText" />
-    </form>
+    </Form>
 
     <p class="form-link">
       Already have an account? <RouterLink :to="formRoute">{{ formLink }}</RouterLink>
@@ -57,10 +109,8 @@ form {
   flex-direction: column;
   gap: 0.5rem;
 
-  .q-field__control {
-    height: 3.3rem !important;
-    color: var(--color-neutral-white) !important;
-    padding-left: 1rem;
+  .q-field--with-bottom {
+    padding-bottom: 0 !important;
   }
 
   .q-field--standard .q-field__control::before {
@@ -73,6 +123,16 @@ form {
 
   .q-field--standard .q-field__control:hover::before {
     border-bottom: 1px solid var(--color-neutral-greyish-blue);
+  }
+
+  .q-field__control {
+    height: 3.3rem !important;
+    color: var(--color-neutral-white) !important;
+    padding-left: 1rem;
+  }
+
+  .q-field__control.text-negative {
+    color: var(--color-primary-red) !important;
   }
 
   .q-field__native {
@@ -94,7 +154,7 @@ form {
   }
 
   .q-field__bottom {
-    font-size: var(--font-size-m) !important;
+    font-size: 0.938rem !important;
     align-items: center !important;
     min-height: 100% !important;
     left: unset !important;
@@ -114,6 +174,7 @@ form {
     border: none;
     border-radius: var(--border-radius-xxs);
     height: 3rem;
+    cursor: pointer;
 
     &:hover {
       background-color: var(--color-neutral-white);
