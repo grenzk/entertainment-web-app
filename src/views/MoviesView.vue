@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, computed } from 'vue'
+import { computed, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
@@ -10,8 +10,7 @@ const { shows } = storeToRefs(store)
 const { resetShows } = store
 
 const movies = computed(() => shows.value.filter((show) => show.category === 'Movie'))
-
-onMounted(() => (shows.value = movies.value))
+shows.value = movies.value
 
 onBeforeUnmount(() => resetShows())
 </script>

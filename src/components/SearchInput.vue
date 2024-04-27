@@ -21,9 +21,10 @@ const isSearchDisabled = computed(() => {
 </script>
 
 <template>
-  <div class="input-group l-flex l-container">
+  <div class="search-group l-flex l-container">
     <SearchIcon class="search-icon" />
     <QInput
+      class="search-input"
       type="search"
       v-model="userInput"
       :placeholder="placeholder"
@@ -33,7 +34,7 @@ const isSearchDisabled = computed(() => {
 </template>
 
 <style lang="scss">
-.input-group {
+.search-group {
   align-self: start;
   align-items: center;
   gap: 1rem;
@@ -44,29 +45,29 @@ const isSearchDisabled = computed(() => {
   height: 1.5rem;
 }
 
-.q-field {
+.search-input {
   width: 100%;
 
-  &--with-bottom {
+  &.q-field--with-bottom {
     padding-bottom: 0 !important;
   }
 
-  &__control {
+  &.q-field--standard .q-field__control::before {
+    border-bottom: none !important;
+  }
+
+  &.q-field--standard .q-field__control::after {
+    height: 1px !important;
+    transform: scale3d(0, 1, 1) !important;
+  }
+
+  .q-field__control {
     position: unset !important;
     color: var(--color-neutral-greyish-blue) !important;
     height: 2.313rem !important;
   }
 
-  &--standard &__control::before {
-    border-bottom: none !important;
-  }
-
-  &--standard &__control::after {
-    height: 1px !important;
-    transform: scale3d(0, 1, 1) !important;
-  }
-
-  &__native {
+  .q-field__native {
     padding: 0 !important;
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-light) !important;
@@ -74,22 +75,9 @@ const isSearchDisabled = computed(() => {
     caret-color: var(--color-primary-red);
   }
 
-  &__append {
-    display: none !important;
+  .q-placeholder::placeholder {
+    color: var(--color-neutral-white) !important;
+    opacity: 0.4979 !important;
   }
-
-  &__bottom {
-    font-size: var(--font-size-m) !important;
-    align-items: center !important;
-    min-height: 100% !important;
-    left: unset !important;
-    transform: unset !important;
-    padding: 0 !important;
-  }
-}
-
-.q-placeholder::placeholder {
-  color: var(--color-neutral-white) !important;
-  opacity: 0.4979 !important;
 }
 </style>

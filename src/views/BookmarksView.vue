@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, computed, watchEffect } from 'vue'
+import { computed, watchEffect, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
