@@ -25,7 +25,8 @@ export const adjustGridForAuthPages = () => {
 
 export const useGrid = (gridHandler: () => void) => {
   const resetGrid = () => {
-    gridContainer.style.gridTemplateRows = ''
+    gridContainer.style.gridTemplate = ''
+    gridContainer.style.placeItems = ''
   }
 
   onMounted(() => {
