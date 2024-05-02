@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
 
 import SiteHeader from '@/components/SiteHeader.vue'
 import SearchInput from '@/components/SearchInput.vue'
+
+const authStore = useAuthStore()
+const { isLoggedIn } = storeToRefs(authStore)
 
 const route = useRoute()
 
@@ -17,15 +22,11 @@ const searchPlaceholders: Record<string, string> = {
 const searchPlaceholder = computed(() => {
   return searchPlaceholders[route.path]
 })
-
-const authRoutes = computed(() => {
-  return route.name === 'sign-in' || route.name === 'sign-up'
-})
 </script>
 
 <template>
-  <SiteHeader v-if="!authRoutes" />
-  <SearchInput v-if="!authRoutes" :placeholder="searchPlaceholder" />
+  <SiteHeader v-if="isLoggedIn" />
+  <SearchInput v-if="isLoggedIn" :placeholder="searchPlaceholder" />
 
   <RouterView />
 </template>

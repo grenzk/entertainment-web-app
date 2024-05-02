@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/auth'
+
 import LogoIcon from '@/components/icons/LogoIcon.vue'
 import NavHomeIcon from '@/components/icons/NavHomeIcon.vue'
 import NavMoviesIcon from '@/components/icons/NavMoviesIcon.vue'
 import NavTVSeriesIcon from '@/components/icons/NavTVSeriesIcon.vue'
 import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
+
+const authStore = useAuthStore()
+const { logoutUser } = authStore
 </script>
 
 <template>
@@ -36,7 +41,7 @@ import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
           </li>
         </ul>
       </nav>
-      <div class="header-avatar">
+      <div class="header-avatar" @click="logoutUser">
         <img src="@/assets/avatars/image-avatar.png" alt="User Avatar" />
       </div>
     </div>

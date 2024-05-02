@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import { Field, Form, type SubmissionContext } from 'vee-validate'
 import * as yup from 'yup'
 
 import LogoIcon from '@/components/icons/LogoIcon.vue'
+
+const authStore = useAuthStore()
+const { registerUser, loginUser } = authStore
 
 const route = useRoute()
 
@@ -16,26 +20,38 @@ const formSubmitButtonText = computed(() =>
 const formLink = computed(() => (isSignUp.value ? 'Login' : 'Sign Up'))
 const formRoute = computed(() => (isSignUp.value ? '/sign-in' : '/sign-up'))
 
-const schema = yup.object({
-  email: yup
-    .string()
-    .required("Can't be empty")
-    .email('Must be a valid email')
-    .label('Email address'),
-  password: yup
-    .string()
-    .required("Can't be empty")
-    .min(6, 'Must be at least 6 characters')
-    .label('Password'),
-  passwordConfirm: yup
-    .string()
-    .oneOf([yup.ref('password')], 'Passwords must match')
-    .required("Can't be empty")
-    .label('Repeat password')
+const schema = computed(() => {
+  const baseSchema = {
+    email: yup
+      .string()
+      .required("Can't be empty")
+      .email('Must be a valid email')
+      .label('Email address'),
+    password: yup
+      .string()
+      .required("Can't be empty")
+      .min(6, 'Must be at least 6 characters')
+      .label('Password')
+  }
+
+  if (isSignUp.value) {
+    return yup.object({
+      ...baseSchema,
+      passwordConfirm: yup
+        .string()
+        .oneOf([yup.ref('password')], 'Passwords must match')
+        .required("Can't be empty")
+        .label('Repeat password')
+    })
+  }
+
+  return yup.object(baseSchema)
 })
 
 const onSubmit = (values: Record<string, string>, actions: SubmissionContext) => {
-  console.log(values)
+  const formData = { user: { email: values.email, password: values.password } }
+
+  isSignUp.value ? registerUser(formData) : loginUser(formData)
   actions.resetForm()
 }
 </script>
