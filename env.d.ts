@@ -2,8 +2,6 @@
 
 interface ImportMetaEnv {
   readonly VITE_BASE_URL: string
-  readonly VITE_MEDIA_API_ENDPOINT: string
-  readonly VITE_BOOKMARKS_API_ENDPOINT: string
 }
 
 interface ImportMeta {

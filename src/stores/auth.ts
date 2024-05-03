@@ -2,8 +2,7 @@ import { ref, computed } from 'vue'
 import { router } from '@/router'
 import { defineStore } from 'pinia'
 import axios, { type AxiosResponse } from 'axios'
-
-const BASE_URL = import.meta.env.VITE_BASE_URL
+import { API_ENDPOINTS } from '@/apiConfig'
 
 export const useAuthStore = defineStore('auth', () => {
   const authToken = ref<string | null>(null)
@@ -37,7 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const registerUser = async (payload: Payload) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/v1/users`, payload)
+      const response = await axios.post(API_ENDPOINTS.users, payload)
 
       setUserInfo(response)
       router.push(returnUrl.value || '/')
@@ -48,7 +47,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const loginUser = async (payload: Payload) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/v1/users/sign_in`, payload)
+      const response = await axios.post(`${API_ENDPOINTS.users}/sign_in`, payload)
 
       setUserInfo(response)
       router.push(returnUrl.value || '/')
@@ -59,11 +58,13 @@ export const useAuthStore = defineStore('auth', () => {
 
   const loginUserWithToken = async ({ authToken }: { authToken: string }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/v1/member-data`, {
+      const response = await axios.get(API_ENDPOINTS.member, {
         headers: {
           authorization: authToken
         }
       })
+
+      if (response.data.user === null) return resetUserInfo()
 
       setUserInfoFromToken(response)
       router.push(returnUrl.value || '/')
@@ -74,7 +75,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const logoutUser = async () => {
     try {
-      await axios.delete(`${BASE_URL}/api/v1/users/sign_out`, {
+      await axios.delete(`${API_ENDPOINTS.users}/sign_out`, {
         headers: {
           authorization: authToken.value
         }
