@@ -7,7 +7,6 @@ import { API_ENDPOINTS } from '@/apiConfig'
 export const useAuthStore = defineStore('auth', () => {
   const authToken = ref<string | null>(null)
   const user = ref<User | null>(null)
-  const returnUrl = ref<string | null>(null)
 
   const isLoggedIn = computed(() => {
     return !(authToken.value === null || authToken.value === JSON.stringify(null))
@@ -39,7 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await axios.post(API_ENDPOINTS.users, payload)
 
       setUserInfo(response)
-      router.push(returnUrl.value || '/')
+      router.push('/')
     } catch (error) {
       console.error(error)
     }
@@ -50,7 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await axios.post(`${API_ENDPOINTS.users}/sign_in`, payload)
 
       setUserInfo(response)
-      router.push(returnUrl.value || '/')
+      router.push('/')
     } catch (error) {
       console.error(error)
     }
@@ -67,7 +66,7 @@ export const useAuthStore = defineStore('auth', () => {
       if (response.data.user === null) return resetUserInfo()
 
       setUserInfoFromToken(response)
-      router.push(returnUrl.value || '/')
+      router.push(router.currentRoute.value || '/')
     } catch (error) {
       console.error(error)
     }
@@ -90,7 +89,6 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     authToken,
     user,
-    returnUrl,
     isLoggedIn,
     setUserInfo,
     setUserInfoFromToken,

@@ -34,7 +34,6 @@ router.beforeEach((to) => {
   const requiresAuth = !publicPages.includes(to.path)
 
   if (requiresAuth && !authStore.isLoggedIn) {
-    authStore.returnUrl = to.fullPath
     return '/sign-in'
   }
 })
