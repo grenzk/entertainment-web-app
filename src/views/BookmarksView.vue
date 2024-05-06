@@ -6,9 +6,9 @@ import { useMediaStore } from '@/stores/media'
 import MediaSection from '@/components/MediaSection.vue'
 import EmptyStateIcon from '@/components/icons/EmptyStateIcon.vue'
 
-const store = useMediaStore()
-const { shows, bookmarks } = storeToRefs(store)
-const { resetShows } = store
+const mediaStore = useMediaStore()
+const { shows, bookmarks } = storeToRefs(mediaStore)
+const { resetShows } = mediaStore
 
 watchEffect(() => {
   shows.value = shows.value.filter((show) => bookmarks.value.includes(show.id))
