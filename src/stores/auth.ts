@@ -1,10 +1,14 @@
 import { ref, computed } from 'vue'
 import { router } from '@/router'
 import { defineStore } from 'pinia'
+import { useMediaStore } from './media'
 import axios, { type AxiosResponse } from 'axios'
 import { API_ENDPOINTS } from '@/apiConfig'
 
 export const useAuthStore = defineStore('auth', () => {
+  const mediaStore = useMediaStore()
+  const { resetShows } = mediaStore
+
   const authToken = ref<string | null>(null)
   const user = ref<User | null>(null)
 
@@ -63,12 +67,11 @@ export const useAuthStore = defineStore('auth', () => {
         }
       })
 
-      if (response.data.user === null) return resetUserInfo()
-
       setUserInfoFromToken(response)
       router.push(router.currentRoute.value || '/')
     } catch (error) {
       console.error(error)
+      resetUserInfo()
     }
   }
 
@@ -79,6 +82,8 @@ export const useAuthStore = defineStore('auth', () => {
           authorization: authToken.value
         }
       })
+
+      resetShows()
       resetUserInfo()
       router.push('/sign-in')
     } catch (error) {
