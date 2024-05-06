@@ -6,6 +6,7 @@ import NavHomeIcon from '@/components/icons/NavHomeIcon.vue'
 import NavMoviesIcon from '@/components/icons/NavMoviesIcon.vue'
 import NavTVSeriesIcon from '@/components/icons/NavTVSeriesIcon.vue'
 import NavBookmarksIcon from '@/components/icons/NavBookmarksIcon.vue'
+import LogoutIcon from '@/components/icons/LogoutIcon.vue'
 
 const authStore = useAuthStore()
 const { logoutUser } = authStore
@@ -39,9 +40,15 @@ const { logoutUser } = authStore
               <NavBookmarksIcon class="header-nav-link-svg-icon" />
             </RouterLink>
           </li>
+          <li class="header-nav-item">
+            <div class="header-logout-button" @click="logoutUser">
+              <LogoutIcon class="header-nav-link-svg-icon" />
+            </div>
+          </li>
         </ul>
       </nav>
-      <div class="header-avatar" @click="logoutUser">
+
+      <div class="header-avatar">
         <img src="@/assets/avatars/image-avatar.png" alt="User Avatar" />
       </div>
     </div>
@@ -97,6 +104,16 @@ const { logoutUser } = authStore
   &-nav-link.router-link-active {
     svg path {
       fill: var(--color-neutral-white);
+    }
+  }
+
+  &-logout-button {
+    cursor: pointer;
+
+    &:hover {
+      svg path {
+        fill: #ff8e31;
+      }
     }
   }
 
