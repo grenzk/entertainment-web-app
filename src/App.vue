@@ -1,12 +1,24 @@
 <script setup lang="ts">
+import { watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 
 import SiteHeader from '@/components/SiteHeader.vue'
 import SearchInput from '@/components/SearchInput.vue'
+import { useMediaStore } from './stores/media'
 
 const authStore = useAuthStore()
 const { isLoggedIn } = storeToRefs(authStore)
+
+const mediaStore = useMediaStore()
+const { fetchMedia, fetchBookmarks } = mediaStore
+
+watchEffect(() => {
+  if (isLoggedIn.value) {
+    fetchMedia()
+    fetchBookmarks()
+  }
+})
 </script>
 
 <template>
