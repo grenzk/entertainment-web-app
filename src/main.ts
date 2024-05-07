@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { storeToRefs } from 'pinia'
 import { Quasar } from 'quasar'
 
 import App from '@/App.vue'
@@ -16,7 +17,9 @@ app.use(router)
 app.use(Quasar, {})
 
 const authStore = useAuthStore()
+const { isLoggedIn, publicPages } = storeToRefs(authStore)
 const { loginUserWithToken } = authStore
+
 const localAuthToken = localStorage.authToken
 const cookieExists = localAuthToken !== 'undefined' && localAuthToken !== null
 
@@ -30,11 +33,12 @@ if (cookieExists) {
 }
 
 router.beforeEach((to) => {
-  const publicPages = ['/sign-up', '/sign-in']
-  const requiresAuth = !publicPages.includes(to.path)
+  const requiresAuth = !publicPages.value.includes(to.path)
 
-  if (requiresAuth && !authStore.isLoggedIn) {
+  if (requiresAuth && !isLoggedIn.value) {
     return '/sign-in'
+  } else if (!requiresAuth && isLoggedIn.value) {
+    return false
   }
 })
 

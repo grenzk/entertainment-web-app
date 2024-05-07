@@ -6,11 +6,12 @@ import axios, { type AxiosResponse } from 'axios'
 import { API_ENDPOINTS } from '@/apiConfig'
 
 export const useAuthStore = defineStore('auth', () => {
-  const mediaStore = useMediaStore()
-  const { resetShows } = mediaStore
-
   const authToken = ref<string | null>(null)
   const user = ref<User | null>(null)
+  const publicPages = ref(['/sign-in', '/sign-up'])
+
+  const mediaStore = useMediaStore()
+  const { resetShows } = mediaStore
 
   const isLoggedIn = computed(() => {
     return !(authToken.value === null || authToken.value === JSON.stringify(null))
@@ -39,10 +40,9 @@ export const useAuthStore = defineStore('auth', () => {
 
   const registerUser = async (payload: Payload) => {
     try {
-      const response = await axios.post(API_ENDPOINTS.users, payload)
+      await axios.post(API_ENDPOINTS.users, payload)
 
-      setUserInfo(response)
-      router.push('/')
+      router.push('/sign-in')
     } catch (error) {
       console.error(error)
     }
@@ -66,9 +66,13 @@ export const useAuthStore = defineStore('auth', () => {
           authorization: authToken
         }
       })
+      const currentRouteName = router.currentRoute.value.path
+      const isAuthRoute = publicPages.value.includes(currentRouteName)
+      const redirectPath = isAuthRoute ? '/' : ''
 
       setUserInfoFromToken(response)
-      router.push(router.currentRoute.value || '/')
+
+      router.push(redirectPath)
     } catch (error) {
       console.error(error)
       resetUserInfo()
@@ -94,6 +98,7 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     authToken,
     user,
+    publicPages,
     isLoggedIn,
     setUserInfo,
     setUserInfoFromToken,
