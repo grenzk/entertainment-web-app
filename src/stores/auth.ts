@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('auth', () => {
     let message = 'An unexpected error occurred.'
 
     if (axios.isAxiosError(error)) {
-      message = error.response?.data
+      message = error.response?.data.message || error.response?.data
     } else if (error instanceof Error) {
       message = error.message
     }
@@ -65,6 +65,7 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await axios.post(`${API_ENDPOINTS.users}/sign_in`, payload)
 
       setUserInfo(response)
+      
       router.push('/')
       Notify.create({ color: 'green', message: response.data.message })
     } catch (error) {
@@ -101,6 +102,7 @@ export const useAuthStore = defineStore('auth', () => {
 
       mediaStore.resetShows()
       resetUserInfo()
+
       router.push('/sign-in')
       Notify.create({ color: 'green', message: response.data.message })
     } catch (error) {
