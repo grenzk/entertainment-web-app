@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import { storeToRefs } from 'pinia'
-import { Quasar } from 'quasar'
+import { createPinia, storeToRefs } from 'pinia'
+import { Quasar, Notify } from 'quasar'
 
 import App from '@/App.vue'
 import { router } from '@/router'
@@ -14,7 +13,9 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
-app.use(Quasar, {})
+app.use(Quasar, {
+  plugins: { Notify }
+})
 
 const authStore = useAuthStore()
 const { isLoggedIn, publicPages } = storeToRefs(authStore)

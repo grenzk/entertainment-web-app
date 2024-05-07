@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue'
+import { Notify } from 'quasar'
 import { router } from '@/router'
 import { defineStore } from 'pinia'
 import { useMediaStore } from './media'
@@ -37,13 +38,25 @@ export const useAuthStore = defineStore('auth', () => {
     axios.defaults.headers.common['Authorization'] = null
   }
 
+  const showErrorMessage = (error: unknown) => {
+    let message = 'An unexpected error occurred.'
+
+    if (axios.isAxiosError(error)) {
+      message = error.response?.data
+    } else if (error instanceof Error) {
+      message = error.message
+    }
+    Notify.create({ color: 'red', message: message })
+  }
+
   const registerUser = async (payload: Payload) => {
     try {
-      await axios.post(API_ENDPOINTS.users, payload)
+      const response = await axios.post(API_ENDPOINTS.users, payload)
 
       router.push('/sign-in')
+      Notify.create({ color: 'green', message: response.data.message })
     } catch (error) {
-      console.error(error)
+      showErrorMessage(error)
     }
   }
 
@@ -53,8 +66,9 @@ export const useAuthStore = defineStore('auth', () => {
 
       setUserInfo(response)
       router.push('/')
+      Notify.create({ color: 'green', message: response.data.message })
     } catch (error) {
-      console.error(error)
+      showErrorMessage(error)
     }
   }
 
@@ -74,13 +88,12 @@ export const useAuthStore = defineStore('auth', () => {
       router.push(redirectPath)
     } catch (error) {
       console.error(error)
-      resetUserInfo()
     }
   }
 
   const logoutUser = async () => {
     try {
-      await axios.delete(`${API_ENDPOINTS.users}/sign_out`, {
+      const response = await axios.delete(`${API_ENDPOINTS.users}/sign_out`, {
         headers: {
           authorization: authToken.value
         }
@@ -89,8 +102,9 @@ export const useAuthStore = defineStore('auth', () => {
       mediaStore.resetShows()
       resetUserInfo()
       router.push('/sign-in')
+      Notify.create({ color: 'green', message: response.data.message })
     } catch (error) {
-      console.error(error)
+      showErrorMessage(error)
     }
   }
 
@@ -102,6 +116,7 @@ export const useAuthStore = defineStore('auth', () => {
     setUserInfo,
     setUserInfoFromToken,
     resetUserInfo,
+    showErrorMessage,
     registerUser,
     loginUser,
     loginUserWithToken,
