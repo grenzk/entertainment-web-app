@@ -25,11 +25,11 @@ const localAuthToken = localStorage.authToken
 const cookieExists = localAuthToken !== 'undefined' && localAuthToken !== null
 
 if (cookieExists) {
-  const authToken = localStorage.getItem('authToken')
-  const authTokenExists = authToken !== 'undefined' && authToken !== null
+  const loginToken = localStorage.getItem('authToken')
+  const authTokenExists = loginToken !== 'undefined' && loginToken !== null
 
   if (authTokenExists) {
-    await loginUserWithToken({ authToken })
+    await loginUserWithToken({ loginToken })
   }
 }
 

@@ -74,11 +74,11 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const loginUserWithToken = async ({ authToken }: { authToken: string }) => {
+  const loginUserWithToken = async ({ loginToken }: { loginToken: string }) => {
     try {
       const response = await axios.get(API_ENDPOINTS.member, {
         headers: {
-          authorization: authToken
+          authorization: loginToken
         }
       })
       const currentRouteName = router.currentRoute.value.path
