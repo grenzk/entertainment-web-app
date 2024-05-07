@@ -46,6 +46,7 @@ export const useAuthStore = defineStore('auth', () => {
     } else if (error instanceof Error) {
       message = error.message
     }
+
     Notify.create({ color: 'red', message: message })
   }
 
@@ -65,7 +66,7 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await axios.post(`${API_ENDPOINTS.users}/sign_in`, payload)
 
       setUserInfo(response)
-      
+
       router.push('/')
       Notify.create({ color: 'green', message: response.data.message })
     } catch (error) {
