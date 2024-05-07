@@ -6,12 +6,11 @@ import axios, { type AxiosResponse } from 'axios'
 import { API_ENDPOINTS } from '@/apiConfig'
 
 export const useAuthStore = defineStore('auth', () => {
+  const mediaStore = useMediaStore()
+
   const authToken = ref<string | null>(null)
   const user = ref<User | null>(null)
   const publicPages = ref(['/sign-in', '/sign-up'])
-
-  const mediaStore = useMediaStore()
-  const { resetShows } = mediaStore
 
   const isLoggedIn = computed(() => {
     return !(authToken.value === null || authToken.value === JSON.stringify(null))
@@ -87,7 +86,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
       })
 
-      resetShows()
+      mediaStore.resetShows()
       resetUserInfo()
       router.push('/sign-in')
     } catch (error) {

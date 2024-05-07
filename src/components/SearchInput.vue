@@ -19,8 +19,8 @@ const searchPlaceholder = computed(() => {
   return searchPlaceholders[route.path]
 })
 
-const store = useMediaStore()
-const { bookmarks, userInput } = storeToRefs(store)
+const mediaStore = useMediaStore()
+const { bookmarks, userInput } = storeToRefs(mediaStore)
 
 const isSearchDisabled = computed(() => {
   return route.path === '/bookmarks' && bookmarks.value.length === 0

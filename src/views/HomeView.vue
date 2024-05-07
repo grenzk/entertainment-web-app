@@ -8,8 +8,8 @@ import MediaSection from '@/components/MediaSection.vue'
 import RightArrowIcon from '@/components/icons/RightArrowIcon.vue'
 import LeftArrowIcon from '@/components/icons/LeftArrowIcon.vue'
 
-const store = useMediaStore()
-const { shows, userInput, isSearchEmpty } = storeToRefs(store)
+const mediaStore = useMediaStore()
+const { shows, userInput, isSearchEmpty } = storeToRefs(mediaStore)
 
 const trendingShows = computed(() => shows.value.filter((show) => show.isTrending))
 const recommendedShows = computed(() => shows.value.filter((show) => !show.isTrending))
