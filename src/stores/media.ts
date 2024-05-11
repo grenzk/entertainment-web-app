@@ -29,7 +29,7 @@ export const useMediaStore = defineStore('media', () => {
 
   const fetchMedia = async (): Promise<void> => {
     try {
-      const response = await axios.get(API_ENDPOINTS.media, {
+      const response = await axios.get<MediaItem[]>(API_ENDPOINTS.media, {
         headers: {
           Authorization: authStore.authToken
         }
@@ -44,7 +44,7 @@ export const useMediaStore = defineStore('media', () => {
 
   const fetchBookmarks = async (): Promise<void> => {
     try {
-      const response = await axios.get(API_ENDPOINTS.bookmarks, {
+      const response = await axios.get<{ medium_id: number }[]>(API_ENDPOINTS.bookmarks, {
         headers: {
           Authorization: authStore.authToken
         }
