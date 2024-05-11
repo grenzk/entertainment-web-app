@@ -83,7 +83,7 @@ export const useMediaStore = defineStore('media', () => {
       fetchMedia()
       fetchBookmarks()
     } catch (error) {
-      console.error(error)
+      authStore.showErrorMessage(error)
     }
   }
 
