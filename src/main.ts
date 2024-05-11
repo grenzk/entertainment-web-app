@@ -29,7 +29,7 @@ if (cookieExists) {
   const authTokenExists = loginToken !== 'undefined' && loginToken !== null
 
   if (authTokenExists) {
-    await loginUserWithToken({ loginToken })
+    await loginUserWithToken(loginToken)
   }
 }
 
