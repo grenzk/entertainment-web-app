@@ -44,13 +44,13 @@ export const useMediaStore = defineStore('media', () => {
 
   const fetchBookmarks = async (): Promise<void> => {
     try {
-      const response = await axios.get<{ medium_id: number }[]>(API_ENDPOINTS.bookmarks, {
+      const response = await axios.get<Bookmark[]>(API_ENDPOINTS.bookmarks, {
         headers: {
           Authorization: authStore.authToken
         }
       })
 
-      bookmarks.value = response.data.map((item: { medium_id: number }) => item.medium_id)
+      bookmarks.value = response.data.map((item: Bookmark) => item.medium_id)
     } catch (error) {
       authStore.showErrorMessage(error)
     }
@@ -61,13 +61,13 @@ export const useMediaStore = defineStore('media', () => {
       const hasBookmark = computed(() => bookmarks.value.includes(id))
 
       if (hasBookmark.value) {
-        await axios.delete(`${API_ENDPOINTS.bookmarks}/${id}`, {
+        await axios.delete<Bookmark>(`${API_ENDPOINTS.bookmarks}/${id}`, {
           headers: {
             Authorization: authStore.authToken
           }
         })
       } else {
-        await axios.post(
+        await axios.post<Bookmark>(
           API_ENDPOINTS.bookmarks,
           {
             medium_id: id

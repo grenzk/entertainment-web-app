@@ -21,3 +21,7 @@ declare interface MediaItem {
   isTrending: boolean
   isBookmarked: boolean
 }
+
+declare interface Bookmark {
+  medium_id: number
+}
