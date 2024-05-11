@@ -34,10 +34,11 @@ export const useMediaStore = defineStore('media', () => {
           authorization: authStore.authToken
         }
       })
+
       allShows.value = response.data
       shows.value = response.data
     } catch (error) {
-      console.error(error)
+      authStore.showErrorMessage(error)
     }
   }
 
@@ -48,9 +49,10 @@ export const useMediaStore = defineStore('media', () => {
           authorization: authStore.authToken
         }
       })
+
       bookmarks.value = response.data.map((item: { medium_id: number }) => item.medium_id)
     } catch (error) {
-      console.error(error)
+      authStore.showErrorMessage(error)
     }
   }
 
