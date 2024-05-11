@@ -5,6 +5,7 @@ declare interface User {
 
 declare interface Payload {
   user: User
+  message?: string
 }
 
 declare interface MediaItem {

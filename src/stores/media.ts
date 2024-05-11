@@ -22,16 +22,16 @@ export const useMediaStore = defineStore('media', () => {
     return userInput.value.length === 0
   })
 
-  const resetShows = () => {
+  const resetShows = (): void => {
     shows.value = allShows.value
     userInput.value = ''
   }
 
-  const fetchMedia = async () => {
+  const fetchMedia = async (): Promise<void> => {
     try {
       const response = await axios.get(API_ENDPOINTS.media, {
         headers: {
-          authorization: authStore.authToken
+          Authorization: authStore.authToken
         }
       })
 
@@ -42,11 +42,11 @@ export const useMediaStore = defineStore('media', () => {
     }
   }
 
-  const fetchBookmarks = async () => {
+  const fetchBookmarks = async (): Promise<void> => {
     try {
       const response = await axios.get(API_ENDPOINTS.bookmarks, {
         headers: {
-          authorization: authStore.authToken
+          Authorization: authStore.authToken
         }
       })
 
@@ -56,14 +56,14 @@ export const useMediaStore = defineStore('media', () => {
     }
   }
 
-  const toggleBookmark = async (id: number) => {
+  const toggleBookmark = async (id: number): Promise<void> => {
     try {
       const hasBookmark = computed(() => bookmarks.value.includes(id))
 
       if (hasBookmark.value) {
         await axios.delete(`${API_ENDPOINTS.bookmarks}/${id}`, {
           headers: {
-            authorization: authStore.authToken
+            Authorization: authStore.authToken
           }
         })
       } else {
@@ -74,7 +74,7 @@ export const useMediaStore = defineStore('media', () => {
           },
           {
             headers: {
-              authorization: authStore.authToken
+              Authorization: authStore.authToken
             }
           }
         )

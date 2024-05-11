@@ -48,10 +48,11 @@ const schema = computed(() => {
   return yup.object(baseSchema)
 })
 
-const onSubmit = (values: Record<string, string>, actions: SubmissionContext) => {
+const onSubmit = (values: Record<string, string>, actions: SubmissionContext): void => {
   const formData = { user: { email: values.email, password: values.password } }
 
   isSignUp.value ? registerUser(formData) : loginUser(formData)
+
   actions.resetForm()
 }
 </script>

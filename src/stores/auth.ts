@@ -17,7 +17,7 @@ export const useAuthStore = defineStore('auth', () => {
     return !(authToken.value === null || authToken.value === JSON.stringify(null))
   })
 
-  const setUserInfo = (response: AxiosResponse<Payload>) => {
+  const setUserInfo = (response: AxiosResponse<Payload>): void => {
     user.value = response.data.user
     authToken.value = response.headers.authorization
     axios.defaults.headers.common['Authorization'] = response.headers.authorization
@@ -25,12 +25,12 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem('authToken', response.headers.authorization)
   }
 
-  const setUserInfoFromToken = (response: AxiosResponse<Payload>) => {
+  const setUserInfoFromToken = (response: AxiosResponse<Payload>): void => {
     user.value = response.data.user
     authToken.value = localStorage.getItem('authToken')
   }
 
-  const resetUserInfo = () => {
+  const resetUserInfo = (): void => {
     user.value = null
     authToken.value = null
 
@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
     axios.defaults.headers.common['Authorization'] = null
   }
 
-  const showErrorMessage = (error: unknown) => {
+  const showErrorMessage = (error: unknown): void => {
     let message = 'An unexpected error occurred.'
 
     if (axios.isAxiosError(error)) {
@@ -50,9 +50,9 @@ export const useAuthStore = defineStore('auth', () => {
     Notify.create({ color: 'red', message: message })
   }
 
-  const registerUser = async (payload: Payload) => {
+  const registerUser = async (payload: Payload): Promise<void> => {
     try {
-      const response = await axios.post(API_ENDPOINTS.users, payload)
+      const response = await axios.post<Payload>(API_ENDPOINTS.users, payload)
 
       router.push('/sign-in')
       Notify.create({ color: 'green', message: response.data.message })
@@ -61,9 +61,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const loginUser = async (payload: Payload) => {
+  const loginUser = async (payload: Payload): Promise<void> => {
     try {
-      const response = await axios.post(`${API_ENDPOINTS.users}/sign_in`, payload)
+      const response = await axios.post<Payload>(`${API_ENDPOINTS.users}/sign_in`, payload)
 
       setUserInfo(response)
 
@@ -74,11 +74,11 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const loginUserWithToken = async (loginToken: string) => {
+  const loginUserWithToken = async (loginToken: string): Promise<void> => {
     try {
-      const response = await axios.get(API_ENDPOINTS.member, {
+      const response = await axios.get<Payload>(API_ENDPOINTS.member, {
         headers: {
-          authorization: loginToken
+          Authorization: loginToken
         }
       })
       const currentRouteName = router.currentRoute.value.path
@@ -93,11 +93,11 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const logoutUser = async () => {
+  const logoutUser = async (): Promise<void> => {
     try {
-      const response = await axios.delete(`${API_ENDPOINTS.users}/sign_out`, {
+      const response = await axios.delete<Payload>(`${API_ENDPOINTS.users}/sign_out`, {
         headers: {
-          authorization: authToken.value
+          Authorization: authToken.value
         }
       })
 

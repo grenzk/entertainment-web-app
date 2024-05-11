@@ -18,15 +18,15 @@ const mediaScroller = ref<HTMLDivElement | null>(null)
 const isPrevButtonShown = ref(false)
 const isNextButtonShown = ref(true)
 
-const scrollLeft = () => {
+const scrollLeft = (): void => {
   mediaScroller.value?.scrollBy({ left: -400, behavior: 'smooth' })
 }
 
-const scrollRight = () => {
+const scrollRight = (): void => {
   mediaScroller.value?.scrollBy({ left: 400, behavior: 'smooth' })
 }
 
-const checkButtonsVisibility = () => {
+const checkButtonsVisibility = (): void => {
   const maxScrollLeft =
     (mediaScroller.value?.scrollWidth || 0) - (mediaScroller.value?.clientWidth || 0)
 
