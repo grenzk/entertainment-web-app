@@ -13,9 +13,9 @@ const props = defineProps<MediaItem>()
 
 const routes = useRoute()
 
-const store = useMediaStore()
-const { isSearchEmpty } = storeToRefs(store)
-const { toggleBookmark } = store
+const mediaStore = useMediaStore()
+const { isSearchEmpty } = storeToRefs(mediaStore)
+const { toggleBookmark } = mediaStore
 
 const thumbnail = computed(() => {
   if (routes.path === '/' && isSearchEmpty.value) {

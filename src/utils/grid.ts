@@ -2,7 +2,7 @@ import { onMounted, onUnmounted } from 'vue'
 
 const gridContainer = document.getElementById('app') as HTMLDivElement
 
-export const adjustGridForContentPages = () => {
+export const adjustGridForContentPages = (): void => {
   gridContainer.style.gridTemplateRows = '5rem 3rem'
 
   if (window.innerWidth >= 768) {
@@ -14,7 +14,7 @@ export const adjustGridForContentPages = () => {
   }
 }
 
-export const adjustGridForAuthPages = () => {
+export const adjustGridForAuthPages = (): void => {
   gridContainer.style.gridTemplate = '8.25rem / auto'
   gridContainer.style.placeItems = 'start center'
 
@@ -23,9 +23,10 @@ export const adjustGridForAuthPages = () => {
   }
 }
 
-export const useGrid = (gridHandler: () => void) => {
+export const useGrid = (gridHandler: () => void): void => {
   const resetGrid = () => {
-    gridContainer.style.gridTemplateRows = ''
+    gridContainer.style.gridTemplate = ''
+    gridContainer.style.placeItems = ''
   }
 
   onMounted(() => {

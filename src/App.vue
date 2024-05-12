@@ -1,31 +1,29 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { watchEffect } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
 
 import SiteHeader from '@/components/SiteHeader.vue'
 import SearchInput from '@/components/SearchInput.vue'
+import { useMediaStore } from './stores/media'
 
-const route = useRoute()
+const authStore = useAuthStore()
+const { isLoggedIn } = storeToRefs(authStore)
 
-const searchPlaceholders: Record<string, string> = {
-  '/': 'Search for movies or TV series',
-  '/movies': 'Search for movies',
-  '/tv-series': 'Search for TV series',
-  '/bookmarks': 'Search for bookmarked shows'
-}
+const mediaStore = useMediaStore()
+const { fetchMedia, fetchBookmarks } = mediaStore
 
-const searchPlaceholder = computed(() => {
-  return searchPlaceholders[route.path]
-})
-
-const authRoutes = computed(() => {
-  return route.name === 'sign-in' || route.name === 'sign-up'
+watchEffect(() => {
+  if (isLoggedIn.value) {
+    fetchMedia()
+    fetchBookmarks()
+  }
 })
 </script>
 
 <template>
-  <SiteHeader v-if="!authRoutes" />
-  <SearchInput v-if="!authRoutes" :placeholder="searchPlaceholder" />
+  <SiteHeader v-if="isLoggedIn" />
+  <SearchInput v-if="isLoggedIn" />
 
   <RouterView />
 </template>

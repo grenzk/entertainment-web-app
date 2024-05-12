@@ -6,14 +6,21 @@ import { useMediaStore } from '@/stores/media'
 
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 
-defineProps<{
-  placeholder: string
-}>()
-
 const route = useRoute()
 
-const store = useMediaStore()
-const { bookmarks, userInput } = storeToRefs(store)
+const searchPlaceholders: Record<string, string> = {
+  '/': 'Search for movies or TV series',
+  '/movies': 'Search for movies',
+  '/tv-series': 'Search for TV series',
+  '/bookmarks': 'Search for bookmarked shows'
+}
+
+const searchPlaceholder = computed(() => {
+  return searchPlaceholders[route.path]
+})
+
+const mediaStore = useMediaStore()
+const { bookmarks, userInput } = storeToRefs(mediaStore)
 
 const isSearchDisabled = computed(() => {
   return route.path === '/bookmarks' && bookmarks.value.length === 0
@@ -27,7 +34,7 @@ const isSearchDisabled = computed(() => {
       class="search-input"
       type="search"
       v-model="userInput"
-      :placeholder="placeholder"
+      :placeholder="searchPlaceholder"
       :disable="isSearchDisabled"
     />
   </div>

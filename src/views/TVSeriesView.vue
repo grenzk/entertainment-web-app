@@ -5,9 +5,9 @@ import { useMediaStore } from '@/stores/media'
 
 import MediaSection from '@/components/MediaSection.vue'
 
-const store = useMediaStore()
-const { shows } = storeToRefs(store)
-const { resetShows } = store
+const mediaStore = useMediaStore()
+const { shows } = storeToRefs(mediaStore)
+const { resetShows } = mediaStore
 
 const tvSeries = computed(() => shows.value.filter((show) => show.category === 'TV Series'))
 shows.value = tvSeries.value

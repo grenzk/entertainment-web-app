@@ -42,6 +42,7 @@ export const router = createRouter({
       path: '/bookmarks',
       component: ContentLayout,
       children: [{ path: '', name: 'bookmarks', component: BookmarksView }]
-    }
+    },
+    { path: '/:pathMatch(.*)*', redirect: '/' }
   ]
 })

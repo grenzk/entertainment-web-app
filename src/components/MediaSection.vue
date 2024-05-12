@@ -11,8 +11,8 @@ const props = defineProps<{
   mediaList: MediaItem[]
 }>()
 
-const store = useMediaStore()
-const { userInput, filteredShows, isSearchEmpty } = storeToRefs(store)
+const mediaStore = useMediaStore()
+const { userInput, filteredShows, isSearchEmpty } = storeToRefs(mediaStore)
 
 const isSearchEnabled = computed(() => {
   return userInput.value.length > 0 && !props.disabledFilteredShows
