@@ -4,8 +4,8 @@ import { router } from '@/router'
 import { defineStore } from 'pinia'
 import { useMediaStore } from './media'
 import axios, { type AxiosResponse } from 'axios'
-import { http } from '@/services/axiosConfig'
-import { API_ENDPOINTS } from '@/services/apiConfig'
+import { http } from '@/services/axios-config'
+import { API_ENDPOINTS } from '@/services/api-config'
 
 export const useAuthStore = defineStore('auth', () => {
   const mediaStore = useMediaStore()

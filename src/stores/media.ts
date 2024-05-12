@@ -1,8 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useAuthStore } from './auth'
-import { http } from '@/services/axiosConfig'
-import { API_ENDPOINTS } from '@/services/apiConfig'
+import { http } from '@/services/axios-config'
+import { API_ENDPOINTS } from '@/services/api-config'
 
 export const useMediaStore = defineStore('media', () => {
   const authStore = useAuthStore()
