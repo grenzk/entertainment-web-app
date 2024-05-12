@@ -1,8 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useAuthStore } from './auth'
-import axios from 'axios'
-import { API_ENDPOINTS } from '@/apiConfig'
+import { http } from '@/services/axiosConfig'
+import { API_ENDPOINTS } from '@/services/apiConfig'
 
 export const useMediaStore = defineStore('media', () => {
   const authStore = useAuthStore()
@@ -29,11 +29,7 @@ export const useMediaStore = defineStore('media', () => {
 
   const fetchMedia = async (): Promise<void> => {
     try {
-      const response = await axios.get<MediaItem[]>(API_ENDPOINTS.media, {
-        headers: {
-          Authorization: authStore.authToken
-        }
-      })
+      const response = await http.get<MediaItem[]>(API_ENDPOINTS.media)
 
       allShows.value = response.data
       shows.value = response.data
@@ -44,11 +40,7 @@ export const useMediaStore = defineStore('media', () => {
 
   const fetchBookmarks = async (): Promise<void> => {
     try {
-      const response = await axios.get<Bookmark[]>(API_ENDPOINTS.bookmarks, {
-        headers: {
-          Authorization: authStore.authToken
-        }
-      })
+      const response = await http.get<Bookmark[]>(API_ENDPOINTS.bookmarks)
 
       bookmarks.value = response.data.map((item: Bookmark) => item.medium_id)
     } catch (error) {
@@ -61,23 +53,11 @@ export const useMediaStore = defineStore('media', () => {
       const hasBookmark = computed(() => bookmarks.value.includes(id))
 
       if (hasBookmark.value) {
-        await axios.delete<Bookmark>(`${API_ENDPOINTS.bookmarks}/${id}`, {
-          headers: {
-            Authorization: authStore.authToken
-          }
-        })
+        await http.delete<Bookmark>(`${API_ENDPOINTS.bookmarks}/${id}`)
       } else {
-        await axios.post<Bookmark>(
-          API_ENDPOINTS.bookmarks,
-          {
-            medium_id: id
-          },
-          {
-            headers: {
-              Authorization: authStore.authToken
-            }
-          }
-        )
+        await http.post<Bookmark>(API_ENDPOINTS.bookmarks, {
+          medium_id: id
+        })
       }
 
       fetchMedia()

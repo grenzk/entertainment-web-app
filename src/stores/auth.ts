@@ -4,7 +4,8 @@ import { router } from '@/router'
 import { defineStore } from 'pinia'
 import { useMediaStore } from './media'
 import axios, { type AxiosResponse } from 'axios'
-import { API_ENDPOINTS } from '@/apiConfig'
+import { http } from '@/services/axiosConfig'
+import { API_ENDPOINTS } from '@/services/apiConfig'
 
 export const useAuthStore = defineStore('auth', () => {
   const mediaStore = useMediaStore()
@@ -23,6 +24,7 @@ export const useAuthStore = defineStore('auth', () => {
     axios.defaults.headers.common['Authorization'] = response.headers.authorization
 
     localStorage.setItem('authToken', response.headers.authorization)
+    localStorage.setItem('lastLoginTime', new Date(Date.now()).getTime().toString())
   }
 
   const setUserInfoFromToken = (response: AxiosResponse<Payload>): void => {
@@ -35,6 +37,7 @@ export const useAuthStore = defineStore('auth', () => {
     authToken.value = null
 
     localStorage.removeItem('authToken')
+    localStorage.removeItem('lastLoginTime')
     axios.defaults.headers.common['Authorization'] = null
   }
 
@@ -74,13 +77,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const loginUserWithToken = async (loginToken: string): Promise<void> => {
+  const loginUserWithToken = async (): Promise<void> => {
     try {
-      const response = await axios.get<Payload>(API_ENDPOINTS.member, {
-        headers: {
-          Authorization: loginToken
-        }
-      })
+      const response = await http.get<Payload>(API_ENDPOINTS.member)
+
       const currentRouteName = router.currentRoute.value.path
       const isAuthRoute = publicPages.value.includes(currentRouteName)
       const redirectPath = isAuthRoute ? '/' : ''
@@ -89,17 +89,13 @@ export const useAuthStore = defineStore('auth', () => {
 
       router.push(redirectPath)
     } catch (error) {
-      console.error(error)
+      showErrorMessage(error)
     }
   }
 
   const logoutUser = async (): Promise<void> => {
     try {
-      const response = await axios.delete<Payload>(`${API_ENDPOINTS.users}/sign_out`, {
-        headers: {
-          Authorization: authToken.value
-        }
-      })
+      const response = await http.delete<Payload>(`${API_ENDPOINTS.users}/sign_out`)
 
       mediaStore.resetShows()
       resetUserInfo()
