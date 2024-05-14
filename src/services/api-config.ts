@@ -9,7 +9,7 @@ interface ApiEndpoints {
 
 export const API_ENDPOINTS: ApiEndpoints = {
   users: `${BASE_URL}/api/v1/users`,
-  member: `${BASE_URL}/api/v1/member-data`,
+  member: `${BASE_URL}/api/v1/member_data`,
   media: `${BASE_URL}/api/v1/media`,
   bookmarks: `${BASE_URL}/api/v1/bookmarks`
 }
