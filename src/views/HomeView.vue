@@ -5,11 +5,12 @@ import { useMediaStore } from '@/stores/media'
 
 import MediaContent from '@/components/MediaContent.vue'
 import MediaSection from '@/components/MediaSection.vue'
+import SectionSkeleton from '@/components/SectionSkeleton.vue'
 import RightArrowIcon from '@/components/icons/RightArrowIcon.vue'
 import LeftArrowIcon from '@/components/icons/LeftArrowIcon.vue'
 
 const mediaStore = useMediaStore()
-const { shows, userInput, isSearchEmpty } = storeToRefs(mediaStore)
+const { shows, userInput, isLoading, isSearchEmpty } = storeToRefs(mediaStore)
 
 const trendingShows = computed(() => shows.value.filter((show) => show.isTrending))
 const recommendedShows = computed(() => shows.value.filter((show) => !show.isTrending))
@@ -48,7 +49,13 @@ onBeforeUnmount(() => (userInput.value = ''))
 
 <template>
   <div v-if="isSearchEmpty" class="trending">
-    <h2 class="section-title l-container">Trending</h2>
+    <QSkeleton
+      v-if="isLoading"
+      class="section-title custom-skeleton l-container"
+      width="150px"
+      animation="fade"
+    />
+    <h2 v-else class="section-title l-container">Trending</h2>
 
     <div class="trending-media-container">
       <button
@@ -64,7 +71,13 @@ onBeforeUnmount(() => (userInput.value = ''))
         class="trending-media-scroller l-grid snaps-inline"
         @scroll="checkButtonsVisibility"
       >
-        <MediaContent v-for="media in trendingShows" :key="media.id" v-bind="media" />
+        <template v-if="isLoading">
+          <QSkeleton class="custom-skeleton" v-for="num in 5" :key="num" animation="fade" />
+        </template>
+
+        <template v-else>
+          <MediaContent v-for="media in trendingShows" :key="media.id" v-bind="media" />
+        </template>
       </div>
 
       <button
@@ -77,7 +90,8 @@ onBeforeUnmount(() => (userInput.value = ''))
     </div>
   </div>
 
-  <MediaSection section-title="Recommended for you" :media-list="recommendedShows" />
+  <SectionSkeleton v-if="isLoading" />
+  <MediaSection v-else section-title="Recommended for you" :media-list="recommendedShows" />
 </template>
 
 <style lang="scss">
@@ -148,5 +162,10 @@ onBeforeUnmount(() => (userInput.value = ''))
   &-right-button {
     right: 0;
   }
+}
+
+.custom-skeleton {
+  background: var(--color-primary-semi-dark-blue) !important;
+  border-radius: var(--border-radius-s) !important;
 }
 </style>

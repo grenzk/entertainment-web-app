@@ -1,26 +1,30 @@
 <script setup lang="ts">
-import { computed, watchEffect, onBeforeUnmount } from 'vue'
+import { computed, watchEffect, onBeforeUnmount} from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
 import MediaSection from '@/components/MediaSection.vue'
+import SectionSkeleton from '@/components/SectionSkeleton.vue'
 import EmptyStateIcon from '@/components/icons/EmptyStateIcon.vue'
 
 const mediaStore = useMediaStore()
-const { shows, bookmarks, userInput } = storeToRefs(mediaStore)
+const { shows, bookmarks, userInput, isLoading } = storeToRefs(mediaStore)
 const { resetShows } = mediaStore
 
+const bookmarkedShows = computed(() => {
+  return shows.value.filter((show) => bookmarks.value.includes(show.id))
+})
+
 watchEffect(() => {
-  shows.value = shows.value.filter((show) => bookmarks.value.includes(show.id))
-  if (bookmarks.value.length === 0) userInput.value = ''
+  if (bookmarkedShows.value.length === 0) userInput.value = ''
 })
 
 const bookmarkedMovies = computed(() => {
-  return shows.value.filter((show) => show.category === 'Movie')
+  return bookmarkedShows.value.filter((show) => show.category === 'Movie')
 })
 
 const bookmarkedTvSeries = computed(() => {
-  return shows.value.filter((show) => show.category === 'TV Series')
+  return bookmarkedShows.value.filter((show) => show.category === 'TV Series')
 })
 
 const hasBookmarkedMovies = computed(() => {
@@ -31,15 +35,26 @@ const hasBookmarkedTvSeries = computed(() => {
   return bookmarkedTvSeries.value.length > 0
 })
 
-const hasShows = computed(() => {
-  return shows.value.length > 0
+const hasNoBookmarkedShows = computed(() => {
+  return bookmarkedShows.value.length === 0
 })
 
 onBeforeUnmount(() => resetShows())
 </script>
 
 <template>
-  <template v-if="hasShows">
+  <SectionSkeleton v-if="isLoading" />
+
+  <div v-else-if="!isLoading && hasNoBookmarkedShows" class="empty-state l-flex">
+    <EmptyStateIcon class="empty-state-icon" />
+
+    <div>
+      <p>You don't have any bookmarks yet.</p>
+      <p>Discover <RouterLink to="/">shows</RouterLink>.</p>
+    </div>
+  </div>
+
+  <template v-else>
     <MediaSection
       v-if="hasBookmarkedMovies"
       class="bookmarked-movies"
@@ -55,15 +70,6 @@ onBeforeUnmount(() => resetShows())
       :disabled-filtered-shows="hasBookmarkedMovies"
     />
   </template>
-
-  <div v-else class="empty-state l-flex">
-    <EmptyStateIcon class="empty-state-icon" />
-
-    <div>
-      <p>You don't have any bookmarks yet.</p>
-      <p>Discover <RouterLink to="/">shows</RouterLink>.</p>
-    </div>
-  </div>
 </template>
 
 <style lang="scss">

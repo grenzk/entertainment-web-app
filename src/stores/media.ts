@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { defineStore } from 'pinia'
 import { useAuthStore } from './auth'
 import { http } from '@/services/axios-config'
@@ -11,6 +11,7 @@ export const useMediaStore = defineStore('media', () => {
   const shows = ref<MediaItem[]>([])
   const bookmarks = ref<number[]>([])
   const userInput = ref('')
+  const isLoading = ref(false)
 
   const filteredShows = computed(() => {
     return shows.value.filter((show) => {
@@ -67,11 +68,26 @@ export const useMediaStore = defineStore('media', () => {
     }
   }
 
+  watchEffect(async () => {
+    if (authStore.isLoggedIn) {
+      isLoading.value = true
+      try {
+        await fetchMedia()
+        await fetchBookmarks()
+      } catch (error) {
+        authStore.showErrorMessage(error)
+      } finally {
+        isLoading.value = false
+      }
+    }
+  })
+
   return {
     allShows,
     shows,
     bookmarks,
     userInput,
+    isLoading,
     filteredShows,
     isSearchEmpty,
     resetShows,
