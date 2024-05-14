@@ -2,6 +2,10 @@
   .media-library-group .media .media-img {
     height: auto;
   }
+
+  .media-skeleton {
+    height: 150px !important;
+  }
 }
 
 @media screen and (min-width: 480px) {
