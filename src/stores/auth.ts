@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth', () => {
     authToken.value = localStorage.getItem('authToken')
   }
 
-  const resetUserInfo = (): void => {
+  const $reset = (): void => {
     user.value = null
     authToken.value = null
 
@@ -98,7 +98,7 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await http.delete<Payload>(`${API_ENDPOINTS.users}/sign_out`)
 
       mediaStore.$reset()
-      resetUserInfo()
+      $reset()
 
       router.push('/sign-in')
       Notify.create({ color: 'green', message: response.data.message })
@@ -114,7 +114,7 @@ export const useAuthStore = defineStore('auth', () => {
     isLoggedIn,
     setUserInfo,
     setUserInfoFromToken,
-    resetUserInfo,
+    $reset,
     showErrorMessage,
     registerUser,
     loginUser,

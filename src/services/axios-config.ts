@@ -25,7 +25,7 @@ http.interceptors.request.use(
     if (loginToken) {
       request.headers.Authorization = loginToken
     } else {
-      authStore.resetUserInfo()
+      authStore.$reset()
 
       alert('Your session has expired.')
       router.push('/sign-in')
