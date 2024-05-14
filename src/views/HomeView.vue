@@ -163,9 +163,4 @@ watchEffect(() => (shows.value = allShows.value))
     right: 0;
   }
 }
-
-.custom-skeleton {
-  background: var(--color-primary-semi-dark-blue) !important;
-  border-radius: var(--border-radius-s) !important;
-}
 </style>
