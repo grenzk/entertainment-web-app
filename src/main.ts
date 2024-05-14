@@ -5,6 +5,7 @@ import { Quasar, Notify } from 'quasar'
 import App from '@/App.vue'
 import { router } from '@/router'
 import { useAuthStore } from '@/stores/auth'
+import { useMediaStore } from '@/stores/media'
 
 import 'quasar/src/css/index.sass'
 import '@/assets/scss/styles.scss'
@@ -20,6 +21,8 @@ app.use(Quasar, {
 const authStore = useAuthStore()
 const { isLoggedIn, publicPages } = storeToRefs(authStore)
 const { loginUserWithToken } = authStore
+
+const mediaStore = useMediaStore()
 
 const localAuthToken = localStorage.authToken
 const cookieExists = localAuthToken !== 'undefined' && localAuthToken !== null
@@ -41,6 +44,8 @@ router.beforeEach((to) => {
   } else if (!requiresAuth && isLoggedIn.value) {
     return false
   }
+
+  if (requiresAuth) mediaStore.userInput = ''
 })
 
 app.mount('#app')

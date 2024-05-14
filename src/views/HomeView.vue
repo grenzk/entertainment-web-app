@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref, computed, watchEffect } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
@@ -10,7 +10,7 @@ import RightArrowIcon from '@/components/icons/RightArrowIcon.vue'
 import LeftArrowIcon from '@/components/icons/LeftArrowIcon.vue'
 
 const mediaStore = useMediaStore()
-const { allShows, shows, userInput, isLoading, isSearchEmpty } = storeToRefs(mediaStore)
+const { allShows, shows, isLoading, isSearchEmpty } = storeToRefs(mediaStore)
 
 const trendingShows = computed(() => allShows.value.filter((show) => show.isTrending))
 const recommendedShows = computed(() => allShows.value.filter((show) => !show.isTrending))
@@ -45,8 +45,6 @@ const checkButtonsVisibility = (): void => {
 }
 
 watchEffect(() => (shows.value = allShows.value))
-
-onBeforeUnmount(() => (userInput.value = ''))
 </script>
 
 <template>
