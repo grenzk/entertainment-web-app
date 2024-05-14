@@ -23,8 +23,10 @@ export const useMediaStore = defineStore('media', () => {
     return userInput.value.length === 0
   })
 
-  const resetShows = (): void => {
-    shows.value = allShows.value
+  const $reset = (): void => {
+    allShows.value = []
+    shows.value = []
+    bookmarks.value = []
     userInput.value = ''
   }
 
@@ -33,7 +35,6 @@ export const useMediaStore = defineStore('media', () => {
       const response = await http.get<MediaItem[]>(API_ENDPOINTS.media)
 
       allShows.value = response.data
-      shows.value = response.data
     } catch (error) {
       authStore.showErrorMessage(error)
     }
@@ -90,7 +91,7 @@ export const useMediaStore = defineStore('media', () => {
     isLoading,
     filteredShows,
     isSearchEmpty,
-    resetShows,
+    $reset,
     fetchMedia,
     fetchBookmarks,
     toggleBookmark

@@ -97,7 +97,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const response = await http.delete<Payload>(`${API_ENDPOINTS.users}/sign_out`)
 
-      mediaStore.resetShows()
+      mediaStore.$reset()
       resetUserInfo()
 
       router.push('/sign-in')

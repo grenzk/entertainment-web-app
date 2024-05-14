@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref, computed } from 'vue'
+import { onBeforeUnmount, ref, computed, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
@@ -10,10 +10,10 @@ import RightArrowIcon from '@/components/icons/RightArrowIcon.vue'
 import LeftArrowIcon from '@/components/icons/LeftArrowIcon.vue'
 
 const mediaStore = useMediaStore()
-const { shows, userInput, isLoading, isSearchEmpty } = storeToRefs(mediaStore)
+const { allShows, shows, userInput, isLoading, isSearchEmpty } = storeToRefs(mediaStore)
 
-const trendingShows = computed(() => shows.value.filter((show) => show.isTrending))
-const recommendedShows = computed(() => shows.value.filter((show) => !show.isTrending))
+const trendingShows = computed(() => allShows.value.filter((show) => show.isTrending))
+const recommendedShows = computed(() => allShows.value.filter((show) => !show.isTrending))
 
 const mediaScroller = ref<HTMLDivElement | null>(null)
 const isPrevButtonShown = ref(false)
@@ -44,6 +44,8 @@ const checkButtonsVisibility = (): void => {
   }
 }
 
+watchEffect(() => (shows.value = allShows.value))
+
 onBeforeUnmount(() => (userInput.value = ''))
 </script>
 
@@ -59,7 +61,7 @@ onBeforeUnmount(() => (userInput.value = ''))
 
     <div class="trending-media-container">
       <button
-        v-if="isPrevButtonShown"
+        v-if="!isLoading && isPrevButtonShown"
         class="trending-media-scroller-left-button"
         @click="scrollLeft"
       >
@@ -81,7 +83,7 @@ onBeforeUnmount(() => (userInput.value = ''))
       </div>
 
       <button
-        v-if="isNextButtonShown"
+        v-if="!isLoading && isNextButtonShown"
         @click="scrollRight"
         class="trending-media-scroller-right-button"
       >

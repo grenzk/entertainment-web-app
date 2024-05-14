@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watchEffect, onBeforeUnmount} from 'vue'
+import { computed, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
@@ -8,15 +8,10 @@ import SectionSkeleton from '@/components/SectionSkeleton.vue'
 import EmptyStateIcon from '@/components/icons/EmptyStateIcon.vue'
 
 const mediaStore = useMediaStore()
-const { shows, bookmarks, userInput, isLoading } = storeToRefs(mediaStore)
-const { resetShows } = mediaStore
+const { allShows, shows, bookmarks, userInput, isLoading } = storeToRefs(mediaStore)
 
 const bookmarkedShows = computed(() => {
-  return shows.value.filter((show) => bookmarks.value.includes(show.id))
-})
-
-watchEffect(() => {
-  if (bookmarkedShows.value.length === 0) userInput.value = ''
+  return allShows.value.filter((show) => bookmarks.value.includes(show.id))
 })
 
 const bookmarkedMovies = computed(() => {
@@ -39,7 +34,10 @@ const hasNoBookmarkedShows = computed(() => {
   return bookmarkedShows.value.length === 0
 })
 
-onBeforeUnmount(() => resetShows())
+watchEffect(() => {
+  shows.value = bookmarkedShows.value
+  if (bookmarkedShows.value.length === 0) userInput.value = ''
+})
 </script>
 
 <template>

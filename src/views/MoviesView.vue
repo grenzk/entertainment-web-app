@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMediaStore } from '@/stores/media'
 
@@ -7,13 +7,11 @@ import MediaSection from '@/components/MediaSection.vue'
 import SectionSkeleton from '@/components/SectionSkeleton.vue'
 
 const mediaStore = useMediaStore()
-const { shows, isLoading } = storeToRefs(mediaStore)
-const { resetShows } = mediaStore
+const { allShows, shows, isLoading } = storeToRefs(mediaStore)
 
-const movies = computed(() => shows.value.filter((show) => show.category === 'Movie'))
-shows.value = movies.value
+const movies = computed(() => allShows.value.filter((show) => show.category === 'Movie'))
 
-onBeforeUnmount(() => resetShows())
+watchEffect(() => (shows.value = movies.value))
 </script>
 
 <template>
