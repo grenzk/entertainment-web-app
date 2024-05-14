@@ -6,11 +6,11 @@ export const http = axios.create()
 
 const getToken = (): string | null => {
   const currentTime = new Date(Date.now()).getTime()
-  const tenMinutes = 1000 * 60 * 10
+  const oneHour = 1000 * 60 * 60
   const loginTime = parseInt(localStorage.getItem('lastLoginTime')!)
   const timeSinceLastLogin = currentTime - loginTime
 
-  if (timeSinceLastLogin < tenMinutes) {
+  if (timeSinceLastLogin < oneHour) {
     return localStorage.getItem('authToken')
   } else {
     return null
