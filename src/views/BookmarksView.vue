@@ -36,7 +36,7 @@ const hasNoBookmarkedShows = computed(() => {
 
 watchEffect(() => {
   shows.value = bookmarkedShows.value
-  if (bookmarkedShows.value.length === 0) userInput.value = ''
+  if (hasNoBookmarkedShows.value) userInput.value = ''
 })
 </script>
 
