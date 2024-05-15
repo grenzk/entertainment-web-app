@@ -68,7 +68,7 @@ Users should be able to:
 
 ## Usage
 
-### Test User Account
+### Test user account
 
 |         Email          | Password |
 | :--------------------: | :------: |
