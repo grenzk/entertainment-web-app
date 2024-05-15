@@ -50,7 +50,7 @@ export const useAuthStore = defineStore('auth', () => {
       message = error.message
     }
 
-    Notify.create({ color: 'red', message: message })
+    Notify.create({ color: 'red-10', message: message })
   }
 
   const registerUser = async (payload: Payload): Promise<void> => {
@@ -65,6 +65,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const loginUser = async (payload: Payload): Promise<void> => {
+    const dismiss = Notify.create({ spinner: true, message: 'Logging you in...', timeout: 0 })
+
     try {
       const response = await axios.post<Payload>(`${API_ENDPOINTS.users}/sign_in`, payload)
 
@@ -75,6 +77,7 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (error) {
       showErrorMessage(error)
     }
+    dismiss()
   }
 
   const loginUserWithToken = async (): Promise<void> => {
