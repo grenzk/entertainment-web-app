@@ -70,9 +70,9 @@ Users should be able to:
 
 ### Test User Account
 
-|        Email         | Password |
-| :------------------: | :------: |
-| john.doe@example.com |  foobar  |
+|         Email          | Password |
+| :--------------------: | :------: |
+| `john.doe@example.com` |  foobar  |
 
 ### Development
 
