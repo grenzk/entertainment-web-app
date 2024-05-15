@@ -68,6 +68,12 @@ Users should be able to:
 
 ## Usage
 
+### Test User Account
+
+|        Email         | Password |
+| :------------------: | :------: |
+| john.doe@example.com |  foobar  |
+
 ### Development
 
 #### Inside the Vue project
