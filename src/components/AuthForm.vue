@@ -163,7 +163,6 @@ form {
   .q-placeholder::placeholder {
     color: var(--color-neutral-white) !important;
     opacity: 0.5 !important;
-    padding-left: 1rem !important;
   }
 
   .q-field__append {
