@@ -139,6 +139,7 @@ watchEffect(() => (shows.value = allShows.value))
 
   &-right-button,
   &-left-button {
+    display: none;
     position: absolute;
     background-color: hsla(0, 0%, 0%, 0.3);
     top: 0;
@@ -152,6 +153,10 @@ watchEffect(() => (shows.value = allShows.value))
       width: 2rem;
       height: 2rem;
       fill: var(--color-neutral-white);
+    }
+
+    @media screen and (min-width: 1024px) {
+      display: block;
     }
   }
 
