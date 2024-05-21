@@ -59,49 +59,49 @@ const onSubmit = (values: Record<string, string>, actions: SubmissionContext): v
 
 <template>
   <LogoIcon class="logo-icon" />
-  <div class="form-group">
-    <h1 class="form-title">{{ formTitle }}</h1>
-
-    <Form class="l-flex" :validation-schema="schema" @submit="onSubmit">
-      <Field name="email" v-slot="{ errorMessage, value, field }">
-        <QInput
-          type="email"
-          placeholder="Email address"
-          :model-value="value"
-          v-bind="field"
-          :error-message="errorMessage"
-          :error="!!errorMessage"
-        />
-      </Field>
-      <Field name="password" v-slot="{ errorMessage, value, field }">
-        <QInput
-          type="password"
-          placeholder="Password"
-          :model-value="value"
-          v-bind="field"
-          :error-message="errorMessage"
-          :error="!!errorMessage"
-        />
-      </Field>
-      <Field name="passwordConfirm" v-slot="{ errorMessage, value, field }">
-        <QInput
-          v-if="isSignUp"
-          type="password"
-          placeholder="Repeat password"
-          :model-value="value"
-          v-bind="field"
-          :error-message="errorMessage"
-          :error="!!errorMessage"
-        />
-      </Field>
-
-      <input type="submit" :value="formSubmitButtonText" />
-    </Form>
-
-    <p class="form-link">
-      Already have an account? <RouterLink :to="formRoute">{{ formLink }}</RouterLink>
-    </p>
-  </div>
+  
+  <main>
+    <div class="form-group">
+      <h1 class="form-title">{{ formTitle }}</h1>
+      <Form class="l-flex" :validation-schema="schema" @submit="onSubmit">
+        <Field name="email" v-slot="{ errorMessage, value, field }">
+          <QInput
+            type="email"
+            placeholder="Email address"
+            :model-value="value"
+            v-bind="field"
+            :error-message="errorMessage"
+            :error="!!errorMessage"
+          />
+        </Field>
+        <Field name="password" v-slot="{ errorMessage, value, field }">
+          <QInput
+            type="password"
+            placeholder="Password"
+            :model-value="value"
+            v-bind="field"
+            :error-message="errorMessage"
+            :error="!!errorMessage"
+          />
+        </Field>
+        <Field name="passwordConfirm" v-slot="{ errorMessage, value, field }">
+          <QInput
+            v-if="isSignUp"
+            type="password"
+            placeholder="Repeat password"
+            :model-value="value"
+            v-bind="field"
+            :error-message="errorMessage"
+            :error="!!errorMessage"
+          />
+        </Field>
+        <input type="submit" :value="formSubmitButtonText" />
+      </Form>
+      <p class="form-link">
+        Already have an account? <RouterLink :to="formRoute">{{ formLink }}</RouterLink>
+      </p>
+    </div>
+  </main>
 </template>
 
 <style lang="scss">
