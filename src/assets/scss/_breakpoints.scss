@@ -30,7 +30,11 @@
 
 @media screen and (min-width: 768px) {
   #app {
-    grid-template: 8.063rem 4.063rem 20.938rem / 1fr;
+    grid-template: 8.063rem 4.063rem / 1fr;
+  }
+
+  .home {
+    grid-template-rows: 20.938rem;
   }
 
   .header-group.l-container,
@@ -116,7 +120,7 @@
 
 @media screen and (min-width: 1024px) {
   #app {
-    grid-template: 7.15rem 20.938rem / 10.25rem 1fr;
+    grid-template: 7.15rem / 10.25rem 1fr;
   }
 
   .header-group.l-container {

@@ -5,5 +5,7 @@ useGrid(adjustGridForContentPages)
 </script>
 
 <template>
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>

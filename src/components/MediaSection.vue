@@ -24,7 +24,7 @@ const resultOrResults = computed(() => {
 </script>
 
 <template>
-  <div class="media-library l-container">
+  <section class="media-library l-container">
     <h2 v-if="isSearchEmpty" class="section-title">
       {{ sectionTitle }}
     </h2>
@@ -39,5 +39,5 @@ const resultOrResults = computed(() => {
     <div v-if="isSearchEnabled" class="media-library-group l-grid">
       <MediaContent v-for="media in filteredShows" :key="media.id" v-bind="media" />
     </div>
-  </div>
+  </section>
 </template>
