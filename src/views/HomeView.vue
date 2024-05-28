@@ -164,10 +164,4 @@ watchEffect(() => (shows.value = allShows.value))
     right: 0;
   }
 }
-
-.home {
-  grid-row: span 2;
-  display: grid;
-  grid-template-rows: 12.813rem;
-}
 </style>

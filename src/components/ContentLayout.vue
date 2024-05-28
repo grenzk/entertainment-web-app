@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import { adjustGridForContentPages, useGrid } from '@/utils/grid'
-
-useGrid(adjustGridForContentPages)
-</script>
-
 <template>
   <RouterView v-slot="{ Component, route }">
     <Transition name="fade-up" mode="out-in">
@@ -15,6 +9,12 @@ useGrid(adjustGridForContentPages)
 </template>
 
 <style lang="scss">
+.home {
+  grid-row: span 2;
+  display: grid;
+  grid-template-rows: 12.813rem;
+}
+
 .fade-up-enter-active,
 .fade-up-leave-active {
   transition: 300ms ease all;
