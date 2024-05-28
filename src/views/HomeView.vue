@@ -48,48 +48,46 @@ watchEffect(() => (shows.value = allShows.value))
 </script>
 
 <template>
-  <main class="home">
-    <section v-if="isSearchEmpty" class="trending">
-      <QSkeleton
-        v-if="isLoading"
-        class="section-title custom-skeleton l-container"
-        width="150px"
-        animation="fade"
-      />
-      <h2 v-else class="section-title l-container">Trending</h2>
-      <div class="trending-media-container">
-        <button
-          v-if="!isLoading && isPrevButtonShown"
-          class="trending-media-scroller-left-button"
-          @click="scrollLeft"
-        >
-          <LeftArrowIcon />
-        </button>
-        <div
-          ref="mediaScroller"
-          class="trending-media-scroller l-grid snaps-inline"
-          @scroll="checkButtonsVisibility"
-        >
-          <template v-if="isLoading">
-            <QSkeleton class="custom-skeleton" v-for="num in 5" :key="num" animation="fade" />
-          </template>
-          <template v-else>
-            <MediaContent v-for="media in trendingShows" :key="media.id" v-bind="media" />
-          </template>
-        </div>
-        <button
-          v-if="!isLoading && isNextButtonShown"
-          @click="scrollRight"
-          class="trending-media-scroller-right-button"
-        >
-          <RightArrowIcon />
-        </button>
+  <section v-if="isSearchEmpty" class="trending">
+    <QSkeleton
+      v-if="isLoading"
+      class="section-title custom-skeleton l-container"
+      width="150px"
+      animation="fade"
+    />
+    <h2 v-else class="section-title l-container">Trending</h2>
+    <div class="trending-media-container">
+      <button
+        v-if="!isLoading && isPrevButtonShown"
+        class="trending-media-scroller-left-button"
+        @click="scrollLeft"
+      >
+        <LeftArrowIcon />
+      </button>
+      <div
+        ref="mediaScroller"
+        class="trending-media-scroller l-grid snaps-inline"
+        @scroll="checkButtonsVisibility"
+      >
+        <template v-if="isLoading">
+          <QSkeleton class="custom-skeleton" v-for="num in 5" :key="num" animation="fade" />
+        </template>
+        <template v-else>
+          <MediaContent v-for="media in trendingShows" :key="media.id" v-bind="media" />
+        </template>
       </div>
-    </section>
+      <button
+        v-if="!isLoading && isNextButtonShown"
+        @click="scrollRight"
+        class="trending-media-scroller-right-button"
+      >
+        <RightArrowIcon />
+      </button>
+    </div>
+  </section>
 
-    <SectionSkeleton v-if="isLoading" />
-    <MediaSection v-else section-title="Recommended for you" :media-list="recommendedShows" />
-  </main>
+  <SectionSkeleton v-if="isLoading" />
+  <MediaSection v-else section-title="Recommended for you" :media-list="recommendedShows" />
 </template>
 
 <style lang="scss">

@@ -25,8 +25,8 @@ export const router = createRouter({
     },
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      component: ContentLayout,
+      children: [{ path: '', name: 'home', component: HomeView }]
     },
     {
       path: '/movies',
