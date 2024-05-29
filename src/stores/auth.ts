@@ -45,7 +45,7 @@ export const useAuthStore = defineStore('auth', () => {
     let message = 'An unexpected error occurred.'
 
     if (axios.isAxiosError(error)) {
-      message = error.response?.data.message || error.response?.data
+      message = error.response?.data.message || error.response?.data || message
     } else if (error instanceof Error) {
       message = error.message
     }
@@ -76,8 +76,9 @@ export const useAuthStore = defineStore('auth', () => {
       Notify.create({ color: 'green', message: response.data.message })
     } catch (error) {
       showErrorMessage(error)
+    } finally {
+      dismiss()
     }
-    dismiss()
   }
 
   const loginUserWithToken = async (): Promise<void> => {
