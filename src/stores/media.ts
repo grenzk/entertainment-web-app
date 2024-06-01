@@ -9,7 +9,6 @@ export const useMediaStore = defineStore('media', () => {
 
   const allShows = ref<MediaItem[]>([])
   const shows = ref<MediaItem[]>([])
-  const bookmarks = ref<number[]>([])
   const userInput = ref('')
   const isLoading = ref(false)
 
@@ -19,6 +18,10 @@ export const useMediaStore = defineStore('media', () => {
     })
   })
 
+  const bookmarkedShows = computed(() => {
+    return allShows.value.filter((show) => show.isBookmarked)
+  })
+
   const isSearchEmpty = computed(() => {
     return userInput.value.length === 0
   })
@@ -26,7 +29,6 @@ export const useMediaStore = defineStore('media', () => {
   const $reset = (): void => {
     allShows.value = []
     shows.value = []
-    bookmarks.value = []
     userInput.value = ''
   }
 
@@ -40,19 +42,9 @@ export const useMediaStore = defineStore('media', () => {
     }
   }
 
-  const fetchBookmarks = async (): Promise<void> => {
-    try {
-      const response = await http.get<Bookmark[]>(API_ENDPOINTS.bookmarks)
-
-      bookmarks.value = response.data.map((item: Bookmark) => item.medium_id)
-    } catch (error) {
-      authStore.showErrorMessage(error)
-    }
-  }
-
   const toggleBookmark = async (id: number): Promise<void> => {
     try {
-      const hasBookmark = computed(() => bookmarks.value.includes(id))
+      const hasBookmark = computed(() => bookmarkedShows.value.some((show) => show.id === id))
 
       if (hasBookmark.value) {
         await http.delete<Bookmark>(`${API_ENDPOINTS.bookmarks}/${id}`)
@@ -63,7 +55,6 @@ export const useMediaStore = defineStore('media', () => {
       }
 
       fetchMedia()
-      fetchBookmarks()
     } catch (error) {
       authStore.showErrorMessage(error)
     }
@@ -74,7 +65,6 @@ export const useMediaStore = defineStore('media', () => {
       isLoading.value = true
       try {
         await fetchMedia()
-        await fetchBookmarks()
       } catch (error) {
         authStore.showErrorMessage(error)
       } finally {
@@ -86,14 +76,13 @@ export const useMediaStore = defineStore('media', () => {
   return {
     allShows,
     shows,
-    bookmarks,
     userInput,
     isLoading,
     filteredShows,
+    bookmarkedShows,
     isSearchEmpty,
     $reset,
     fetchMedia,
-    fetchBookmarks,
     toggleBookmark
   }
 })

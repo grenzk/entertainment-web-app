@@ -8,11 +8,7 @@ import SectionSkeleton from '@/components/SectionSkeleton.vue'
 import EmptyStateIcon from '@/components/icons/EmptyStateIcon.vue'
 
 const mediaStore = useMediaStore()
-const { allShows, shows, bookmarks, userInput, isLoading } = storeToRefs(mediaStore)
-
-const bookmarkedShows = computed(() => {
-  return allShows.value.filter((show) => bookmarks.value.includes(show.id))
-})
+const { shows, userInput, isLoading, bookmarkedShows } = storeToRefs(mediaStore)
 
 const bookmarkedMovies = computed(() => {
   return bookmarkedShows.value.filter((show) => show.category === 'Movie')

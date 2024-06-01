@@ -20,10 +20,10 @@ const searchPlaceholder = computed(() => {
 })
 
 const mediaStore = useMediaStore()
-const { bookmarks, userInput } = storeToRefs(mediaStore)
+const { userInput, bookmarkedShows } = storeToRefs(mediaStore)
 
 const isSearchDisabled = computed(() => {
-  return route.path === '/bookmarks' && bookmarks.value.length === 0
+  return route.path === '/bookmarks' && bookmarkedShows.value.length === 0
 })
 </script>
 
