@@ -28,7 +28,7 @@ const thumbnail = computed(() => {
 <template>
   <div class="media">
     <div class="media-img-group">
-      <img class="media-img" :src="thumbnail" alt="Movie Image" />
+      <img class="media-img" :src="thumbnail" :alt="title" loading="lazy" decoding="async" />
 
       <button class="media-play-button l-flex">
         <PlayIcon />
