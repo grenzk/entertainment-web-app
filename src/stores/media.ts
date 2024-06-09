@@ -44,10 +44,10 @@ export const useMediaStore = defineStore('media', () => {
 
   const toggleBookmark = async (id: number, isBookmarked: boolean): Promise<void> => {
     try {
-      const mediaIndex = allShows.value.findIndex((show) => show.id === id)
+      const showIndex = allShows.value.findIndex((show) => show.id === id)
 
-      allShows.value.splice(mediaIndex, 1, {
-        ...allShows.value[mediaIndex],
+      allShows.value.splice(showIndex, 1, {
+        ...allShows.value[showIndex],
         isBookmarked: !isBookmarked
       })
 
