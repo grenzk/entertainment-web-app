@@ -7,6 +7,7 @@ import { router } from '@/router'
 import { useAuthStore } from '@/stores/auth'
 import { useMediaStore } from '@/stores/media'
 
+import '@quasar/extras/material-icons-outlined/material-icons-outlined.css'
 import 'quasar/src/css/index.sass'
 import '@/assets/scss/styles.scss'
 
