@@ -40,7 +40,7 @@ const thumbnail = computed(() => {
       class="media-bookmark-button l-flex"
       :class="{ 'is-pressed': isBookmarked }"
       aria-label="Bookmark"
-      @click="toggleBookmark(id)"
+      @click="toggleBookmark(id, isBookmarked)"
     >
       <BookmarkIcon />
     </button>

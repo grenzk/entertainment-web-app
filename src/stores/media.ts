@@ -42,19 +42,22 @@ export const useMediaStore = defineStore('media', () => {
     }
   }
 
-  const toggleBookmark = async (id: number): Promise<void> => {
+  const toggleBookmark = async (id: number, isBookmarked: boolean): Promise<void> => {
     try {
-      const hasBookmark = computed(() => bookmarkedShows.value.some((show) => show.id === id))
+      const mediaIndex = allShows.value.findIndex((show) => show.id === id)
 
-      if (hasBookmark.value) {
+      allShows.value.splice(mediaIndex, 1, {
+        ...allShows.value[mediaIndex],
+        isBookmarked: !isBookmarked
+      })
+
+      if (isBookmarked) {
         await http.delete<Bookmark>(`${API_ENDPOINTS.bookmarks}/${id}`)
       } else {
         await http.post<Bookmark>(API_ENDPOINTS.bookmarks, {
           medium_id: id
         })
       }
-
-      fetchMedia()
     } catch (error) {
       authStore.showErrorMessage(error)
     }
