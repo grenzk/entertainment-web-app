@@ -27,14 +27,12 @@ const schema = computed(() => {
       .required("Can't be empty")
       .email('Must be a valid email')
       .label('Email address'),
-    password: yup
-      .string()
-      .required("Can't be empty")
-      .min(6, 'Must be at least 6 characters')
-      .label('Password')
+    password: yup.string().required("Can't be empty").label('Password')
   }
 
   if (isSignUp.value) {
+    baseSchema.password = baseSchema.password.min(6, 'Must be at least 6 characters')
+
     return yup.object({
       ...baseSchema,
       passwordConfirm: yup
@@ -59,7 +57,7 @@ const onSubmit = (values: Record<string, string>, actions: SubmissionContext): v
 
 <template>
   <LogoIcon class="logo-icon" />
-  
+
   <main>
     <div class="form-group">
       <h1 class="form-title">{{ formTitle }}</h1>
