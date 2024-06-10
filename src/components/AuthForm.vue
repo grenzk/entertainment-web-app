@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { Field, Form, type SubmissionContext } from 'vee-validate'
@@ -12,11 +12,13 @@ const { registerUser, loginUser } = authStore
 
 const route = useRoute()
 
+const isPassword = ref(true)
+const passwordInputType = computed(() => (isPassword.value ? 'password' : 'text'))
+const passwordIcon = computed(() => (isPassword.value ? 'o_visibility' : 'o_visibility_off'))
+
 const isSignUp = computed(() => route.name === 'sign-up')
 const formTitle = computed(() => (isSignUp.value ? 'Sign Up' : 'Login'))
-const formSubmitButtonText = computed(() =>
-  isSignUp.value ? 'Create an account' : 'Login to your account'
-)
+const formBtnText = computed(() => (isSignUp.value ? 'Create an account' : 'Login to your account'))
 const formLink = computed(() => (isSignUp.value ? 'Login' : 'Sign Up'))
 const formRoute = computed(() => (isSignUp.value ? '/sign-in' : '/sign-up'))
 
@@ -46,6 +48,10 @@ const schema = computed(() => {
   return yup.object(baseSchema)
 })
 
+const passwordErrorsExist = (errorMessage: string | undefined, value: string | undefined) => {
+  return typeof errorMessage === 'undefined' && (value?.length || 0) > 0
+}
+
 const onSubmit = (values: Record<string, string>, actions: SubmissionContext): void => {
   const formData = { user: { email: values.email, password: values.password } }
 
@@ -72,28 +78,48 @@ const onSubmit = (values: Record<string, string>, actions: SubmissionContext): v
             :error="!!errorMessage"
           />
         </Field>
-        <Field name="password" v-slot="{ errorMessage, value, field }">
+        <Field ref="passwordField" name="password" v-slot="{ errorMessage, value, field }">
           <QInput
-            type="password"
+            :type="passwordInputType"
             placeholder="Password"
             :model-value="value"
             v-bind="field"
             :error-message="errorMessage"
             :error="!!errorMessage"
-          />
+          >
+            <template v-slot:append>
+              <QIcon
+                v-if="passwordErrorsExist(errorMessage, value)"
+                :name="passwordIcon"
+                @click="isPassword = !isPassword"
+              />
+            </template>
+          </QInput>
         </Field>
-        <Field name="passwordConfirm" v-slot="{ errorMessage, value, field }">
+        <Field
+          ref="passwordConfirmField"
+          name="passwordConfirm"
+          v-slot="{ errorMessage, value, field }"
+        >
           <QInput
             v-if="isSignUp"
-            type="password"
+            :type="passwordInputType"
             placeholder="Repeat password"
             :model-value="value"
             v-bind="field"
             :error-message="errorMessage"
             :error="!!errorMessage"
-          />
+          >
+            <template v-slot:append>
+              <QIcon
+                v-if="passwordErrorsExist(errorMessage, value)"
+                :name="passwordIcon"
+                @click="isPassword = !isPassword"
+              />
+            </template>
+          </QInput>
         </Field>
-        <input type="submit" :value="formSubmitButtonText" />
+        <input type="submit" :value="formBtnText" />
       </Form>
       <p class="form-link">
         Already have an account? <RouterLink :to="formRoute">{{ formLink }}</RouterLink>
@@ -164,7 +190,16 @@ form {
   }
 
   .q-field__append {
-    display: none !important;
+    padding-right: 0.75rem;
+
+    .q-icon {
+      color: var(--color-neutral-white);
+      cursor: pointer;
+    }
+
+    .q-icon.text-negative {
+      display: none !important;
+    }
   }
 
   .q-field__bottom {
