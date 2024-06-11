@@ -48,7 +48,10 @@ const schema = computed(() => {
   return yup.object(baseSchema)
 })
 
-const passwordErrorsExist = (errorMessage: string | undefined, value: string | undefined) => {
+const passwordErrorsExist = (
+  errorMessage: string | undefined,
+  value: string | undefined
+): boolean => {
   return typeof errorMessage === 'undefined' && (value?.length || 0) > 0
 }
 
