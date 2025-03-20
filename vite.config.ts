@@ -15,7 +15,9 @@ export default defineConfig({
     }),
     quasar({
       autoImportComponentCase: 'pascal',
-      sassVariables: 'src/assets/scss/quasar-variables.scss'
+      sassVariables: fileURLToPath(
+        new URL('./src/assets/scss/quasar-variables.scss', import.meta.url)
+      )
     })
   ],
   resolve: {
