@@ -19,8 +19,11 @@ const passwordIcon = computed(() => (isPassword.value ? 'o_visibility' : 'o_visi
 const isSignUp = computed(() => route.name === 'sign-up')
 const formTitle = computed(() => (isSignUp.value ? 'Sign Up' : 'Login'))
 const formBtnText = computed(() => (isSignUp.value ? 'Create an account' : 'Login to your account'))
-const formLink = computed(() => (isSignUp.value ? 'Login' : 'Sign Up'))
 const formRoute = computed(() => (isSignUp.value ? '/sign-in' : '/sign-up'))
+const formLink = computed(() => (isSignUp.value ? 'Login' : 'Sign Up'))
+const formLinkText = computed(() => {
+  return isSignUp.value ? 'Already have an account?' : "Don't have an account?"
+})
 
 const schema = computed(() => {
   const baseSchema = {
@@ -125,7 +128,7 @@ const onSubmit = (values: Record<string, string>, actions: SubmissionContext): v
         <input type="submit" :value="formBtnText" />
       </Form>
       <p class="form-link">
-        Already have an account? <RouterLink :to="formRoute">{{ formLink }}</RouterLink>
+        {{ formLinkText }} <RouterLink :to="formRoute">{{ formLink }}</RouterLink>
       </p>
     </div>
   </main>
